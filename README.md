@@ -9,6 +9,7 @@
 ![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/77a6aff4-3ca2-46eb-9548-3d8e4e218d8a)
 
 ### 아키텍처 설계서
+<img width="891" alt="아키텍처 설계서" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/3a398ae0-ae42-4e63-b8f2-18dfc5ec51e3">
    
 ### 화면 설계서
 - 유저 화면
