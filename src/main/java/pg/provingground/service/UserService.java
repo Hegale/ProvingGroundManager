@@ -8,7 +8,6 @@ import pg.provingground.domain.User;
 import pg.provingground.repository.UserRepository;
 
 import java.util.List;
-
 @Service
 @Transactional(readOnly = true) // readOnly=true 옵션도 고려
 @RequiredArgsConstructor
@@ -33,5 +32,6 @@ public class UserService {
 
     public User findOne(Long userId) {
         return userRepository.findOne(userId);
+    }
 
 }

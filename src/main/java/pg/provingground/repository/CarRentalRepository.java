@@ -21,11 +21,13 @@ public class CarRentalRepository {
         return em.find(CarRental.class, id);
     }
 
-    /*
-    TODO: 조건에 맞는 객체 찾아 반환
-    public List<CarRental> findNotReturned() {
-        String jpql = "select cr from CarRental cr ";
+    // TODO: 성능 생각하기
+    /** 인자로 받은 차량 중 반납되지 않은 대여기록 반환. */
+    public List<CarRental> findNotReturned(Long carId) {
+        String jpql = "select cr from CarRental cr where cr.returned = 'N' and cr.car = " + carId;
+        return em.createQuery(jpql, CarRental.class)
+                .getResultList();
     }
-    */
+
 
 }
