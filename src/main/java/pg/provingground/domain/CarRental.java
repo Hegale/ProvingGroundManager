@@ -2,23 +2,62 @@ package pg.provingground.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+// 대여 시작 시간을 인덱스로
+@Table(indexes = @Index(name = "idx_start_time", columnList = "start_time"))
+// 대여 시간에 인덱스
 public class CarRental {
 
-    @Id @GeneratedValue
-    private Long car_rental_id;
+    @Id
+    @GeneratedValue
+    @Column(name = "car_rental_id")
+    private Long carRentalId;
 
-    private Timestamp start_time;
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime start_time;
 
     private String returned;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Car car_id;
+    @JoinColumn(name = "car_id")
+    private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user_id;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    // === 생성 메서드 === //
+
+    /**
+     * 유저, 대여 차량, 날짜를 통해 차 대여 생성.
+     */
+    public static CarRental createCarRental(User user, Car car, LocalDateTime time) {
+        CarRental carRental = new CarRental();
+        carRental.user = user;
+        carRental.car = car;
+        carRental.start_time = time;
+        carRental.returned = "N";
+        return carRental;
+    }
+
+    // === 비즈니스 로직 === //
+    /** 차량 대여 취소 */
+    public void cancel(){
+        // 취소하려는 차량이 이미 반납된 상태이면
+        if (this.returned.equals("Y")) {
+            throw new IllegalStateException("이미 반납된 차량입니다.");
+        } else if (!LocalDateTime.now().isBefore(this.start_time)) {
+            // 대여 실행 시점 3시간 전까지만 취소할 수 있다.. 뭐 이런조항 넣는건 어떨까?
+            throw new IllegalStateException("이미 예약 시간이 지난 차량입니다.");
+        }
+        // 취소 로직을 아예 이력을 없애버리는 걸로 할지, 혹은 이르게 반납 완료된 걸로 할지는 고민해보기..
+        this.returned = "Y";
+        // 반납 이후 대기열에서 없애는 쪽으로 갈지 고민....
+    }
+
 }

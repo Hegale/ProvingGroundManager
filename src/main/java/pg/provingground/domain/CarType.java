@@ -9,13 +9,17 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Station {
+// 차종 엔티티
+public class CarType {
 
     @Id @GeneratedValue
-    @Column(name = "station_id")
-    private Long stationId;
+    @Column(name = "car_type_id")
+    private Long CarTypeId;
 
-    @Column(unique = true)
     private String name;
+
+    private String type;
+
+    private String engine;
 
 }

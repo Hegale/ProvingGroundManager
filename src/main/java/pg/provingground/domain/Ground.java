@@ -1,16 +1,17 @@
 package pg.provingground.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
+@Table(name = "ground", indexes = @Index(name = "idx_ground_id", columnList = "ground_id"))
 public class Ground {
 
     @Id @GeneratedValue
-    private Long ground_id;
+    @Column(name = "ground_id")
+    private Long groundId;
 
     private String name;
 

@@ -2,23 +2,28 @@ package pg.provingground.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
-@Getter
+@Getter @Setter
 public class GroundRental {
 
     @Id @GeneratedValue
-    private Long ground_rental_id;
+    @Column(name = "ground_rental_id")
+    private Long groundRentalId;
 
-    private Timestamp start_time;
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime start_time;
 
     private String returned;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Ground ground_id;
+    @JoinColumn(name = "ground_id")
+    private Ground ground;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user_id;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

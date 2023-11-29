@@ -1,18 +1,21 @@
 package pg.provingground.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
+@Table(name = "car", indexes = @Index(name = "idx_car_id", columnList = "car_id"))
 public class Car {
 
     @Id @GeneratedValue
-    private Long car_id;
+    @Column(name = "car_id")
+    private Long carId;
 
-    private String type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_type_id")
+    private CarType carType;
 
     private String number;
 
