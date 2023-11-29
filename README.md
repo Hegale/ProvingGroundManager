@@ -5,9 +5,10 @@
 : 산출물 파일은 중간산출물/ 경로에 포함함
 ### 요구사항 명세서
 - 로그인/회원가입 및 유저 요구사항
-![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/2e5e4b01-c7d1-4248-b1a3-aa2f25251446)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/2a95fa37-8416-45df-b508-108ccb6b149a)
+
 - 관리자 요구사항
-![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/92b45520-acfc-4042-88d8-421dd674a486)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/e802a5b2-37a2-40b4-83a2-050aec216dfb)
 
 ### 아키텍처 설계서
 <img width="891" alt="아키텍처 설계서" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/3a398ae0-ae42-4e63-b8f2-18dfc5ec51e3">
@@ -24,13 +25,13 @@
 : 전체 화면은 중간 산출물/ 에 추가
 
 ### 통합 테스트 시나리오
-![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/dad01ac4-97d5-4c09-a515-c65e508b27fb)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/d9fd5197-cb2b-4690-9f8f-a7003c727c1c)
 
 ### 테이블 정의서
-![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/c33ca7fd-66ed-4704-8280-e4a2e315274d)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/ecb532bb-0928-459f-b573-58e55a92af69)
 
 ### 인덱스 정의서
-![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/d8e5beca-b2fe-4aa8-929b-7241226b1040)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/0cd8c0bc-2241-4d90-9031-8191bab48d18)
 
 ### 물리 ERD
 ![physicerd](https://github.com/Hegale/ProvingGroundManager/assets/92227496/e0fc197f-cf73-4de8-8fad-c1d8b1b84ba8)
