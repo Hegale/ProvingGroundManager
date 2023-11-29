@@ -34,6 +34,6 @@ public class UserRepository {
         }
     }
 
-    // 이후 관리자-> 유저 검색을 위한 메소드 등 추가
+    // TODO: 조건에 따른 검색들 구현하기
 
 }
