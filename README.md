@@ -11,8 +11,8 @@
 ![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/e802a5b2-37a2-40b4-83a2-050aec216dfb)
 
 ### 아키텍처 설계서
-<img width="891" alt="아키텍처 설계서" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/3a398ae0-ae42-4e63-b8f2-18dfc5ec51e3">
-   
+<img width="1184" alt="스크린샷 2023-11-30 14 18 23" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/68a5aa96-86b1-436d-b38a-f505da9ae37e">
+
 ### 화면 설계서
 - 유저 화면
    - 메인 화면
