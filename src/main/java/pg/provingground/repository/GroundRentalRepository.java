@@ -3,9 +3,15 @@ package pg.provingground.repository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pg.provingground.domain.Car;
+import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,8 +26,38 @@ public class GroundRentalRepository {
         return em.find(GroundRental.class, id);
     }
 
+    public List<GroundRental> findAll() {
+        return em.createQuery("select g from GroundRental g", GroundRental.class).getResultList();
+    }
+
+    /** 시간대별 시험장 예약현황 반환. */
+    public Map<LocalDateTime, Integer> countRentedCarsPerTimeSlot(Long groundId) {
+        // 예약 가능일: 예약 시점 다음날 ~ +30일
+        LocalDateTime start = LocalDateTime.now().plusDays(1).with(LocalTime.MIDNIGHT);
+        LocalDateTime end = start.plusDays(30);
+        List<Object[]> results = em.createQuery(
+                        "SELECT c.startTime " +
+                                "FROM GroundRental c " +
+                                "WHERE c.startTime > :start and c.startTime < :end " +
+                                "AND c.returned  = 'N' and c.ground = :groundId " +
+                                "GROUP BY c.startTime",
+                        Object[].class)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .setParameter("groundId", groundId)
+                .getResultList();
+
+        Map<LocalDateTime, Integer> groundPerTimeSlot = new HashMap<>();
+        for (Object[] result : results) {
+            groundPerTimeSlot.put(
+                    (LocalDateTime) result[0],
+                    ((Long) result[1]).intValue());
+        }
+        return groundPerTimeSlot;
+    }
+
     /**
-     * 인자로 받은 차량 중 반납되지 않은 대여기록 반환.
+     * 인자로 받은 차량 중 반납되지 않은 대여기록 반환. TODO: 삭제
      */
     public List<GroundRental> findNotReturned(Long groundId) {
         String jpql = "select gr from GroundRental gr where gr.returned = 'N' and gr.ground = :groundId";

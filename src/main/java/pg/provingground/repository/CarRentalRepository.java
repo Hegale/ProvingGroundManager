@@ -40,7 +40,7 @@ public class CarRentalRepository {
                 .getResultList();
     }
 
-    /** 시간대별로 차량 대여 횟수 반환. */
+    /** 시간대별 차량 대여 횟수 반환. */
     public Map<LocalDateTime, Integer> countRentedCarsPerTimeSlot(Long carTypeId) {
         // 예약 가능일: 예약 시점 다음날 ~ +30일
         LocalDateTime start = LocalDateTime.now().plusDays(1).with(LocalTime.MIDNIGHT);
