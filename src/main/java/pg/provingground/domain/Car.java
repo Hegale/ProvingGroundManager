@@ -6,7 +6,10 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name = "car", indexes = @Index(name = "idx_car_id", columnList = "car_id"))
+@Table(indexes = {
+        @Index(name = "idx_car_id", columnList = "car_id"),
+        @Index(name = "idx_car_type_id", columnList = "car_type")
+})
 public class Car {
 
     @Id @GeneratedValue
@@ -15,7 +18,7 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_type_id")
-    private CarType carType;
+    private CarType type;
 
     private String number;
 

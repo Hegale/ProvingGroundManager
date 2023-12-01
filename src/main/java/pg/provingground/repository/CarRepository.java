@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,9 +36,22 @@ public class CarRepository {
         }
     }
 
-    /** 특정 차종의 차량 검색 */
+    /** 특정 차종에 해당하는 차량의 대수 구하기 */
+    public long countCarsPerCarType(Long type) {
+        Long count = em.createQuery(
+                "SELECT COUNT(c) " +
+                        "FROM Car c " +
+                        "WHERE c.type = :carTypeId",
+                Long.class)
+                .setParameter("carTypeId", type)
+                .getSingleResult();
+
+        return count != null ? count : 0;
+    }
+
+    /** 특정 차종의 차량들 검색 */
     public List<Car> findByCondition(CarType type) {
-        return em.createQuery("select c from Car c where c.carType = :type", Car.class)
+        return em.createQuery("select c from Car c where c.type = :type", Car.class)
                 .setParameter("type", type)
                 .getResultList();
     }

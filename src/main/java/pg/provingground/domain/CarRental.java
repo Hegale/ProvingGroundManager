@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-// 대여 시작 시간을 인덱스로
-@Table(indexes = @Index(name = "idx_start_time", columnList = "start_time"))
-// 대여 시간에 인덱스
+// carTypeId + returned로 검색 잦음
+@Table(name = "car_rental", indexes = {
+        @Index(name = "idx_start_time", columnList = "start_time"),
+        @Index(name = "idx_car_returned", columnList = "car_id, returned")
+})
 public class CarRental {
 
     @Id
@@ -18,8 +20,8 @@ public class CarRental {
     @Column(name = "car_rental_id")
     private Long carRentalId;
 
-    @Column(columnDefinition = "DATETIME")
-    private LocalDateTime start_time;
+    @Column(columnDefinition = "DATETIME", name = "start_time")
+    private LocalDateTime startTime;
 
     private String returned;
 
@@ -40,7 +42,7 @@ public class CarRental {
         CarRental carRental = new CarRental();
         carRental.user = user;
         carRental.car = car;
-        carRental.start_time = time;
+        carRental.startTime = time;
         carRental.returned = "N";
         return carRental;
     }
@@ -51,8 +53,8 @@ public class CarRental {
         // 취소하려는 차량이 이미 반납된 상태이면
         if (this.returned.equals("Y")) {
             throw new IllegalStateException("이미 반납된 차량입니다.");
-        } else if (!LocalDateTime.now().isBefore(this.start_time)) {
-            // 대여 실행 시점 3시간 전까지만 취소할 수 있다.. 뭐 이런조항 넣는건 어떨까?
+        } else if (!LocalDateTime.now().isBefore(this.startTime)) {
+            // TODO: 이걸 여기서 체크하지 말고 controller에서 체크. 버튼을 아예 다르게 주기
             throw new IllegalStateException("이미 예약 시간이 지난 차량입니다.");
         }
         // 취소 로직을 아예 이력을 없애버리는 걸로 할지, 혹은 이르게 반납 완료된 걸로 할지는 고민해보기..

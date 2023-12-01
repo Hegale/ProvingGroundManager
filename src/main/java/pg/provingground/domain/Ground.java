@@ -15,7 +15,7 @@ public class Ground {
 
     private String name;
 
-    private Long user_maximum;
+    private Long car_maximum; // 최대 이용 가능 차량
 
     private Long distance;
 

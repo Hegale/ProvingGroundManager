@@ -1,16 +1,21 @@
 spring:
   datasource:
-    #driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:h2:tcp://localhost/~/proving_ground
-    username: juykim
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mariadb://localhost:3306/proving_ground # mariadb
+    # url: jdbc:h2:tcp://localhost/~/proving_ground
+    username: root
+    password: Likepotato13^^
+    #username: juykim
+    # password:
+    #driver-class-name: org.h2.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create # 애플리케이션 시작할 때마다 스키마 새로 생성
+    show-sql: true #추가함.
     properties:
       hibernate:
         format_sql: true
+    #database-platform: org.hibernate.spatial.dialect.mariadb.MariaDB103SpatialDialect
 
 logging:
   level:
