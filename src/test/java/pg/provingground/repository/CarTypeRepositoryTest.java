@@ -20,7 +20,7 @@ class CarTypeRepositoryTest {
 
     @Test
     @Rollback(false)
-    public void 차종_테스트데이터_생성() throws Exception {
+    public void buildCarTypeTestData() {
 
         List<CarType> carTypes = new ArrayList<CarType>();
         List<String> names = List.of(

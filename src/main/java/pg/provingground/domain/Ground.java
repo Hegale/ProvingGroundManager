@@ -15,9 +15,11 @@ public class Ground {
 
     private String name;
 
-    private Long car_maximum; // 최대 이용 가능 차량
+    private String description;
 
-    private Long distance;
+    private int car_maximum; // 최대 이용 가능 차량
+
+    private int distance;
 
     // private Double Coordinate; ; 일단 보류. JTS 사용할수도 있음
     private int fuel_consumption;
