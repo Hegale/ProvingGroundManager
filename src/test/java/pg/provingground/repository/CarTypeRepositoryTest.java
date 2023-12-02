@@ -1,19 +1,28 @@
 package pg.provingground.repository;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import pg.provingground.domain.Car;
+import pg.provingground.domain.CarType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 @Transactional
-class CarRepositoryTest {
-    public void 차량_테스트데이터_생성() throws Exception {
+class CarTypeRepositoryTest {
 
-        List<Car> cars = new ArrayList<Car>();
+    @Autowired CarTypeRepository carTypeRepository;
+
+    @Test
+    @Rollback(false)
+    public void 차종_테스트데이터_생성() throws Exception {
+
+        List<CarType> carTypes = new ArrayList<CarType>();
         List<String> names = List.of(
                 "더 뉴 아반떼", "쏘나타 디 엣지", "디 올 뉴 그랜저",
                 "디 올 뉴 싼타페", "베뉴", "디 올 뉴 코나", "투싼",
@@ -23,11 +32,11 @@ class CarRepositoryTest {
         List<String> engines = List.of(
                 "가솔린", "가솔린", "가솔린", "가솔린", "가솔린", "가솔린", "디젤", "디젤", "전기", "수소");
         for (int i = 0; i < 10; ++i) {
-            Car car = new Car();
-            car.setNumber("12가 3456");
-            car.setEngine(engines.get(i));
+            CarType carType = new CarType();
+            carType.setName(names.get(i));
+            carType.setType(types.get(i));
+            carType.setEngine(engines.get(i));
+            carTypeRepository.save(carType);
         }
-
-
     }
 }

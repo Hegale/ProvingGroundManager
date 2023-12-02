@@ -29,6 +29,8 @@ public class GroundRentalService {
         User user = userRepository.findOne(userId);
         Ground ground = groundRepository.findOne(groundId);
 
+        // TODO: 실제 생성하기 직전, 그 사이에 추가로 예약이 진행된 것은 없는지 확인해야 함.
+        // 사용자가 페이지를 띄워놓고 오랜 시간이 지났는데, 그 사이 누군가 예약을 채갔을 수도 있으므로
         GroundRental groundRental = GroundRental.createGroundRental(user, ground, time);
 
         groundRentalRepository.save(groundRental);
