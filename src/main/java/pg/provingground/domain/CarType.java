@@ -20,6 +20,13 @@ public class CarType {
 
     private String type;
 
+    private String description;
+
+    private Integer displacement; // cc 단위
+
+    @Column (name = "fuel_efficiency")
+    private Double fuelEfficiency; // km/l 단위
+
     private String engine;
 
 }

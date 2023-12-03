@@ -5,7 +5,7 @@
 .thwhole-enlPbA0Maj::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 100%; transition: 0.4s; background: linear-gradient(rgba(var(--black-rgb), 0.5), rgba(0, 255, 0, 0)); }
 .thwhole-enlPbA0Maj:hover::after { background: rgba(var(--black-rgb), 0.7); }
 .thwhole-enlPbA0Maj.block-scroll-active::after { background: rgba(var(--black-rgb), 0.5); }
-.thwhole-enlPbA0Maj.block-active::after { background: rgba(var(--black-rgb), 0.7); height: 28.4rem; }
+.thwhole-enlPbA0Maj.block-active::after { background: rgba(var(--black-rgb), 0.7); height: 24rem; }
 .thwhole-enlPbA0Maj.block-active .header-sublist { display: block; height: 16.4rem; }
 .thwhole-enlPbA0Maj .header-container { display: flex; align-items: center; justify-content: space-between; position: relative; width: 100%; height: 8rem; padding: 0 8rem; z-index: 100; }
 .thwhole-enlPbA0Maj .header-title { margin-bottom: 0; }

@@ -35,11 +35,32 @@ public class TestDataBuilder {
                 "승용", "승용", "승용", "SUV", "SUV", "SUV", "SUV", "SUV", "수소/전기차", "수소/전기차");
         List<String> engines = List.of(
                 "가솔린", "가솔린", "가솔린", "가솔린", "가솔린", "가솔린", "디젤", "디젤", "전기", "수소");
+        List<Double> fuelEfficiencys = List.of(
+                15.3, 13.5, 11.7, 11.0, 13.7, 13.6, 14.5, 12.4, 6.2, 96.2);
+        List<Integer> displacements = List.of(
+                1598, 1999, 3470, 2497, 1598, 1999, 1998, 3778, 0, 0);
+
+        List<String> descriptions = List.of(
+                "더욱 스타일리시하게. 한층 더 진보된 기본기와 함께, 디테일이 다른 새로운 라이프스타일이 시작됩니다.",
+                "탄탄한 헤리티지와 선도적인 디자인, 첨단 기술의 조합. 익숙함도 완전히 새롭게, 쏘나타 디 엣지.",
+                "세상의 기대와 예상을 뛰어넘어 스스로를 혁신한 그랜저. 전통과 미래, 세대와 취향, 기술과 감성의 경계를 지운 새로운 경험을 선사합니다.",
+                "완전히 새로운 상품성으로 차별화된 경험과 다양한 라이프 스타일을 제안합니다.",
+                "혼영, 혼밥, 혼휴. 혼자가 좋은 당신에게 오로지 당신을 위한 즐거움, 지금은 혼라이프를 즐길 시간.",
+                "미래지향적인 새로운 스타일과 차급을 넘나드는 상품성으로 새로운 차원의 경험을 선사합니다.",
+                "당신만의 특별한 공간 투싼. 더 오래 머물수록 그 가치는 빛이 납니다.",
+                "현대자동차의 플래그십 SUV 팰리세이드와 함께 당신만의 세상을 향한 멋진 여정을 준비하십시오.",
+                "나의 취향과 감각으로 만들어가는 새로운 세상이 열립니다. 내가 만드는 세상, IONIQ 6를 경험하세요.",
+                "수소와 산소의 결합으로 어떠한 오염물질 없이 오직 에너지와 물만을 발생시키고 달리면서 PM2.5 이하의 초미세먼지까지 걸러내는 궁극의 친환경차 NEXO. '미래 자동차 기술의 현재화'라는 개발 철학 아래, 가장 진보된 기술로 완성된 미래 모빌리티를 가장 먼저 경험하십시오."
+        );
+
         for (int i = 0; i < 10; ++i) {
             CarType carType = new CarType();
             carType.setName(names.get(i));
             carType.setType(types.get(i));
             carType.setEngine(engines.get(i));
+            carType.setFuelEfficiency(fuelEfficiencys.get(i));
+            carType.setDisplacement(displacements.get(i));
+            carType.setDescription(descriptions.get(i));
             carTypeRepository.save(carType);
         }
     }

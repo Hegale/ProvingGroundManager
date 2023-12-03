@@ -368,17 +368,22 @@
                 <ul class="selectset-list">
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿1">
-                      <span>템플릿1</span>
+                      <span>승용</span>
                     </button>
                   </li>
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿2">
-                      <span>템플릿2</span>
+                      <span>SUV</span>
                     </button>
                   </li>
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>템플릿3</span>
+                      <span>수소/전기차</span>
+                    </button>
+                  </li>
+                  <li class="selectset-item">
+                    <button class="selectset-link btn" type="button" data-value="템플릿3">
+                      <span>N</span>
                     </button>
                   </li>
                 </ul>
@@ -392,17 +397,32 @@
                 <ul class="selectset-list">
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿1">
-                      <span>템플릿1</span>
+                      <span>가솔린</span>
                     </button>
                   </li>
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿2">
-                      <span>템플릿2</span>
+                      <span>LPG</span>
                     </button>
                   </li>
                   <li class="selectset-item">
                     <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>템플릿3</span>
+                      <span>하이브리드</span>
+                    </button>
+                  </li>
+                  <li class="selectset-item">
+                    <button class="selectset-link btn" type="button" data-value="템플릿3">
+                      <span>디젤</span>
+                    </button>
+                  </li>
+                  <li class="selectset-item">
+                    <button class="selectset-link btn" type="button" data-value="템플릿3">
+                      <span>전기</span>
+                    </button>
+                  </li>
+                  <li class="selectset-item">
+                    <button class="selectset-link btn" type="button" data-value="템플릿3">
+                      <span>수소</span>
                     </button>
                   </li>
                 </ul>
@@ -425,7 +445,7 @@
                 <!-- 목록 하나 시작 -->
                 <a href="javascript:void(0)" class="cardset cardset-hor" th:each="type : ${types}">
                   <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/1a667417f7034089a7285619ceaae2f5.jpg" alt="">
+                    <img class="cardset-img" th:src="@{'/images/car_img/' + ${type.name} + '.jpg'}" alt="">
                   </figure>
                   <!-- 그림 오른쪽의 내용 -->
                   <div class="cardset-body">
@@ -435,8 +455,8 @@
                     </div>
                     <hr class="juykim-underline">
                     <!-- 글 내용 -->
-                    <p class="cardset-desc"> 복합 연비 : ~10.6km/l | 배기량 : ~1,998cc </p>
-                    <p class="cardset-text"> 더 낮아지고 와이드해진 디자인에 역동적인 디테일과 강력한 컬러. 고성능 퍼포먼스의 인테리어 컨셉 구현 </p>
+                    <p class="cardset-desc" th:utext="'복합 연비: ~' + ${type.fuelEfficiency.toString()} + 'km/l  |  배기량: ~' + ${type.displacement.toString()} + 'cc'"> 복합 연비 : ~10.6km/l | 배기량 : ~1,998cc </p>
+                    <p class="cardset-text" th:text="${type.description}"> 더 낮아지고 와이드해진 디자인에 역동적인 디테일과 강력한 컬러. 고성능 퍼포먼스의 인테리어 컨셉 구현 </p>
                     <!-- 날짜 -->
                   </div>
                 </a>
