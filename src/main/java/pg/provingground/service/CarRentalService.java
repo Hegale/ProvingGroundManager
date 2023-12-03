@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
+import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.UserRepository;
@@ -43,7 +44,8 @@ public class CarRentalService {
         rental.cancel();
     }
 
-    /** 전체 대여 내역 검색 */
+
+    /** [관리자 기능] 전체 대여 내역 검색 */
     public List<CarRental> findRentals() {
         return carRentalRepository.findAll();
     }
