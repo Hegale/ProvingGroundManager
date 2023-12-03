@@ -5,11 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pg.provingground.domain.Car;
-import pg.provingground.domain.CarType;
-import pg.provingground.domain.Ground;
-import pg.provingground.domain.GroundRental;
+import pg.provingground.domain.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,16 +16,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestDataBuilder {
 
+    private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final CarTypeRepository carTypeRepository;
     private final GroundRepository groundRepository;
+    private final CarRentalRepository carRentalRepository;
+    private final GroundRentalRepository groundRentalRepository;
+
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    /** 유저 테스트 데이터 생성 */
+    public void buildUserTestData() {
+
+        List<String> names = List.of(
+                "피카츄", "라이츄", "파이리", "꼬부기");
+        List<String> ids = List.of(
+                "pikachu", "raichu", "pairii", "ggobugi");
+        List<String> passwds = List.of(
+                "pikachu123", "raichu123", "pairii123", "ggobugi123");
+        List<String> phoneNums = List.of(
+                "010-1234-5678", "010-0000-1111", "010-2222-3333", "010-4444-5555");
+        for (int i = 0; i < 4; ++i) {
+            User user = User.createUser(ids.get(i), passwds.get(i), names.get(i), phoneNums.get(i));
+            userRepository.save(user);
+        }
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     /** 차종 테스트 데이터 생성 */
     public void buildCarTypeTestData() {
 
-        List<CarType> carTypes = new ArrayList<CarType>();
         List<String> names = List.of(
                 "더 뉴 아반떼", "쏘나타 디 엣지", "디 올 뉴 그랜저",
                 "디 올 뉴 싼타페", "베뉴", "디 올 뉴 코나", "투싼",
@@ -82,7 +103,7 @@ public class TestDataBuilder {
     public void buildGroundData() {
         List<String> names = List.of(
                 "다목적 주행 코스", "제동 코스", "마른 노면 서킷", "고속주회로",
-                "젖은 노면 서킷", "킥 플레이트 코스", "젖은 언선회 코스", "오프로드 코스"
+                "젖은 노면 서킷", "킥 플레이트 코스", "젖은 원선회 코스", "오프로드 코스"
         );
         List<String> descriptions = List.of(
                 "슬라럼, 짐카나 등 다양한 모듈로 구성되어 있는 코스로 드라이빙의 기본기부터 자동차의 가속 성능까지 종합적으로 경험할 수 있습니다.",
@@ -102,6 +123,30 @@ public class TestDataBuilder {
             ground.setCar_maximum(3);
             ground.setFuel_consumption(3000); // ml 단위
             groundRepository.save(ground);
+        }
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void buildCarRentalData() {
+        User user = userRepository.findOne(1L); // pikachu
+        for (int i = 0; i < 12; ++i) {
+            Car car = carRepository.findOne((long) i + 1);
+            CarRental carRental = CarRental.createCarRental(user, car,
+                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
+            carRentalRepository.save(carRental);
+        }
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void buildGroundRentalData() {
+        User user = userRepository.findOne(1L); // pikachu
+        for (int i = 0; i < 12; ++i) {
+            Ground ground = groundRepository.findOne((long) i % 8 + 1);
+            GroundRental groundRental = GroundRental.createGroundRental(user, ground,
+                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
+            groundRentalRepository.save(groundRental);
         }
     }
 

@@ -15,10 +15,12 @@ public class CarController {
 
     private final CarTypeService carTypeService;
 
-    @GetMapping("car_rental")
+    @GetMapping("/car_rental/new")
     public String carTypeList(Model model) {
         List<CarType> types = carTypeService.findCarTypes();
         model.addAttribute("types", types);
         return "car_rental/car_selection";
     }
+
+
 }

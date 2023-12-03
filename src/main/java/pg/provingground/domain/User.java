@@ -29,4 +29,13 @@ public class User {
     @Column(name = "phone_num", unique = true) // 이속성 그냥 없내느것도 생각해보기
     private String phoneNum;
 
+    public static User createUser(String id, String passwd, String name, String phoneNum) {
+        User user = new User();
+        user.setId(id);
+        user.setPasswd(passwd);
+        user.setName(name);
+        user.setPhoneNum(phoneNum);
+        // TODO: Role도 추가
+        return user;
+    }
 }

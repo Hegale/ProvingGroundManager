@@ -370,103 +370,19 @@
           <div class="slide-container">
             <div class="swiper-wrapper">
               <!-- slide start -->
-              <div class="swiper-slide">
+              <div class="swiper-slide" th:each="ground : ${grounds}">
                 <a class="cardset cardset-border" href="javascript:void(0);">
                   <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/8e56549c92314e929f6e18aa9079e391.jpg" alt="">
+                    <img class="cardset-img" th:src="@{'/images/pv_img/' + ${ground.name} + '.jpg'}" alt="">
                   </figure>
                   <div class="cardset-body">
-                    <h5 class="cardset-tit">다목적 주행 코스</h5>
-                    <p class="cardset-desc">슬라럼, 짐카나 등 다양한 모듈로 구성되어 있는 코스로 드라이빙의 기본기부터 자동차의 가속 성능까지 종합적으로 경험할 수 있습니다.</p>
+                    <h5 class="cardset-tit" th:text="${ground.name}">다목적 주행 코스</h5>
+                    <p class="cardset-desc" th:text="${ground.description}">슬라럼, 짐카나 등 다양한 모듈로 구성되어 있는 코스로 드라이빙의 기본기부터 자동차의 가속 성능까지 종합적으로 경험할 수 있습니다.</p>
                     <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
                   </div>
                 </a>
               </div>
               <!-- slide end -->
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/34fdcd8dc7cb463ea7008be450a253c3.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">제동 코스</h5>
-                    <p class="cardset-desc">다양한 노면과 상황 속에서 브레이크의 성능을 최대로 이끌어 내는 코스로 위급 상황 시 안전하게 대처하는 테크닉을 익힐 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/227410a8371f4b46b6359ff3f045ce71.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">마른 노면 서킷</h5>
-                    <p class="cardset-desc">3.4km, 16개의 코너로 구성된 서킷에서 드라이빙 스킬을 종합적으로 경험할 수 있는 코스입니다. 레벨에 따라 두 개의 코스로 나누어 경험할 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/a0af0e50ca604c15889b35dcf71a5555.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">고속주회로</h5>
-                    <p class="cardset-desc">38.87도의 뱅크각의 4.6km 오벌 트랙에서 자동차의 한계 속도와 극한의 중력 가속도를 체험할 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/ae3073edec694c488ad10e9045970158.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">젖은 노면 서킷</h5>
-                    <p class="cardset-desc">11개 코너, 1.6km의 젖은 서킷을 달리는 코스로 젖은 노면에서도 안전하게 자동차를 컨트롤하는 방법을 배울 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/86fb17a6ee9d44509a673eab7e5f1c90.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">킥 플레이트 코스</h5>
-                    <p class="cardset-desc">돌발 상황에 대처하는 능력을 키우는데 특화된 코스로 킥 플레이트의 인위적인 힘에 의해 불안정해진 차량을 안전하게 컨트롤하는 능력을 키울 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/ccd4a2eab652422fbc507590065e0aab.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">젖은 원선회 코스</h5>
-                    <p class="cardset-desc">서로 다른 노면 위에서 눈으로만 보았던 드리프트를 실제로 경험해보는 코스입니다. 카운터 스티어링을 비롯한 고급 기술을 경험할 수 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a class="cardset cardset-border" href="javascript:void(0);">
-                  <figure class="cardset-figure">
-                    <img class="cardset-img" src="../medias/e6a71dff13c24a93840b3c082d2fa3ec.jpg" alt="">
-                  </figure>
-                  <div class="cardset-body">
-                    <h5 class="cardset-tit">오프로드 코스</h5>
-                    <p class="cardset-desc">보기만 해도 아찔한 구간를 통과하며 SUV의 내구성과 오프로드 성능을 체험하는 코스입니다. 언덕 경사, 모랫길, 계단 등 11가지 즐거운 장애물이 기다리고 있습니다.</p>
-                    <span class="btnset btnset-text btnset-icon icon-right btnset-sm">예약하기</span>
-                  </div>
-                </a>
-              </div>
             </div>
           </div>
           <div class="swiper-control">
