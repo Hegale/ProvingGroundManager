@@ -69,7 +69,7 @@
 .thwhole-enlPbA0Maj .header-search-form { display: flex; height: 18.6rem; width: 100%; justify-content: center; align-items: center; background-color: var(--white); }
 .thwhole-enlPbA0Maj .header-search-form .inputset { width: 62rem; }
 .thwhole-enlPbA0Maj .header-search-form .icon-search { position: absolute; top: 0; right: 0; width: 3.2rem; height: 3.2rem; }
-.thwhole-enlPbA0Maj .header-search-form .icon-search::after { content: ""; display: inline-block; margin-top: 0.7rem; width: 3.2rem; height: 3.2rem; background: url("../../static/icons/ico_search_black.svg") no-repeat center right/cover; }
+.thwhole-enlPbA0Maj .header-search-form .icon-search::after { content: ""; display: inline-block; margin-top: 0.7rem; width: 3.2rem; height: 3.2rem; background: url("../icons/ico_search_black.svg") no-repeat center right/cover; }
 .thwhole-enlPbA0Maj .recom-list .recom-tit { margin-bottom: 1.6rem; text-align: center; font-size: var(--fs-h5); font-family: var(--ff-ko); font-weight: 600; letter-spacing: 0.025rem; }
 .thwhole-enlPbA0Maj .recom-list ul { display: flex; justify-content: center; flex-wrap: wrap; }
 .thwhole-enlPbA0Maj .recom-list ul li { margin: 0.4rem; border: 0.1rem solid var(--line-color1); }
@@ -143,8 +143,8 @@
 .thwhole-PYlPbA0mbO .btnset { display: none; margin-top: 2.4rem; position: relative; font-size: var(--fs-p1); font-weight: 500; color: #da291c; }
 .thwhole-PYlPbA0mbO .swiper-control { position: absolute; right: 4rem; top: -7.5rem; }
 .thwhole-PYlPbA0mbO .swiper-button-next::after,.thwhole-PYlPbA0mbO .swiper-button-prev::after { display: none; }
-.thwhole-PYlPbA0mbO .swiper-button-prev { left: -4rem; background: url("../../static/icons/ico_slide_arrow_black.svg") center no-repeat; transform: rotate(180deg); filter: invert(50%); -webkit-filter: invert(50%); }
-.thwhole-PYlPbA0mbO .swiper-button-next { left: 0; background: url("../../static/icons/ico_slide_arrow_black.svg") center no-repeat; filter: invert(50%); -webkit-filter: invert(50%); }
+.thwhole-PYlPbA0mbO .swiper-button-prev { left: -4rem; background: url("../icons/ico_slide_arrow_black.svg") center no-repeat; transform: rotate(180deg); filter: invert(50%); -webkit-filter: invert(50%); }
+.thwhole-PYlPbA0mbO .swiper-button-next { left: 0; background: url("../icons/ico_slide_arrow_black.svg") center no-repeat; filter: invert(50%); -webkit-filter: invert(50%); }
 .thwhole-PYlPbA0mbO .swiper-button-prev:hover,.thwhole-PYlPbA0mbO .swiper-button-next:hover { filter: invert(0); -webkit-filter: invert(0); }
 @media (max-width: 1366px) {
  .opilsol-N5>.content-container { padding: 0 0 0 1.6rem; }
