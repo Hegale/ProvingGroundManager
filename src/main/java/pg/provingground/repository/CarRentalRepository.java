@@ -6,6 +6,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
+import pg.provingground.domain.User;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +26,13 @@ public class CarRentalRepository {
 
     public List<CarRental> findAll() {
         return em.createQuery("select c from CarRental c", CarRental.class).getResultList();
+    }
+
+    public List<CarRental> findAllByUser(User user) {
+        return em.createQuery(
+                "select c from CarRental c where c.user = :user", CarRental.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     public CarRental findOne(Long id) {

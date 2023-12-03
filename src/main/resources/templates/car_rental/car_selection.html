@@ -103,7 +103,7 @@
             <div class="juykim-contents-wrap">
               <div class="contents-cardlist contents-cardlist-active">
                 <!-- 목록 하나 시작 -->
-                <a href="javascript:void(0)" class="cardset cardset-hor" th:each="type : ${types}">
+                <a href="@{/car_rental(carTypeId=${type.carTypeId})}" class="cardset cardset-hor" th:each="type : ${types}">
                   <figure class="cardset-figure">
                     <img class="cardset-img" th:src="@{'/images/car_img/' + ${type.name} + '.jpg'}" alt="">
                   </figure>

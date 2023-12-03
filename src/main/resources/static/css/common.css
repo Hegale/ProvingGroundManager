@@ -271,7 +271,7 @@
 .opilsol-N24 .content-container { margin-bottom: 8rem; padding: 8rem 0; }
 .opilsol-N24 table { table-layout: fixed; }
 .opilsol-N24 .tableset .tableset-table> :not(caption):not(colgroup)>*>* { padding: 1.3rem 2.4rem; }
-.opilsol-N24 .table .thead-border-top .number,.opilsol-N24 .table tbody .number { padding: 1.3rem; width: 10rem; min-width: 10rem; text-align: center; line-height: var(--lh-h6); font-size: var(--fs-p1); font-family: var(--ff-po); color: var(--text-color7); }
+.opilsol-N24 .table .thead-border-top .number,.opilsol-N24 .table tbody { padding: 1.3rem; width: 10rem; min-width: 10rem; text-align: center; line-height: var(--lh-h6); font-size: var(--fs-p1); font-family: var(--ff-po); color: var(--text-color7); }
 .opilsol-N24 .table .thead-border-top .last-child,.opilsol-N24 .table tbody .last-child { margin-left: auto; width: 12rem; min-width: 12rem; line-height: var(--lh-h6); text-align: center; font-size: var(--fs-p1); color: var(--text-color7); }
 .opilsol-N24 .table .thead-border-top th:nth-of-type(2) { text-align: center; color: var(--text-color1); }
 .opilsol-N24 .table tbody td:nth-of-type(2) a { overflow: hidden; display: block; text-align: left; white-space: nowrap; text-overflow: ellipsis; color: var(--text-color1); }

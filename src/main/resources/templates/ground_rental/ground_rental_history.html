@@ -1,216 +1,170 @@
 <!DOCTYPE html>
 <html lang="ko">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
+
 <div th:replace="fragments/body_header :: body_header" />
-
-
 <!-- [E]thwhole-enlPbA0Maj -->
-  <main class="th-layout-main ">
-    <!-- [S]opilsol-N24 -->
-    <div class="opilsol-N24" data-bid="yb2claaBLr3" id="">
-      <div class="content-container">
-        <div class="container-md">
-          <div class="tableset">
-            <div class="tableset-inner">
-              <!-- 테이블 위에 작성 -->
-              <div>
-                <h3 class="h3 juykim-history-h3">시험장 예약 내역</h3>
-              </div>
-              <!-- 위의 검색란 시작-->
-              <table class="tableset-table table">
-                <colgroup>
-                  <col>
-                  <col>
-                  <col>
-                </colgroup>
-                <thead class="thead-border-top">
-                  <tr>
-                    <th class="number" scope="col">
-                      <p class="p1">날짜 검색</p>
-                    </th>
-                    <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>템플릿을 선택하세요</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    </th>
-                    <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>템플릿을 선택하세요</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    </th>
-                    <th scope="col">
-                    </th>
-                    <th scope="col">
-                      <div class="inputset inputset-line inputset-lg">
-                        <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-                        <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용">
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-              <!-- 위의 검색란 끝-->
-              <table class="tableset-table table">
-                <!-- 아래 있을 col의 속성 미리지정하는부분?-->
-                <colgroup>
-                  <col>
-                  <col>
-                  <col>
-                </colgroup>
-                <thead class="thead-border-top">
-                  <tr>
-                    <th class="number" scope="col">NO</th>
-                    <!-- 가로구분  -->
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th class="last-child" scope="col">작성일</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- 목록 하나 시작 -->
-                  <tr>
-                    <td class="number">7</td>
-                    <td>
-                      <a href="javascript:void(0)">스포츠센터 스마트폰 앱 출시</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                    <td class="last-child">2023.01.01</td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <!-- 목록 하나 끝-->
-                  <tr>
-                    <td class="number">6</td>
-                    <td>
-                      <a href="javascript:void(0)">프로그램 백업방법 안내</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <tr>
-                    <td class="number">5</td>
-                    <td>
-                      <a href="javascript:void(0)">좋은 솔루션 만들기 위원회 워크숍</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <tr>
-                    <td class="number">4</td>
-                    <td>
-                      <a href="javascript:void(0)">고객불만제로를 위한 교육을 실시하였습니다</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <tr>
-                    <td class="number">3</td>
-                    <td>
-                      <a href="javascript:void(0)">솔루션 25주년을 맞이하여 기념으로 행사와 공연을 추진하였습니다</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <tr>
-                    <td class="number">2</td>
-                    <td>
-                      <a href="javascript:void(0)">스포츠센터 스마트폰 앱 출시</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                  <tr>
-                    <td class="number">1</td>
-                    <td>
-                      <a href="javascript:void(0)">솔루션 홈페이지가 새롭게 리뉴얼 되었습니다</a>
-                    </td>
-                    <td class="last-child">2023.01.01</td>
-                  </tr>
-                </tbody>
-              </table>
+<main class="th-layout-main ">
+  <!-- [S]opilsol-N24 -->
+  <div class="opilsol-N24" data-bid="aRlPLAH5af">
+    <div class="content-container">
+      <div class="container-md">
+        <div class="tableset">
+          <div class="tableset-inner">
+            <!-- 테이블 위에 작성 -->
+            <div>
+              <h3 class="h3 juykim-history-h3">시험장 예약 내역</h3>
             </div>
+            <!-- 위의 검색란 시작-->
+            <table class="tableset-table table">
+              <colgroup>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <thead class="thead-border-top">
+              <tr>
+                <th class="number" scope="col">
+                  <p class="p1">날짜 검색</p>
+                </th>
+                <th scope="col">
+                  <div class="selectset selectset-lg">
+                    <button class="selectset-toggle btn" type="button">
+                      <span>날짜 선택</span>
+                    </button>
+                    <ul class="selectset-list">
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿1">
+                          <span>템플릿1</span>
+                        </button>
+                      </li>
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿2">
+                          <span>템플릿2</span>
+                        </button>
+                      </li>
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿3">
+                          <span>템플릿3</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </th>
+                <th scope="col">
+                  <div class="selectset selectset-lg">
+                    <button class="selectset-toggle btn" type="button">
+                      <span>날짜 선택</span>
+                    </button>
+                    <ul class="selectset-list">
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿1">
+                          <span>템플릿1</span>
+                        </button>
+                      </li>
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿2">
+                          <span>템플릿2</span>
+                        </button>
+                      </li>
+                      <li class="selectset-item">
+                        <button class="selectset-link btn" type="button" data-value="템플릿3">
+                          <span>템플릿3</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </th>
+                <th scope="col">
+                </th>
+                <th scope="col">
+                  <div class="inputset inputset-line inputset-lg">
+                    <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
+                    <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용">
+                  </div>
+                </th>
+              </tr>
+              </thead>
+            </table>
+            <!-- 위의 검색란 끝-->
+            <table class="tableset-table table">
+              <!-- 아래 있을 col의 속성 미리지정하는부분?-->
+              <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <thead class="thead-border-top" style="text-align:center;">
+              <tr>
+                <th class="number" scope="col">NO</th>
+                <!-- 가로구분  -->
+                <th scope="col">시험장 이름</th>
+                <th scope="col">예약일</th>
+                <th scope="col">취소/반납</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- 목록 하나 시작 -->
+              <tr th:each="rental : ${rentals}">
+                <td class="number" th:text="${rental.groundRentalId.toString()}">7</td>
+                <td>
+                  <p th:text="${rental.groundName}"></p>
+                </td>
+                <td class="last-child" th:text="${rental.startTime}">대여일</td>
+                <td class="last-child">수정/삭제 버튼</td>
+              </tr>
+              <!-- 목록 하나 끝-->
+              </tbody>
+            </table>
           </div>
-          <nav class="pagiset pagiset-line">
-            <div class="pagiset-ctrl">
-              <a class="pagiset-link pagiset-first" href="javascript:void(0)">
-                <span class="visually-hidden">처음</span>
-              </a>
-            </div>
-            <div class="pagiset-ctrl">
-              <a class="pagiset-link pagiset-prev" href="javascript:void(0)">
-                <span class="visually-hidden">이전</span>
-              </a>
-            </div>
-            <div class="pagiset-list">
-              <a class="pagiset-link active-line" href="javascript:void(0)">1</a>
-              <a class="pagiset-link" href="javascript:void(0)">2</a>
-              <a class="pagiset-link" href="javascript:void(0)">3</a>
-              <a class="pagiset-link" href="javascript:void(0)">4</a>
-              <a class="pagiset-link" href="javascript:void(0)">5</a>
-            </div>
-            <div class="pagiset-ctrl">
-              <a class="pagiset-link pagiset-next" href="javascript:void(0)">
-                <span class="visually-hidden">다음</span>
-              </a>
-            </div>
-            <div class="pagiset-ctrl">
-              <a class="pagiset-link pagiset-last" href="javascript:void(0)">
-                <span class="visually-hidden">마지막</span>
-              </a>
-            </div>
-          </nav>
         </div>
+        <nav class="pagiset pagiset-line">
+          <div class="pagiset-ctrl">
+            <a class="pagiset-link pagiset-first" href="javascript:void(0)">
+              <span class="visually-hidden">처음</span>
+            </a>
+          </div>
+          <div class="pagiset-ctrl">
+            <a class="pagiset-link pagiset-prev" href="javascript:void(0)">
+              <span class="visually-hidden">이전</span>
+            </a>
+          </div>
+          <div class="pagiset-list">
+            <a class="pagiset-link active-line" href="javascript:void(0)">1</a>
+            <a class="pagiset-link" href="javascript:void(0)">2</a>
+            <a class="pagiset-link" href="javascript:void(0)">3</a>
+            <a class="pagiset-link" href="javascript:void(0)">4</a>
+            <a class="pagiset-link" href="javascript:void(0)">5</a>
+          </div>
+          <div class="pagiset-ctrl">
+            <a class="pagiset-link pagiset-next" href="javascript:void(0)">
+              <span class="visually-hidden">다음</span>
+            </a>
+          </div>
+          <div class="pagiset-ctrl">
+            <a class="pagiset-link pagiset-last" href="javascript:void(0)">
+              <span class="visually-hidden">마지막</span>
+            </a>
+          </div>
+        </nav>
       </div>
     </div>
-    <!-- [E]opilsol-N24 -->
-  </main>
-  <!-- [S]opilsol-N3 -->
+  </div>
+  <!-- [E]opilsol-N24 -->
+</main>
 
-  <div th:replace="fragments/footer :: footer" />
-
-  <!-- [E]opilsol-N3 -->
-  <script src="/js/setting.js"></script>
-  <script src="/js/plugin.js"></script>
-  <script src="/js/template.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/script.js"></script>
+<div th:replace="fragments/footer :: footer" />
+<!-- [E]opilsol-N3 -->
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
 </body>

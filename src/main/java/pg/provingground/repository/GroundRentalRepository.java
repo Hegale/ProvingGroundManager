@@ -3,9 +3,7 @@ package pg.provingground.repository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pg.provingground.domain.Car;
-import pg.provingground.domain.Ground;
-import pg.provingground.domain.GroundRental;
+import pg.provingground.domain.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,6 +26,13 @@ public class GroundRentalRepository {
 
     public List<GroundRental> findAll() {
         return em.createQuery("select g from GroundRental g", GroundRental.class).getResultList();
+    }
+
+    public List<GroundRental> findAllByUser(User user) {
+        return em.createQuery(
+                "select g from GroundRental g where g.user = :user", GroundRental.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     /** 시간대별 시험장 예약현황 반환. */

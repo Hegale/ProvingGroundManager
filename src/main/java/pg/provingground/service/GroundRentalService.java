@@ -3,15 +3,19 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
+import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.dto.GroundRentalHistory;
 import pg.provingground.repository.GroundRentalRepository;
 import pg.provingground.repository.GroundRepository;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,6 +47,15 @@ public class GroundRentalService {
     public void cancelRental(Long carRentalId) {
         GroundRental rental = groundRentalRepository.findOne(carRentalId);
         rental.cancel();
+    }
+
+    /** 한 유저의 시험장 예약 내역을 dto로 변환하여 반환 */
+    public List<GroundRentalHistory> findRentalHistory(User user) {
+        List<GroundRental> rentals = groundRentalRepository.findAllByUser(user);
+        List<GroundRentalHistory> history = rentals.stream()
+                .map(GroundRentalHistory::new)
+                .collect(Collectors.toList());
+        return history;
     }
 
     /** 전체 대여 내역 검색 */

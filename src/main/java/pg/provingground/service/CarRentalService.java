@@ -9,10 +9,12 @@ import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.CarRepository;
+import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,6 +22,7 @@ import java.util.List;
 public class CarRentalService {
 
     private final CarRentalRepository carRentalRepository;
+    private final CarTypeRepository carTypeRepository;
     private final UserRepository userRepository;
     private final CarRepository carRepository;
 
@@ -44,6 +47,14 @@ public class CarRentalService {
         rental.cancel();
     }
 
+    /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */
+    public List<CarRentalHistory> findRentalHistory(User user) {
+        List<CarRental> rentals = carRentalRepository.findAllByUser(user);
+        List<CarRentalHistory> history = rentals.stream()
+                .map(CarRentalHistory::new)
+                .collect(Collectors.toList());
+        return history;
+    }
 
     /** [관리자 기능] 전체 대여 내역 검색 */
     public List<CarRental> findRentals() {

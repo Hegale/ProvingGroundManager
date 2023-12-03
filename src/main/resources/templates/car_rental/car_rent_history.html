@@ -99,17 +99,17 @@
                   <col>
                   <col>
                   <col>
+                  <col>
+                  <col>
                 </colgroup>
-                <thead class="thead-border-top">
+                <thead class="thead-border-top" style="text-align:center;">
                   <tr>
                     <th class="number" scope="col">NO</th>
                     <!-- 가로구분  -->
-                    <th scope="col">
-
-                    </th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th class="last-child" scope="col">작성일</th>
+                    <th scope="col">차량 이름</th>
+                    <th scope="col">대여일</th>
+                    <th scope="col">반납 여부</th>
+                    <th scope="col">취소/반납</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,11 +117,11 @@
                   <tr th:each="rental : ${rentals}">
                     <td class="number" th:text="${rental.carRentalId.toString()}">7</td>
                     <td>
-                      <a href="javascript:void(0)" th:text="${rental.user}">스포츠센터 스마트폰 앱 출시</a>
+                      <p th:text="${rental.carName}"></p>
                     </td>
-                    <td class="last-child">2023.01.01</td>
-                    <td class="last-child">2023.01.01</td>
-                    <td class="last-child">2023.01.01</td>
+                    <td class="last-child" th:text="${rental.startTime}">대여일</td>
+                    <td class="last-child" th:text="${rental.returned}">반납 여부</td>
+                    <td class="last-child">수정/삭제 버튼</td>
                   </tr>
                   <!-- 목록 하나 끝-->
                 </tbody>
