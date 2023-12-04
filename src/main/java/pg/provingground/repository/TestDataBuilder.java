@@ -133,14 +133,28 @@ public class TestDataBuilder {
         for (int i = 0; i < 12; ++i) {
             Car car = carRepository.findOne((long) i + 1);
             CarRental carRental = CarRental.createCarRental(user, car,
-                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
+                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(12));
             carRentalRepository.save(carRental);
         }
         // 3번 차량 두 대를 같은 시간대로 예약
         Car car = carRepository.findOne(13L);
         CarRental carRental = CarRental.createCarRental(user, car,
-                LocalDateTime.now().plusDays(3).with(LocalTime.MIDNIGHT));
+                LocalDateTime.now().plusDays(3).with(LocalTime.MIDNIGHT).withHour(12));
         carRentalRepository.save(carRental);
+
+        // 3번 차량 두 대를 5일 후에 한하여 전 시간 매진
+        for (int i = 0; i < 5; ++i) {
+            carRental = CarRental.createCarRental(user, car,
+                    LocalDateTime.now().plusDays(5).with(LocalTime.MIDNIGHT).withHour(10 + 2 * i));
+            carRentalRepository.save(carRental);
+        }
+        car = carRepository.findOne(3L);
+        for (int i = 0; i < 5; ++i) {
+            carRental = CarRental.createCarRental(user, car,
+                    LocalDateTime.now().plusDays(5).with(LocalTime.MIDNIGHT).withHour(10 + 2 * i));
+            carRentalRepository.save(carRental);
+        }
+
     }
 
     @EventListener(ApplicationReadyEvent.class)

@@ -14,6 +14,7 @@ import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,21 +51,40 @@ public class CarRentalService {
         rental.cancel();
     }
 
-    /** 특정 차종의 대여 현황을 통해 대여 불가능한 시간대를 반환 */
-    public List<LocalDateTime> getUnavailableTimes(Long carTypeId) {
+    /** 차량 대여가 불가능한 시간대 구해서 반환*/
+    public List<LocalDateTime> getUnAvailableTimes(Long carTypeId) {
         Map<LocalDateTime, Integer> rentedCarsPerTimeSlot = carRentalRepository.countRentedCarsPerTimeSlot(carTypeId);
-        List<LocalDateTime> unavailableTimes = new ArrayList<LocalDateTime>();
         long carCount = carRepository.countCarsPerCarType(carTypeId);
-
-        System.out.println("selected car : " + carTypeId + "carCount : " + carCount);
+        List<LocalDateTime> unavailableTimes = new ArrayList<>();
 
         for (LocalDateTime time : rentedCarsPerTimeSlot.keySet()) {
-            // carTypeId 차종의 모든 차량이 해당 시간대에 예약상태일 때
-            if (rentedCarsPerTimeSlot.get(time) == carCount) {
+            // 해당 시간대에 예약되지 않은 차량이 남아 있다면?
+            if (rentedCarsPerTimeSlot.get(time) != carCount) {
                 unavailableTimes.add(time);
             }
         }
-        return unavailableTimes; // 해당 차종을 대여할 수 없는 시간대 반환
+        return unavailableTimes;
+    }
+
+    /** 특정 차종의 대여 현황을 통해 대여 가능한 시간대를 폼으로 변경해 반환 */
+    public List<AvailableTimeForm> getAvailableTimeForms(Long carTypeId) {
+        List<AvailableTimeForm> availableTimeForms = new ArrayList<>();
+        List<LocalDateTime> unavailableTimes = getUnAvailableTimes(carTypeId);
+
+        for (int i = 1; i <= 30; ++i) {
+            LocalDateTime date = LocalDateTime.now().plusDays(i).with(LocalTime.of(10, 0));
+            AvailableTimeForm timeForm = new AvailableTimeForm(date);
+
+            // 2시간 간격으로 6번 반복 (10:00, 12:00, 14:00, 16:00, 18:00)
+            for (int j = 0; j < 5; j++) {
+                // 대여 불가능한 시간의 경우, 폼에 추가하지 않는다
+                if (!unavailableTimes.contains(date.plusHours(2 * j))) {
+                    timeForm.addTimes(date.plusHours(2 * j).getHour());
+                }
+            }
+            availableTimeForms.add(timeForm);
+        }
+        return availableTimeForms; // 해당 차종을 대여할 수 없는 시간대 반환
     }
 
     /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */

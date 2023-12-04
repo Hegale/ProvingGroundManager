@@ -9,6 +9,7 @@ import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.repository.UserRepository;
+import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.CarRentalService;
 
 import java.time.LocalDateTime;
@@ -35,15 +36,14 @@ public class CarRentalController {
     public String selectDate(@PathVariable Long carTypeId, Model model) {
         // 모델에 데이터 추가
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
-        List<LocalDateTime> unavailableTimes = carRentalService.getUnavailableTimes(carTypeId);
-
-        for (LocalDateTime time : unavailableTimes) {
-            System.out.println("불가능한 시간 : " + time);
+        List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
+        for (AvailableTimeForm t : times) {
+            System.out.println("date: " + t.getDate());
         }
 
         model.addAttribute("type", carTypeId);
         model.addAttribute("form", form);
-        model.addAttribute("unavailableTimes", unavailableTimes);
+        model.addAttribute("availableTimes", times);
         return "car_rental/car_date_selection";
     }
 

@@ -21,7 +21,7 @@
         <div class="container-md">
 
           <!-- 컨트롤러에서 받아온 unavailableTimes를 data-unavailable-date-times 속성으로 전달 -->
-          <div id="unavailableDateTimes" th:attr="data-unavailable-date-times=${unavailableTimes}"></div>
+          <div id="availableDateTimes" th:attr="data-available-date-times=${availableTimes}"></div>
 
 
           <form th:object="${form}" method="post">
@@ -30,9 +30,6 @@
               <div class="juykim-leftbox">
                 <div class="juykim-step-text">
 
-                  <!-- 테스트 출력 -->
-                  <p th:text="${unavailableTimes}">hi</p>
-
                   <h3 class="h3">STEP2. 대여 날짜 정하기</h3>
                   <!-- 달력 들어갈 박스 -->
                   <div class="juykim-calendarbox">
@@ -40,24 +37,14 @@
                       <div class="datepicker rental-datepicker"></div>
                     </div>
                     <script>
+
                       $(function(){
-                        // var unavaliableDateTimes =
+                        // TODO: 특정 날짜만 활성화
+
                         $('.datepicker').datepicker(
                           {
-                            // 날짜 출력 전 확인
-                            beforeShowDay: function (date) {
-                              var stringDate = $.datepicker.formatDate('yy-mm-dd', date);
-                              var unavailableTimes = unavailableDateTimes.filter(function (dateTime) {
-                                return dateTime.startsWith(stringDate);
-                              });
-                              return [unvaliableTimes.length === 0];
-                            },
 
                             onSelect: function(dateText, inst) {
-                              var selectedDateTime = dateText + ' ' + $('#selectedTime').val() + ':00';
-                              if (unavailableDateTimes.indexOf(selectedDateTime) !== -1) {
-
-                              }
 
                               // 모든 날짜 셀의 배경색을 초기화
                               $('.ui-state-active').css('backgroundColor', '');
@@ -83,6 +70,7 @@
                 <div class="juykim-timebox">
                   <h4 class="h4 juykim-date-text">11월 23일 목요일</h4>
                   <hr style="border: none; border-top: 1px solid gray;">
+                  <input type="hidden" id="selectedDate" name="selectedDate" th:value="${form.selectedDate}">
                   <div class="juykim-timebtnbox">
                     <!-- 테스트 코드 시작-->
                     <!-- TODO: 단순히 10시, 11시로 나타내지 말고 시간을 보여줄 별도의 폼 이용  -->
@@ -117,7 +105,6 @@
                     <p class="p1">더 뉴 아반떼 N<br></p>
                   </div>
                   <!--  아래 버튼 원래 button이었던걸 submit으로 바꿈 -->
-                  <input type="hidden" id="selectedDate" name="selectedDate" th:value="${form.selectedDate}">
                   <button type="submit" class="btnset btnset-lg btnset-mono btnset-line">대여하기</button>
                 </div>
               </div>
