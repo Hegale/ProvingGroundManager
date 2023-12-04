@@ -3,8 +3,7 @@ package pg.provingground.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
@@ -23,21 +22,45 @@ public class CarRentalController {
     @GetMapping("/car_rental")
     /** 차량 대여 내역 */
     public String list(Model model) {
-        // TODO: DTO 객체로 변환하여 내보내기
         User user = userRepository.findOne(1L);
         List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
         return "car_rental/car_rent_history";
     }
 
-    /*
-    @GetMapping("/car_rental")
-    /** 차량 선택 -> 날짜 선택
-    public String carRental(@RequestParam("carTypeId") Long carTypeId, Model model) {
-        // TODO: carTypeId를 사용하여 예약 가능 날짜 및 시간 계산
-        model.addAttribute("carType", carTypeId); // 차량 타입 전달
-        // model.addAttribute("dates", date); // 가능한 날짜 전달
-        return "car_date_selection";
+    @GetMapping("/car_rental/select/{carTypeId}")
+    /** 차량 선택 후 날짜 선택 */
+    public String selectDate(@PathVariable Long carTypeId, Model model) {
+        // 여기서 typeId를 사용하여 데이터베이스에서 해당 타입의 정보를 가져오거나 원하는 작업을 수행할 수 있습니다.
+        // 예를 들어, TypeRepository 등을 사용해서 정보를 가져올 수 있습니다.
+        // TODO: carTypeId를 통해 예약 가능 날짜 및 시간 계산. 결과를 form에 담아 반환하기
+        // 모델에 데이터 추가
+        CarRentalForm form = new CarRentalForm(1L, carTypeId);
+
+        model.addAttribute("type", carTypeId);
+        model.addAttribute("form", form);
+        // 다른 템플릿으로 이동
+        return "car_rental/car_date_selection";
     }
-    */
+
+    // TODO: poasmapping 구현,
+    @PostMapping("/car_rental/select/{carTypeId}")
+    /** 대여에 필요한 정보들 확정 후 대여 시행 */
+    public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form) {
+        System.out.println("선택한 날짜 = " + form.getSelectedDate());
+        return "home";
+    }
+
+
+    /*
+    @GetMapping("/car_rental/{carTypeId}")
+    /** 차량 선택 -> 날짜 선택
+    public String dateSelect(@PathVariable Long carTypeId, Model model) {
+        // TODO: carTypeId를 사용하여 예약 가능 날짜 및 시간 계산
+        System.out.println("Controller method called with carTypeId: " + carTypeId);
+        //model.addAttribute("carType", carTypeId); // 차량 타입 전달
+        // model.addAttribute("dates", date); // 가능한 날짜 전달
+        return "car_rental/car_date_selection";
+    }*/
+
 }

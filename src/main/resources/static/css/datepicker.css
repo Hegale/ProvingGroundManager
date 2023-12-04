@@ -21,7 +21,13 @@ html .rental-datepicker .ui-button.ui-state-disabled:active { border: 0px solid 
     text-align: center; 
     font-size: 2.5rem; padding: 0px; font-weight: bold; } 
 
-.rental-datepicker .ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 80rem; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); } 
+.rental-datepicker .ui-datepicker { 
+    display: none; background-color: #fff; 
+    border-radius: 4px; 
+    margin-top: 10px; margin-left: 0px; margin-right: 0px;
+    padding: 20px; padding-bottom: 10px; 
+    width: 100%;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); } 
 
 .rental-datepicker .ui-widget.ui-widget-content { border: 1px solid #eee; } 
 
@@ -47,8 +53,7 @@ html .rental-datepicker .ui-button.ui-state-disabled:active { border: 0px solid 
 
 .rental-datepicker .ui-datepicker-calendar>tbody>tr>td { 
     border-radius: 0%; 
-    width: 44px; 
-    height: 90px; 
+    height: 8rem; /* 각 날짜 칸의 크기 (높이) */
     cursor: pointer; 
     padding: 15px; 
     font-weight: 100; 
@@ -66,7 +71,7 @@ html .rental-datepicker .ui-button.ui-state-disabled:active { border: 0px solid 
 .rental-datepicker .ui-button:hover,
 .rental-datepicker .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
 
-.rental-datepicker .ui-widget-header .ui-icon { background-image: url('../images/btns.png'); } 
+.rental-datepicker .ui-widget-header .ui-icon { background-image: url('../img/btns.png'); } 
 
 .rental-datepicker .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
 
@@ -83,10 +88,10 @@ html .rental-datepicker .ui-button.ui-state-disabled:active { border: 0px solid 
 /* 오늘 날짜 표시 */
 .rental-datepicker .ui-state-highlight,
 .rental-datepicker .ui-widget-content .ui-state-highlight,
-.rental-datepicker .ui-widget-header .ui-state-highlight { border: 0px; background: #F6CECE; padding-top: 17px; padding-bottom: 17px; } 
+.rental-datepicker .ui-widget-header .ui-state-highlight { border: 0px; background: #F6CECE; padding-top: 12px; padding-bottom: 12px; } 
 
 /* 선택한 날짜 표시 */
-.rental-datepicker .ui-state-active { border: 0px; padding-top: 17px; padding-bottom: 17px; }
+.rental-datepicker .ui-state-active { border: 0px; padding-top: 12px; padding-bottom: 12px;}
 
 .rental-datepicker .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 0px; border: 0px; } 
 
@@ -146,7 +151,7 @@ html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background
 .ui-button:hover,
 .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
 
-.ui-widget-header .ui-icon { background-image: url('../images/btns.png'); } 
+.ui-widget-header .ui-icon { background-image: url('../img/btns.png'); } 
 
 .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
 

@@ -1,0 +1,170 @@
+.opilsol-N11 .juykim-leftbox {
+    width: 60%;
+    height: 100%;
+  }
+  
+  .opilsol-N11 .juykim-calendarbox {
+    margin-top: 3rem;
+    height: 50rem;
+    width: 90%
+  }
+  
+  .opilsol-N11 .juykim-rightbox {
+    width: 40%;
+    height: 100%;
+  }
+  
+  .opilsol-N11 .juykim-step-text {
+    margin-bottom: 2rem;
+  }
+  
+  .opilsol-N11 .juykim-date-text {
+    margin-bottom: 1rem;
+  }
+  
+  .opilsol-N11 .juykim-timebox {
+    height: 30%;
+    padding: 2rem;
+    margin-top: 5rem;
+    background-color: #F2F2F2;
+  }
+  
+  .opilsol-N11 .juykim-timebtnbox {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 15px;
+    justify-items: stretch;
+    align-items: stretch;
+    margin-top: 2rem;
+  }
+  
+  
+  .opilsol-N11 .juykim-weatherbox {
+    height: 30%;
+    padding: 2rem;
+    background-color: #F2F2F2;
+    margin-top: 3rem;
+  }
+  
+  .opilsol-N11 .juykim-date-confirm {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6rem;
+  }
+  
+  .juykim-rental-in-wrapper {
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    /* 요소들을 세로로 배치 */
+    justify-content: flex-end;
+    /* 요소들을 가로 방향으로 오른쪽 정렬 */
+    margin-right: 3rem;
+  }
+  
+  .opilsol-N11 .content-container {
+    padding: 8rem 0;
+  }
+  
+  .opilsol-N11 .content-group {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .opilsol-N11 .content-group .img-box {
+    width: calc(50% + 4rem);
+    height: 70rem;
+  }
+  
+  .opilsol-N11 .content-group .img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .opilsol-N11 .content-group .txt-box {
+    width: calc(50% - 14rem);
+    padding: 0 2rem 0 0;
+  }
+  
+  .opilsol-N11 .content-group .txt-box .textset {
+    padding: 0;
+  }
+  
+  .opilsol-N11 .content-group .txt-box .textset-tit {
+    padding-bottom: 2rem;
+    font-size: var(--ht-xs);
+    line-height: var(--lh-h2);
+    letter-spacing: var(--lt-sp);
+    word-break: keep-all;
+  }
+  
+  .opilsol-N11 .content-group .txt-box .textset-desc {
+    line-height: var(--lh-h6);
+    font-size: var(--lh-p3);
+    color: var(--text-color3);
+    letter-spacing: -0.1rem;
+    word-break: keep-all;
+  }
+  
+  .opilsol-N11 .content-group .txt-box .br {
+    display: block;
+  }
+  
+  @media (max-width: 1366px) {
+    .opilsol-N11 .container-md {
+      padding: 0 1.6rem;
+    }
+  
+    .opilsol-N11 .content-group .txt-box {
+      width: calc(50% - 9rem);
+    }
+  
+    .opilsol-N11 .content-group .txt-box .textset-desc {
+      padding-right: 2rem;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .opilsol-N11 .content-container {
+      padding: 5rem 0;
+    }
+  
+    .opilsol-N11 .content-group .img-box {
+      height: 55rem;
+    }
+  
+    .opilsol-N11 .content-group .txt-box .br {
+      display: inline;
+    }
+  }
+  
+  @media (max-width: 922px) {
+    .opilsol-N11 .content-group {
+      flex-direction: column;
+    }
+  
+    .opilsol-N11 .content-group .img-box {
+      margin-bottom: 4rem;
+      width: 100%;
+      min-width: 32.8rem;
+      height: 32rem;
+    }
+  
+    .opilsol-N11 .content-group .txt-box {
+      padding: 0;
+      width: 100%;
+    }
+  
+    .opilsol-N11 .content-group .txt-box .textset-tit {
+      padding-bottom: 0;
+    }
+  
+    .opilsol-N11 .content-group .txt-box .textset-desc {
+      padding-right: 0;
+      letter-spacing: var(--lt-sp);
+    }
+  }

@@ -4,54 +4,97 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
+
 <div th:replace="fragments/body_header :: body_header" />
 
-  <div class="blank-EwLpnPM3Jp" data-bid="EwLpnPM3Jp">
-    <div class="container"></div>
-  </div>
-  <div class="blank-EwLpnPM3Jp" data-bid="EwLpnPM3Jp">
-    <div class="container"></div>
-  </div>
-  
-  <div>
-    <div class="datepicker rental-datepicker"></div>
-  </div>
-  <script>
-    $(function(){
-      $('.datepicker').datepicker(
-        {
-          onSelect: function(dateText, inst) {
-            // 모든 날짜 셀의 배경색을 초기화
-            $('.ui-state-active').css('backgroundColor', '');
+  <div style="height:10rem;"></div>
+  <main class="th-layout-main ">
+    <!-- [S]opilsol-N11 -->
+    <div class="opilsol-N11" data-bid="hLlPPF62pn">
+      <div class="content-container">
+        <div class="container-md">
+          <form th:object="${form}" method="post">
+            <div class="content-group" style="height:80rem;">
+              <!--start-->
+              <div class="juykim-leftbox">
+                <div class="juykim-step-text">
+                  <h3 class="h3">STEP2. 대여 날짜 정하기</h3>
+                  <!-- 달력 들어갈 박스 -->
+                  <div class="juykim-calendarbox">
+                    <div>
+                      <div class="datepicker rental-datepicker"></div>
+                    </div>
+                    <script>
+                      $(function(){
+                        $('.datepicker').datepicker(
+                          {
+                            onSelect: function(dateText, inst) {
+                              // 모든 날짜 셀의 배경색을 초기화
+                              $('.ui-state-active').css('backgroundColor', '');
 
-            // 선택한 날짜 셀의 배경색을 빨간색으로 변경
-            setTimeout(function() {
-                $('.ui-state-active').css('backgroundColor', '#D8D8D8');
-            }, 0);
-          }
-        });
-    })
-  </script>
-  hi.
+                              // 선택한 날짜 셀의 배경색을 변경
+                              setTimeout(function() {
+                                  $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                              }, 0);
 
-  <div class="datepicker">
-  </div>
+                              $("#selectedDate").val(dateText);
+
+                            }
+                          });
+                      })
+                    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="juykim-rightbox">
+                <div class="juykim-step-text">
+                  <h3 class="h3">STEP3. 대여 시간 정하기</h3>
+                </div>
+                <div class="juykim-timebox">
+                  <h4 class="h4 juykim-date-text">11월 23일 목요일</h4>
+                  <hr style="border: none; border-top: 1px solid gray;">
+                  <div class="juykim-timebtnbox">
+                    <button type="button" class="btnset btnset-lg btnset-ghost">10:00</button>
+                    <button type="button" class="btnset btnset-lg btnset-ghost">12:00</button>
+                    <button type="button" class="btnset btnset-lg btnset-ghost">14:00</button>
+                    <button type="button" class="btnset btnset-lg btnset-ghost">16:00</button>
+                  </div>
+                </div>
+                <div class="juykim-weatherbox">
+                </div>
+                <div class="juykim-date-confirm">
+                  <div class="juykim-rental-in-wrapper">
+                    <p class="p1" style="text-align: right;">선택 차량<br></p>
+                    <p class="p1">더 뉴 아반떼 N<br></p>
+                  </div>
+                  <!--  아래 버튼 원래 button이었던걸 submit으로 바꿈 -->
+                  <input type="hidden" id="selectedDate" name="selectedDate" th:value="${form.selectedDate}">
+                  <button type="submit" class="btnset btnset-lg btnset-mono btnset-line">대여하기</button>
+                </div>
+              </div>
+              <!--end-->
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <!-- [E]opilsol-N11 -->
+  </main>
 
   <div th:replace="fragments/footer :: footer" />
-  
-  <!-- [E]opilsol-N3 -->
-  <script src="/js/setting.js"></script>
-  <script src="/js/plugin.js"></script>
-  <script src="/js/template.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/script.js"></script>
-  <script src="/js/jquery-ui.min.js"></script>
-</body>
 
+  <script src="../resources/js/setting.js"></script>
+  <script src="../resources/js/plugin.js"></script>
+  <script src="../resources/js/template.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/script.js"></script>
+  <script src="../resources/js/jquery-ui.min.js"></script>
+</body>
