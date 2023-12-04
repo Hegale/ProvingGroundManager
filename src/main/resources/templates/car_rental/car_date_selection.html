@@ -138,7 +138,7 @@
                 <div class="juykim-date-confirm">
                   <div class="juykim-rental-in-wrapper">
                     <p class="p1" style="text-align: right;">선택 차량<br></p>
-                    <p class="p1">더 뉴 아반떼 N<br></p>
+                    <p class="p1" th:text="${type.getName()}">선택 차종 출력<br></p>
                   </div>
                   <!--  아래 버튼 원래 button이었던걸 submit으로 바꿈 -->
                   <button type="submit" class="btnset btnset-lg btnset-mono btnset-line">대여하기</button>

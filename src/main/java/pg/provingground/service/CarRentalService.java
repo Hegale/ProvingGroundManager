@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
+import pg.provingground.domain.CarType;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
@@ -107,6 +108,10 @@ public class CarRentalService {
                 .map(CarRentalHistory::new)
                 .collect(Collectors.toList());
         return history;
+    }
+
+    public CarType findType(Long carTypeId) {
+        return carTypeRepository.findOne(carTypeId);
     }
 
     /** [관리자 기능] 전체 대여 내역 검색 */

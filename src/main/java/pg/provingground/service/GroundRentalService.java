@@ -14,7 +14,9 @@ import pg.provingground.repository.GroundRepository;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,7 +60,14 @@ public class GroundRentalService {
         return history;
     }
 
-    /** 전체 대여 내역 검색 */
+    /** 해당 시험장 대여가 불가능한 시간대 구해서 반환*/
+    public List<LocalDateTime> getUnAvailableTimes(Long groundId) {
+        return groundRentalRepository.getGroundRentalStatus(groundId);
+    }
+
+    /** TODO: 해당 시험장 대여가 가능한 시간대 구현.. 일단 car부터 ajax로 완성하고 */
+
+    /** [관리자 기능] 전체 대여 내역 검색 */
     public List<GroundRental> findRentals() {
         return groundRentalRepository.findAll();
     }

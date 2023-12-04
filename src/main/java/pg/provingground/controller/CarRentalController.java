@@ -39,7 +39,7 @@ public class CarRentalController {
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
         List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
 
-        model.addAttribute("type", carTypeId);
+        model.addAttribute("type", carRentalService.findType(carTypeId));
         model.addAttribute("form", form);
         // TODO: ajax로 불가능한 날짜 및 시간 처리하는 로직 구현
         model.addAttribute("availableTimes", times);

@@ -36,29 +36,20 @@ public class GroundRentalRepository {
     }
 
     /** 시간대별 시험장 예약현황 반환. */
-    public Map<LocalDateTime, Integer> countRentedCarsPerTimeSlot(Long groundId) {
+    public List<LocalDateTime> getGroundRentalStatus(Long groundId) {
         // 예약 가능일: 예약 시점 다음날 ~ +30일
         LocalDateTime start = LocalDateTime.now().plusDays(1).with(LocalTime.MIDNIGHT);
         LocalDateTime end = start.plusDays(30);
-        List<Object[]> results = em.createQuery(
+        return em.createQuery(
                         "SELECT c.startTime " +
                                 "FROM GroundRental c " +
                                 "WHERE c.startTime > :start and c.startTime < :end " +
-                                "AND c.returned  = 'N' and c.ground = :groundId " +
-                                "GROUP BY c.startTime",
-                        Object[].class)
+                                "AND c.returned  = 'N' and c.ground = :groundId ",
+                        LocalDateTime.class)
                 .setParameter("start", start)
                 .setParameter("end", end)
                 .setParameter("groundId", groundId)
                 .getResultList();
-
-        Map<LocalDateTime, Integer> groundPerTimeSlot = new HashMap<>();
-        for (Object[] result : results) {
-            groundPerTimeSlot.put(
-                    (LocalDateTime) result[0],
-                    ((Long) result[1]).intValue());
-        }
-        return groundPerTimeSlot;
     }
 
     /**

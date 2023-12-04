@@ -1,17 +1,24 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.GroundRentalHistory;
 import pg.provingground.repository.UserRepository;
+import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.GroundRentalService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -29,5 +36,32 @@ public class GroundRentalController {
         model.addAttribute("rentals", rentals);
         return "ground_rental/ground_rental_history";
     }
+
+    @GetMapping("/ground_rental/select/{groundId}")
+    /** 시험장 선택 후 날짜 선택 */
+    public String selectDate(@PathVariable Long groundId, Model model) {
+        GroundRentalForm form = new GroundRentalForm(1L, groundId);
+        //List<AvailableTimeForm> times = groundRentalService.getAvailableTimeForms(groundId);
+
+        model.addAttribute("form", form);
+        // TODO: ajax로 불가능한 날짜 및 시간 처리하는 로직 구현
+        //model.addAttribute("availableTimes", times);
+
+        return "ground_rental/ground_date_selection";
+    }
+
+    @PostMapping("/ground_rental/select/{groundId}")
+    /** 예약에 필요한 정보들 확정 후 예약 실행 */
+    public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form) {
+        // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
+        String dateTimeString = form.getSelectedDate() + "T" + form.getSelectedTime() + ":00:00";
+        LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        groundRentalService.rental(1L, groundId, time);
+
+        return "redirect:/ground_rental"; // 대여 내역으로 이동
+    }
+
+
+
 
 }
