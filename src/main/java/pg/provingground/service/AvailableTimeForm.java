@@ -19,6 +19,8 @@ public class AvailableTimeForm {
     // format: 10, 12, 14...
     private List<Integer> times;
 
+    private String selectedDate;
+
     public AvailableTimeForm(LocalDateTime time) {
         this.date = time.format(DATE_FORMATTER);
         this.times = new ArrayList<>();

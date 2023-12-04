@@ -1,13 +1,13 @@
 package pg.provingground.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.CarTypeRepository;
@@ -49,6 +49,19 @@ public class CarRentalService {
     public void cancelRental(Long carRentalId) {
         CarRental rental = carRentalRepository.findOne(carRentalId);
         rental.cancel();
+    }
+
+    /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
+    public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
+        List<Car> unavailableCars = carRentalRepository.findUnavailableCars(carTypeId, time);
+        List<Car> cars = carRepository.findByCarType(carTypeId);
+        for (Car car : cars) {
+            if (!unavailableCars.contains(car)) {
+                return car.getCarId();
+            }
+        }
+        // 모든 차량이 예약 불가능하면
+        throw new NoAvailableCarException("해당 시간대에 예약 가능한 차량이 없습니다!");
     }
 
     /** 차량 대여가 불가능한 시간대 구해서 반환*/

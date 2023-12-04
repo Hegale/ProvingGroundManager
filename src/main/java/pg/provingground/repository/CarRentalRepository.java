@@ -39,18 +39,19 @@ public class CarRentalRepository {
         return em.find(CarRental.class, id);
     }
 
-    /*
-    // TODO: 성능 생각하기. 내일 이후만 검색
-    // 인자로 받은 차량 중 반납되지 않은 대여기록 반환. 일단 아래걸로 대체
-    public List<CarRental> findNotReturned(Long carTypeId) {
-        String jpql = "select cr from CarRental cr where cr.returned = 'N' and cr.car = :carTypeId";
-        return em.createQuery(jpql, CarRental.class)
+    /** 해당 차종의 해당 시간대 예약을 반환 */
+    public List<Car> findUnavailableCars(Long carTypeId, LocalDateTime time) {
+        return em.createQuery(
+                "SELECT c.car " +
+                        "FROM CarRental c " +
+                        "WHERE c.startTime = :time AND c.car.type.carTypeId = :carTypeId " +
+                        "AND c.returned = 'N'", Car.class)
+                .setParameter("time", time)
                 .setParameter("carTypeId", carTypeId)
                 .getResultList();
     }
-    */
 
-    /** 시간대별 차량 대여 횟수 반환. */
+    /** 시간대별 차량 대여 횟수 반환 */
     public Map<LocalDateTime, Integer> countRentedCarsPerTimeSlot(Long carTypeId) {
         // 예약 가능일: 예약 시점 다음날 ~ +30일
         LocalDateTime start = LocalDateTime.now().plusDays(1).with(LocalTime.MIDNIGHT);

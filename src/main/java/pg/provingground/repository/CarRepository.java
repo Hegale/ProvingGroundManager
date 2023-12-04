@@ -50,9 +50,9 @@ public class CarRepository {
     }
 
     /** 특정 차종의 차량들 검색 */
-    public List<Car> findByCondition(CarType type) {
-        return em.createQuery("select c from Car c where c.type = :type", Car.class)
-                .setParameter("type", type)
+    public List<Car> findByCarType(Long typeId) {
+        return em.createQuery("select c from Car c where c.type.carTypeId = :typeId", Car.class)
+                .setParameter("typeId", typeId)
                 .getResultList();
     }
 

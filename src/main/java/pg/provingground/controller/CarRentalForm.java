@@ -14,6 +14,8 @@ public class CarRentalForm {
     private String selectedDate;
     private String selectedTime;
 
+    private String userDate;
+
     public CarRentalForm(Long userId, Long carTypeId) {
         this.userId = userId;
         this.carTypeId = carTypeId;

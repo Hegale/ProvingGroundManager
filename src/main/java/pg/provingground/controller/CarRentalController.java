@@ -5,6 +5,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
@@ -13,6 +14,7 @@ import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.CarRentalService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -34,25 +36,27 @@ public class CarRentalController {
     @GetMapping("/car_rental/select/{carTypeId}")
     /** 차량 선택 후 날짜 선택 */
     public String selectDate(@PathVariable Long carTypeId, Model model) {
-        // 모델에 데이터 추가
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
         List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
-        for (AvailableTimeForm t : times) {
-            System.out.println("date: " + t.getDate());
-        }
 
         model.addAttribute("type", carTypeId);
         model.addAttribute("form", form);
+        // TODO: ajax로 불가능한 날짜 및 시간 처리하는 로직 구현
         model.addAttribute("availableTimes", times);
+
         return "car_rental/car_date_selection";
     }
 
     @PostMapping("/car_rental/select/{carTypeId}")
     /** 대여에 필요한 정보들 확정 후 대여 시행 */
     public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form) {
-        System.out.println("선택한 날짜 = " + form.getSelectedDate());
-        System.out.println("선택한 시간 = " + form.getSelectedTime());
-        return "home";
+        // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
+        String dateTimeString = form.getSelectedDate() + "T" + form.getSelectedTime() + ":00:00";
+        LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        Long carId = carRentalService.getSchedulableCar(carTypeId, time);
+        carRentalService.rental(1L, carId, time);
+
+        return "redirect:/car_rental"; // 대여 내역으로 이동
     }
 
 
