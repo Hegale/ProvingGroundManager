@@ -1,6 +1,7 @@
 package pg.provingground.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
@@ -13,7 +14,9 @@ import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +48,23 @@ public class CarRentalService {
     public void cancelRental(Long carRentalId) {
         CarRental rental = carRentalRepository.findOne(carRentalId);
         rental.cancel();
+    }
+
+    /** 특정 차종의 대여 현황을 통해 대여 불가능한 시간대를 반환 */
+    public List<LocalDateTime> getUnavailableTimes(Long carTypeId) {
+        Map<LocalDateTime, Integer> rentedCarsPerTimeSlot = carRentalRepository.countRentedCarsPerTimeSlot(carTypeId);
+        List<LocalDateTime> unavailableTimes = new ArrayList<LocalDateTime>();
+        long carCount = carRepository.countCarsPerCarType(carTypeId);
+
+        System.out.println("selected car : " + carTypeId + "carCount : " + carCount);
+
+        for (LocalDateTime time : rentedCarsPerTimeSlot.keySet()) {
+            // carTypeId 차종의 모든 차량이 해당 시간대에 예약상태일 때
+            if (rentedCarsPerTimeSlot.get(time) == carCount) {
+                unavailableTimes.add(time);
+            }
+        }
+        return unavailableTimes; // 해당 차종을 대여할 수 없는 시간대 반환
     }
 
     /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */

@@ -1,6 +1,7 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.CarRentalService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -31,23 +33,25 @@ public class CarRentalController {
     @GetMapping("/car_rental/select/{carTypeId}")
     /** 차량 선택 후 날짜 선택 */
     public String selectDate(@PathVariable Long carTypeId, Model model) {
-        // 여기서 typeId를 사용하여 데이터베이스에서 해당 타입의 정보를 가져오거나 원하는 작업을 수행할 수 있습니다.
-        // 예를 들어, TypeRepository 등을 사용해서 정보를 가져올 수 있습니다.
-        // TODO: carTypeId를 통해 예약 가능 날짜 및 시간 계산. 결과를 form에 담아 반환하기
         // 모델에 데이터 추가
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
+        List<LocalDateTime> unavailableTimes = carRentalService.getUnavailableTimes(carTypeId);
+
+        for (LocalDateTime time : unavailableTimes) {
+            System.out.println("불가능한 시간 : " + time);
+        }
 
         model.addAttribute("type", carTypeId);
         model.addAttribute("form", form);
-        // 다른 템플릿으로 이동
+        model.addAttribute("unavailableTimes", unavailableTimes);
         return "car_rental/car_date_selection";
     }
 
-    // TODO: poasmapping 구현,
     @PostMapping("/car_rental/select/{carTypeId}")
     /** 대여에 필요한 정보들 확정 후 대여 시행 */
     public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form) {
         System.out.println("선택한 날짜 = " + form.getSelectedDate());
+        System.out.println("선택한 시간 = " + form.getSelectedTime());
         return "home";
     }
 

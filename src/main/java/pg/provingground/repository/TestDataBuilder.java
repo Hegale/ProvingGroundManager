@@ -89,7 +89,7 @@ public class TestDataBuilder {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void buildCarTestData() {
-        for (int i = 0; i < 30; ++i){
+        for (int i = 0; i < 20; ++i){
             Car car = new Car();
             CarType carType = carTypeRepository.findOne((long)i % 10 + 1);
             car.setType(carType);
@@ -136,6 +136,11 @@ public class TestDataBuilder {
                     LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
             carRentalRepository.save(carRental);
         }
+        // 3번 차량 두 대를 같은 시간대로 예약
+        Car car = carRepository.findOne(13L);
+        CarRental carRental = CarRental.createCarRental(user, car,
+                LocalDateTime.now().plusDays(3).with(LocalTime.MIDNIGHT));
+        carRentalRepository.save(carRental);
     }
 
     @EventListener(ApplicationReadyEvent.class)

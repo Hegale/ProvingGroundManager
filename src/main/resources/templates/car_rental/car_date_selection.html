@@ -19,11 +19,20 @@
     <div class="opilsol-N11" data-bid="hLlPPF62pn">
       <div class="content-container">
         <div class="container-md">
+
+          <!-- 컨트롤러에서 받아온 unavailableTimes를 data-unavailable-date-times 속성으로 전달 -->
+          <div id="unavailableDateTimes" th:attr="data-unavailable-date-times=${unavailableTimes}"></div>
+
+
           <form th:object="${form}" method="post">
             <div class="content-group" style="height:80rem;">
               <!--start-->
               <div class="juykim-leftbox">
                 <div class="juykim-step-text">
+
+                  <!-- 테스트 출력 -->
+                  <p th:text="${unavailableTimes}">hi</p>
+
                   <h3 class="h3">STEP2. 대여 날짜 정하기</h3>
                   <!-- 달력 들어갈 박스 -->
                   <div class="juykim-calendarbox">
@@ -32,9 +41,24 @@
                     </div>
                     <script>
                       $(function(){
+                        // var unavaliableDateTimes =
                         $('.datepicker').datepicker(
                           {
+                            // 날짜 출력 전 확인
+                            beforeShowDay: function (date) {
+                              var stringDate = $.datepicker.formatDate('yy-mm-dd', date);
+                              var unavailableTimes = unavailableDateTimes.filter(function (dateTime) {
+                                return dateTime.startsWith(stringDate);
+                              });
+                              return [unvaliableTimes.length === 0];
+                            },
+
                             onSelect: function(dateText, inst) {
+                              var selectedDateTime = dateText + ' ' + $('#selectedTime').val() + ':00';
+                              if (unavailableDateTimes.indexOf(selectedDateTime) !== -1) {
+
+                              }
+
                               // 모든 날짜 셀의 배경색을 초기화
                               $('.ui-state-active').css('backgroundColor', '');
 
@@ -60,10 +84,29 @@
                   <h4 class="h4 juykim-date-text">11월 23일 목요일</h4>
                   <hr style="border: none; border-top: 1px solid gray;">
                   <div class="juykim-timebtnbox">
-                    <button type="button" class="btnset btnset-lg btnset-ghost">10:00</button>
-                    <button type="button" class="btnset btnset-lg btnset-ghost">12:00</button>
-                    <button type="button" class="btnset btnset-lg btnset-ghost">14:00</button>
-                    <button type="button" class="btnset btnset-lg btnset-ghost">16:00</button>
+                    <!-- 테스트 코드 시작-->
+                    <!-- TODO: 단순히 10시, 11시로 나타내지 말고 시간을 보여줄 별도의 폼 이용  -->
+                    <label class="time-btn">
+                      <input type="radio" th:field="*{selectedTime}" value="10">
+                      <span>10:00</span>
+                    </label>
+                    <label class="time-btn">
+                      <input type="radio" th:field="*{selectedTime}" value="12">
+                      <span>12:00</span>
+                    </label>
+                    <label class="time-btn">
+                      <input type="radio" th:field="*{selectedTime}" value="14">
+                      <span>14:00</span>
+                    </label>
+                    <label class="time-btn">
+                      <input type="radio" th:field="*{selectedTime}" value="16">
+                      <span>16:00</span>
+                    </label>
+                    <label class="time-btn">
+                      <input type="radio" th:field="*{selectedTime}" value="18">
+                      <span>18:00</span>
+                    </label>
+
                   </div>
                 </div>
                 <div class="juykim-weatherbox">

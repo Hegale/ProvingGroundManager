@@ -629,7 +629,9 @@ progress { vertical-align: baseline; }
 .btnset:hover { color: var(--white); background-color: rgba(var(--primary-rgb), .8); border-color: rgba(var(--primary-rgb), .8); } 
 .btnset:disabled, .btnset.disabled { color: var(--text-color4); background-color: var(--bg-color); border-color: var(--bg-color); } 
 .btnset.btnset-xl { min-width: 9.4rem; padding: 0 3.2rem; height: var(--ht-xl); font-size: var(--fs-h6); } 
-.btnset.btnset-lg { min-width: 9.4rem; padding: 0 6.21rem; height: var(--ht-lg); font-size: var(--fs-p1); } 
+.btnset.btnset-lg {
+  min-width: 9.4rem; padding: 0 6.21rem; 
+  height: var(--ht-lg); font-size: var(--fs-p1); } 
 .btnset.btnset-sm { min-width: 9rem; padding: 0 2rem; height: var(--ht-sm); font-size: var(--fs-p2); } 
 .btnset.btnset-xs { min-width: 6.8rem; padding: 0 1.6rem; height: var(--ht-xs); font-size: var(--fs-p2); } 
 .btnset.btnset-block { width: 100%; } 
@@ -643,6 +645,10 @@ progress { vertical-align: baseline; }
 .btnset.btnset-ghost { color: var(--body-color); background-color: var(--white); border-color: var(--line-color1); } 
 .btnset.btnset-ghost:hover { color: var(--body-color); background-color: var(--line-color1); border-color: var(--line-color1); } 
 .btnset.btnset-ghost:disabled, .btnset.btnset-ghost.disabled { color: var(--text-color4); background-color: var(--bg-color); border-color: var(--line-color1); } 
+.btnset.btnset-ghost input[type="radio"]:checked + span { 
+  background-color: #000;
+  color: #fff;
+ } 
 .btnset.btnset-rect { border-radius: 0; } 
 .btnset.btnset-round { border-radius: 9rem; } 
 .btnset.btnset-icon { min-width: 18.4rem; padding: 0 2.4rem; } 

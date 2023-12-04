@@ -1,3 +1,6 @@
+// 불가능한 날짜 지정
+
+
 // thwhole-enlPbA0Maj [enlPbA0Maj]
 (function() {
   $(function() {

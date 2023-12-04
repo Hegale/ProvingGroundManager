@@ -37,13 +37,13 @@ public class CarRepository {
     }
 
     /** 특정 차종에 해당하는 차량의 대수 구하기 */
-    public long countCarsPerCarType(Long type) {
+    public long countCarsPerCarType(Long carTypeId) {
         Long count = em.createQuery(
                 "SELECT COUNT(c) " +
                         "FROM Car c " +
-                        "WHERE c.type = :carTypeId",
+                        "WHERE c.type.carTypeId = :carTypeId",
                 Long.class)
-                .setParameter("carTypeId", type)
+                .setParameter("carTypeId", carTypeId)
                 .getSingleResult();
 
         return count != null ? count : 0;

@@ -1,3 +1,25 @@
+/* 시간대 선택 버튼 설정들 */
+.time-btn input[type="radio"] {
+  display: none;
+}
+
+.time-btn input[type="radio"] + span {
+  display: inline-block;
+  padding: 15px 10px;
+  width: 13rem;
+  border: 1px solid #dfdfdf;
+  background-color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.time-btn input[type="radio"]:checked + span {
+  background-color: #dfdfdf;
+  color: #ffffff;
+}
+
+/* 시간 선택 버튼 설정 끝 */
+
 .opilsol-N11 .juykim-leftbox {
     width: 60%;
     height: 100%;
@@ -34,8 +56,8 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 15px;
-    justify-items: stretch;
-    align-items: stretch;
+    justify-items: center;
+    align-items: center;
     margin-top: 2rem;
   }
   

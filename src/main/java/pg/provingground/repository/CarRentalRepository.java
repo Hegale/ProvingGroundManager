@@ -39,14 +39,16 @@ public class CarRentalRepository {
         return em.find(CarRental.class, id);
     }
 
+    /*
     // TODO: 성능 생각하기. 내일 이후만 검색
-    /** 인자로 받은 차량 중 반납되지 않은 대여기록 반환. 일단 아래걸로 대체 */
+    // 인자로 받은 차량 중 반납되지 않은 대여기록 반환. 일단 아래걸로 대체
     public List<CarRental> findNotReturned(Long carTypeId) {
         String jpql = "select cr from CarRental cr where cr.returned = 'N' and cr.car = :carTypeId";
         return em.createQuery(jpql, CarRental.class)
                 .setParameter("carTypeId", carTypeId)
                 .getResultList();
     }
+    */
 
     /** 시간대별 차량 대여 횟수 반환. */
     public Map<LocalDateTime, Integer> countRentedCarsPerTimeSlot(Long carTypeId) {
@@ -57,7 +59,7 @@ public class CarRentalRepository {
                 "SELECT c.startTime, COUNT(c) " +
                         "FROM CarRental c " +
                         "WHERE c.startTime > :start and c.startTime < :end " +
-                        "AND c.returned  = 'N' and c.car = :carTypeId " +
+                        "AND c.returned  = 'N' and c.car.type.carTypeId = :carTypeId " +
                         "GROUP BY c.startTime",
                 Object[].class)
                 .setParameter("start", start)
