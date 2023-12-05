@@ -119,35 +119,28 @@
                     <td>
                       <p th:text="${rental.carName}"></p>
                     </td>
-                    <td class="last-child" th:text="${rental.startTime}">대여일</td>
+                    <td class="last-child" th:text="${rental.startTime.toString()}">대여일</td>
                     <td class="last-child" th:text="${rental.returned}">반납 여부</td>
                     <td class="last-child">
-                      <!--
 
                       <button type="button"
-                              th:if="${rental.canceled == 'Y'}"
+                              th:if="${rental.returned == 'Y'}"
                               disabled
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        취소 완료
-                      </button>
-                      <button
-                              th:if="${rental.cancelable == 'Y'}"
-                              th:onclick="'javascript:cancel('+${rental.groundRentalId}+');'"
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        취소
-                      </button>
-                      <button
-                              th:if="${rental.cancelable == 'Y'}"
-                              th:onclick="'javascript:cancel('+${rental.groundRentalId}+');'"
                               class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                         반납 완료
                       </button>
+                      <button
+                              th:if="${rental.cancelable == 'Y'}"
+                              th:onclick="'javascript:cancel('+${rental.carRentalId}+');'"
+                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                        취소
+                      </button>
                       <button type="button"
-                              th:if="${rental.canceled == 'N' and rental.cancelable == 'N'}"
-                              disabled
+                              th:if="${rental.returnable == 'Y'}"
+                              th:onclick="'javascript:cancel('+${rental.carRentalId}+');'"
                               class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                         반납
-                      </button>-->
+                      </button>
 
                     </td>
                   </tr>
@@ -190,6 +183,16 @@
     </div>
     <!-- [E]opilsol-N24 -->
   </main>
+
+  <script>
+    function cancel(carRentalId) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "/car_rental/" + carRentalId + "/return");
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
 
   <div th:replace="fragments/footer :: footer" />
   <!-- [E]opilsol-N3 -->

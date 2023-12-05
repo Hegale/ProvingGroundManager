@@ -33,6 +33,11 @@ public class CarRentalController {
         return "car_rental/car_rent_history";
     }
 
+    @PostMapping("/car_rental/{carRentalId}/return")
+    public String returnRental(@PathVariable("carRentalId") Long carRentalId) {
+        carRentalService.cancelRental(carRentalId);
+        return "redirect:/car_rental";
+    }
 
     @GetMapping("/car_rental/select/{carTypeId}")
     /** 차량 선택 후 날짜 선택 페이지 */
@@ -59,8 +64,6 @@ public class CarRentalController {
 
         return "redirect:/car_rental"; // 대여 내역으로 이동
     }
-
-
 
     /*
     @GetMapping("/car_rental/{carTypeId}")

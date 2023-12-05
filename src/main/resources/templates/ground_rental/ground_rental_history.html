@@ -112,17 +112,6 @@
               </thead>
               <tbody>
 
-              <
-              <script>
-                function cancel(groundRentalId) {
-                  var form = document.createElement("form");
-                  form.setAttribute("method", "post");
-                  form.setAttribute("action", "/ground_rental/" + groundRentalId + "/cancel");
-                  document.body.appendChild(form);
-                  form.submit();
-                }
-              </script>
-
 
               <!-- 목록 하나 시작 -->
               <tr th:each="rental : ${rentals}">
@@ -197,6 +186,15 @@
 
 <div th:replace="fragments/footer :: footer" />
 
+<script>
+  function cancel(groundRentalId) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/ground_rental/" + groundRentalId + "/cancel");
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
 
 <!-- [E]opilsol-N3 -->
 <script src="/js/setting.js"></script>
