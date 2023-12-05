@@ -299,7 +299,7 @@
 .personal-seLPF6Qg10 .contents-inner { padding: 10rem 2.4rem; }
 .personal-seLPF6Qg10 .textset { margin-top: 0; margin-bottom: 4rem; }
 .personal-seLPF6Qg10 .tabset.tabset-brick { margin-bottom: 4rem; }
-.personal-seLPF6Qg10 .contents-search { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; }
+.personal-seLPF6Qg10 .contents-search { display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 4rem; }
 .personal-seLPF6Qg10 .inputset { width: 40.3rem; }
 .personal-seLPF6Qg10 .contents-result { font-size: 1.8rem; font-weight: 500; }
 .personal-seLPF6Qg10 .contents-result span { color: var(--secondary); }

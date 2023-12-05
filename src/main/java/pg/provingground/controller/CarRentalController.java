@@ -34,7 +34,7 @@ public class CarRentalController {
     }
 
     @GetMapping("/car_rental/select/{carTypeId}")
-    /** 차량 선택 후 날짜 선택 */
+    /** 차량 선택 후 날짜 선택 페이지 */
     public String selectDate(@PathVariable Long carTypeId, Model model) {
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
         List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);

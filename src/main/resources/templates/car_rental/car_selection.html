@@ -19,85 +19,44 @@
           <div class="textset textset-h2">
             <h2 class="h2">STEP 1. 차량 선택</h2>
           </div>
+
           <div class="contents-search">
-            <div class="juykim-car-search">
-              <div class="selectset selectset-lg">
-                <button class="selectset-toggle btn" type="button">
-                  <span>차종</span>
-                </button>
-                <ul class="selectset-list">
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿1">
-                      <span>승용</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿2">
-                      <span>SUV</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>수소/전기차</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>N</span>
-                    </button>
-                  </li>
-                </ul>
+            <form th:object="${searchForm}" method="post" class="contents-search">
+              <div class="juykim-car-search">
+
+
+                <select th:field="*{type}" id="typeSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                  <option value="">차종</option>
+                  <option value="승용">승용</option>
+                  <option value="SUV">SUV</option>
+                  <option value="수소/전기차">수소/전기차</option>
+                  <option value="N">N</option>
+                </select>
               </div>
-            </div>
-            <div class="juykim-car-search">
-              <div class="selectset selectset-lg">
-                <button class="selectset-toggle btn" type="button">
-                  <span>엔진</span>
-                </button>
-                <ul class="selectset-list">
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿1">
-                      <span>가솔린</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿2">
-                      <span>LPG</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>하이브리드</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>디젤</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>전기</span>
-                    </button>
-                  </li>
-                  <li class="selectset-item">
-                    <button class="selectset-link btn" type="button" data-value="템플릿3">
-                      <span>수소</span>
-                    </button>
-                  </li>
-                </ul>
+
+              <div class="juykim-car-search">
+                <select th:field="*{engine}" id="engineSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                  <option value="">엔진</option>
+                  <option value="승용">가솔린</option>
+                  <option value="SUV">LPG</option>
+                  <option value="하이브리드">하이브리드</option>
+                  <option value="디젤">디젤</option>
+                  <option value="전기">전기</option>
+                  <option value="수소">수소</option>
+                </select>
               </div>
-            </div>
-            <!-- 차종/엔진으로 검색할 버튼 삽입 -->
-            <div class="juykim-search-button">
-              <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-            </div>
-            <div class="juykim-car-search"></div>
-            <div class="inputset">
-              <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-              <input type="text" class="inputset-input form-control" placeholder="검색어를 입력해주세요." aria-label="내용">
-            </div>
+
+              <div class="juykim-car-search"></div>
+
+              <div class="inputset">
+                <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘"></button>
+                <input th:field="*{name}" type="text" class="inputset-input form-control" placeholder="검색할 차량 이름을 입력해 주세요." aria-label="내용">
+              </div>
+            </form>
+
           </div>
+
+
           <!-- 리스트 시작 -->
           <div class="contents-group">
             <div class="juykim-contents-wrap">
