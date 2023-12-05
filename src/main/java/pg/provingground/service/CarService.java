@@ -51,10 +51,21 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
-    public boolean isValidFuelAmount(Long carId, int amount) {
-        Car car = carRepository.findOne(carId);
-        ///if (car.getType().get)
+    /** 선택 차량에 적합한 주유구인지 확인 */
+    public boolean isValidStation(Long carId, Long stationId) {
+        // TODO: station에 연료 타입 추가하여 car의 연료 타입과 일치하는지 확인
         return true;
+    }
+
+    /** 입력된 연료량을 유효한 값으로 변경하여 반환 */
+    public int validFuelAmount(Long carId, int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("유효하지 않은 주유량입니다.");
+        }
+        Car car = carRepository.findOne(carId);
+        // 연료 탱크의 남은 공간
+        int leftCapacity = car.getType().getFuelCapacity() - car.getFuel();
+        return Math.min(amount, leftCapacity);
     }
 
 }

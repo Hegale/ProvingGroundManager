@@ -12,6 +12,7 @@ import pg.provingground.service.CarService;
 import pg.provingground.service.CarTypeService;
 import pg.provingground.service.RefuelService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -21,6 +22,7 @@ public class RefuelController {
     private final CarTypeService carTypeService;
     private final CarService carService;
     private final StationRepository stationRepository;
+    private final RefuelService refuelService;
 
     @GetMapping("/refuel/new")
     /** 차종으로 차량 검색 */
@@ -57,7 +59,7 @@ public class RefuelController {
 
     @GetMapping("/refuel/select/{carId}")
     /** 차 선택 후 주유 */
-    public String chooseAmount(@PathVariable("carId") Long carRentalId, Model model) {
+    public String chooseAmount(@PathVariable("carId") Long carId, Model model) {
         List<Station> stations = stationRepository.findAll();
 
         model.addAttribute("stations", stations);
@@ -67,8 +69,10 @@ public class RefuelController {
 
     @PostMapping("/refuel/select/{carId}")
     /** 차 선택 후 주유 */
-    public String refueling(@PathVariable("carId") Long carRentalId, @RequestParam Long stationId, @RequestParam Long amount) {
-        // amount의 유효성 체크
+    public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId, @RequestParam int amount) {
+        int validAmount = carService.validFuelAmount(carId, amount);
+        // TODO: 유효한 주유구인지 확인하는 service method 호출
+        refuelService.refuel(1L, carId, stationId, LocalDateTime.now(), validAmount);
         return "refuel/fueling_history";
     }
 
