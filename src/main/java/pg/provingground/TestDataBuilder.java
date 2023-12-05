@@ -95,6 +95,7 @@ public class TestDataBuilder {
             CarType carType = carTypeRepository.findOne((long)i % 10 + 1);
             car.setType(carType);
             car.setNumber("12가 3456");
+            car.setFuel(0);
             carRepository.save(car);
         }
     }

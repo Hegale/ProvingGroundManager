@@ -31,35 +31,25 @@ public class CarRepository {
         return em.createQuery("select c from Car c", Car.class).getResultList();
     }
 
-    public List<CarDto> findAllDto() {
-        return em.createQuery(
-                "SELECT new pg.provingground.dto.CarDto(" +
-                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
-                        "FROM Car c " +
-                        "JOIN FETCH c.type t ", CarDto.class).getResultList();
-    }
-
     /** 차량번호를 통한 차량 검색 */
-    public List<CarDto> findByNumber(String number) {
+    public List<Car> findByNumber(String number) {
         return em.createQuery(
-                "SELECT new pg.provingground.dto.CarDto(" +
-                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
+                "SELECT c " +
                         "FROM Car c " +
                         "JOIN FETCH c.type t " +
                         "WHERE c.number like :number",
-                CarDto.class)
+                Car.class)
                 .setParameter("number", "%" + number + "%")
                 .getResultList();
     }
 
     /** 차종을 통한 차량 검색 */
-    public List<CarDto> findByCarTypes(List<CarType> types) {
+    public List<Car> findByCarTypes(List<CarType> types) {
         return em.createQuery(
-                "SELECT new pg.provingground.dto.CarDto(" +
-                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
+                "SELECT c " +
                         "FROM Car c " +
                         "JOIN FETCH c.type t " +
-                        "WHERE t IN :types", CarDto.class)
+                        "WHERE t IN :types", Car.class)
                 .setParameter("types", types)
                 .getResultList();
     }

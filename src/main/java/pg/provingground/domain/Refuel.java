@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter @Setter
-public class Refueling {
+public class Refuel {
 
     @Id @GeneratedValue
     @Column(name = "refueling_id")
