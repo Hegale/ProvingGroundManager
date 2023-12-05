@@ -22,4 +22,6 @@ public class Car {
 
     private String number;
 
+    private int fuel; // 잔여 연료, cc단위
+
 }

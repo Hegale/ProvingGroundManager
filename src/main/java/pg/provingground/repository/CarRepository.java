@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
+import pg.provingground.dto.CarDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
+// TODO: 양방향 관계 고려하기. 상당수가 필요없어짐
 public class CarRepository {
 
     private final EntityManager em;
@@ -29,14 +31,36 @@ public class CarRepository {
         return em.createQuery("select c from Car c", Car.class).getResultList();
     }
 
-    /** 차량번호를 통한 차량 검색 */
-    public List<Car> findByNumber(String number) {
+    public List<CarDto> findAllDto() {
         return em.createQuery(
-                "SELECT c " +
+                "SELECT new pg.provingground.dto.CarDto(" +
+                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
                         "FROM Car c " +
+                        "JOIN FETCH c.type t ", CarDto.class).getResultList();
+    }
+
+    /** 차량번호를 통한 차량 검색 */
+    public List<CarDto> findByNumber(String number) {
+        return em.createQuery(
+                "SELECT new pg.provingground.dto.CarDto(" +
+                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
+                        "FROM Car c " +
+                        "JOIN FETCH c.type t " +
                         "WHERE c.number like :number",
-                Car.class)
+                CarDto.class)
                 .setParameter("number", "%" + number + "%")
+                .getResultList();
+    }
+
+    /** 차종을 통한 차량 검색 */
+    public List<CarDto> findByCarTypes(List<CarType> types) {
+        return em.createQuery(
+                "SELECT new pg.provingground.dto.CarDto(" +
+                        "c.carId, c.number, c.fuel, t.name, t.type, t.engine) " +
+                        "FROM Car c " +
+                        "JOIN FETCH c.type t " +
+                        "WHERE t IN :types", CarDto.class)
+                .setParameter("types", types)
                 .getResultList();
     }
 
@@ -62,7 +86,11 @@ public class CarRepository {
 
     /** 특정 차종의 차량들 검색 */
     public List<Car> findByCarType(Long typeId) {
-        return em.createQuery("select c from Car c where c.type.carTypeId = :typeId", Car.class)
+        return em.createQuery(
+                "SELECT c " +
+                        "FROM Car c " +
+                        "JOIN FETCH c.type ct " +
+                        "WHERE ct.carTypeId = :typeId", Car.class)
                 .setParameter("typeId", typeId)
                 .getResultList();
     }

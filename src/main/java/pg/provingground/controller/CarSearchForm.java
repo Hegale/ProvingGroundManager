@@ -12,4 +12,6 @@ public class CarSearchForm {
 
     String name;
 
+    String number;
+
 }
