@@ -16,6 +16,7 @@ public class UserRepository {
     private final EntityManager em;
 
     public void save(User user) {
+        System.out.println("안녕하세요!!");
         em.persist(user);
     }
 

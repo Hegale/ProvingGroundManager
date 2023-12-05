@@ -17,7 +17,7 @@ public class User {
     // 권한 아이디. 외래키
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private Role roleId;
+    private Role role;
 
     @Column(unique = true) // 아이디는 유일해야 한다.
     private String id;
@@ -31,10 +31,10 @@ public class User {
 
     public static User createUser(String id, String passwd, String name, String phoneNum) {
         User user = new User();
-        user.setId(id);
-        user.setPasswd(passwd);
-        user.setName(name);
-        user.setPhoneNum(phoneNum);
+        user.id = id;
+        user.passwd = passwd;
+        user.name = name;
+        user.phoneNum = phoneNum;
         // TODO: Role도 추가
         return user;
     }

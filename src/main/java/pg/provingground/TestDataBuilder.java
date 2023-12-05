@@ -23,26 +23,7 @@ public class TestDataBuilder {
     private final GroundRepository groundRepository;
     private final CarRentalRepository carRentalRepository;
     private final GroundRentalRepository groundRentalRepository;
-
-
-    @EventListener(ApplicationReadyEvent.class)
-    @Transactional
-    /** 유저 테스트 데이터 생성 */
-    public void buildUserTestData() {
-
-        List<String> names = List.of(
-                "피카츄", "라이츄", "파이리", "꼬부기");
-        List<String> ids = List.of(
-                "pikachu", "raichu", "pairii", "ggobugi");
-        List<String> passwds = List.of(
-                "pikachu123", "raichu123", "pairii123", "ggobugi123");
-        List<String> phoneNums = List.of(
-                "010-1234-5678", "010-0000-1111", "010-2222-3333", "010-4444-5555");
-        for (int i = 0; i < 4; ++i) {
-            User user = User.createUser(ids.get(i), passwds.get(i), names.get(i), phoneNums.get(i));
-            userRepository.save(user);
-        }
-    }
+    private final StationRepository stationRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -86,6 +67,27 @@ public class TestDataBuilder {
             carTypeRepository.save(carType);
         }
     }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    // 유저 테스트 데이터 생성
+    public void buildUserTestData() {
+
+        List<String> names = List.of(
+                "피카츄", "라이츄", "파이리", "꼬부기");
+        List<String> ids = List.of(
+                "pikachu", "raichu", "pairii", "ggobugi");
+        List<String> passwds = List.of(
+                "pikachu123", "raichu123", "pairii123", "ggobugi123");
+        List<String> phoneNums = List.of(
+                "010-1234-5678", "010-0000-1111", "010-2222-3333", "010-4444-5555");
+        for (int i = 0; i < 4; ++i) {
+            System.out.println("지금 i = " + i);
+            User user = User.createUser(ids.get(i), passwds.get(i), names.get(i), phoneNums.get(i));
+            userRepository.save(user);
+        }
+    }
+
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -168,6 +170,16 @@ public class TestDataBuilder {
             GroundRental groundRental = GroundRental.createGroundRental(user, ground,
                     LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
             groundRentalRepository.save(groundRental);
+        }
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void buildStationData() {
+        List<String> names = List.of("주유구 A", "주유구 B", "주유구 C", "주유구 D", "주유구 E");
+        for (int i = 0; i < 5; ++i) {
+            Station station = Station.createStation(names.get(i));
+            stationRepository.save(station);
         }
     }
 

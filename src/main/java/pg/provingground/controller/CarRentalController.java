@@ -47,7 +47,7 @@ public class CarRentalController {
 
         model.addAttribute("type", carRentalService.findType(carTypeId));
         model.addAttribute("form", form);
-        // TODO: ajax로 불가능한 날짜 및 시간 처리하는 로직 구현
+        // TODO: ajax로 불가능한 날짜 및 시간 비활성화하는 로직 구현
         model.addAttribute("availableTimes", times);
 
         return "car_rental/car_date_selection";

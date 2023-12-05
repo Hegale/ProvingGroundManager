@@ -50,4 +50,11 @@ public class CarService {
                         car.getType().getEngine()))
                 .collect(Collectors.toList());
     }
+
+    public boolean isValidFuelAmount(Long carId, int amount) {
+        Car car = carRepository.findOne(carId);
+        ///if (car.getType().get)
+        return true;
+    }
+
 }

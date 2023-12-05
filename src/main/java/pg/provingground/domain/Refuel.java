@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -14,9 +15,9 @@ public class Refuel {
     @Column(name = "refueling_id")
     private Long refuelingId;
 
-    private Timestamp fuel_time;
+    private LocalDateTime time;
 
-    private int fuel_amount;
+    private int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
@@ -29,5 +30,18 @@ public class Refuel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "station_id")
     private Station station;
+
+
+    // === 생성 메서드 === //
+    /** 새 refuel 객체 생성 */
+    public static Refuel createRefuel(User user, Car car, Station station, LocalDateTime time, int amount) {
+        Refuel refuel = new Refuel();
+        refuel.user = user;
+        refuel.car = car;
+        refuel.station = station;
+        refuel.time = time;
+        refuel.amount = amount;
+        return refuel;
+    }
 
 }

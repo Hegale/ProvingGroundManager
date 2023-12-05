@@ -30,7 +30,7 @@ public class CarController {
         return "car_rental/car_selection";
     }
 
-    /*
+
     @PostMapping("/car_rental/new")
     public String searchCarType(@ModelAttribute CarSearchForm searchForm, RedirectAttributes redirectAttributes) {
         System.out.println("form result: " + searchForm.type + " | " + searchForm.engine + " | " + searchForm.name);
@@ -53,6 +53,6 @@ public class CarController {
 
         return "car_rental/car_selection";
     }
-    */
+
 
 }
