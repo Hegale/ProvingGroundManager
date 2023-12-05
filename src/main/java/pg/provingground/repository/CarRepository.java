@@ -29,6 +29,17 @@ public class CarRepository {
         return em.createQuery("select c from Car c", Car.class).getResultList();
     }
 
+    /** 차량번호를 통한 차량 검색 */
+    public List<Car> findByNumber(String number) {
+        return em.createQuery(
+                "SELECT c " +
+                        "FROM Car c " +
+                        "WHERE c.number like :number",
+                Car.class)
+                .setParameter("number", "%" + number + "%")
+                .getResultList();
+    }
+
     @Transactional
     public void delete(Car car) {
         if (car != null) {
