@@ -109,7 +109,7 @@
                     <th scope="col">차량 이름</th>
                     <th scope="col">대여일</th>
                     <th scope="col">반납 여부</th>
-                    <th scope="col">취소/반납</th>
+                    <th scope="col">취소 / 반납</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -121,7 +121,35 @@
                     </td>
                     <td class="last-child" th:text="${rental.startTime}">대여일</td>
                     <td class="last-child" th:text="${rental.returned}">반납 여부</td>
-                    <td class="last-child">수정/삭제 버튼</td>
+                    <td class="last-child">
+                      <!--
+
+                      <button type="button"
+                              th:if="${rental.canceled == 'Y'}"
+                              disabled
+                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                        취소 완료
+                      </button>
+                      <button
+                              th:if="${rental.cancelable == 'Y'}"
+                              th:onclick="'javascript:cancel('+${rental.groundRentalId}+');'"
+                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                        취소
+                      </button>
+                      <button
+                              th:if="${rental.cancelable == 'Y'}"
+                              th:onclick="'javascript:cancel('+${rental.groundRentalId}+');'"
+                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                        반납 완료
+                      </button>
+                      <button type="button"
+                              th:if="${rental.canceled == 'N' and rental.cancelable == 'N'}"
+                              disabled
+                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                        반납
+                      </button>-->
+
+                    </td>
                   </tr>
                   <!-- 목록 하나 끝-->
                 </tbody>

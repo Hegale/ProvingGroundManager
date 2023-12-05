@@ -9,6 +9,13 @@
     margin-right: 3rem;
 }
 
+.juykim-cancel-btn {
+    width: 30%;
+    height: 4.5rem !important;
+    padding: 10px !important;
+    margin: 0 !important;
+}
+
 /* thwhole-enlPbA0Maj [enlPbA0Maj] */
 .thwhole-enlPbA0Maj { z-index: 5000; position: fixed; width: 100%; height: 8rem; }
 .thwhole-enlPbA0Maj::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 100%; transition: 0.4s; background: linear-gradient(rgba(var(--black-rgb), 0.5), rgba(0, 255, 0, 0)); }

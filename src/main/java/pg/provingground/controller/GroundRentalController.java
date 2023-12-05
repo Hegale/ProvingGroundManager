@@ -61,6 +61,13 @@ public class GroundRentalController {
         return "redirect:/ground_rental"; // 대여 내역으로 이동
     }
 
+    @PostMapping("/ground_rental/{groundRentalId}/cancel")
+    public String cancelRental(@PathVariable("groundRentalId") Long groundRentalId) {
+        groundRentalService.cancelRental(groundRentalId);
+
+        return "redirect:/ground_rental";
+    }
+
 
 
 

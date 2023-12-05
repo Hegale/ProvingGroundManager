@@ -44,7 +44,7 @@ public class GroundRentalRepository {
                         "SELECT c.startTime " +
                                 "FROM GroundRental c " +
                                 "WHERE c.startTime > :start and c.startTime < :end " +
-                                "AND c.returned  = 'N' and c.ground = :groundId ",
+                                "AND c.canceled  = 'N' and c.ground = :groundId ",
                         LocalDateTime.class)
                 .setParameter("start", start)
                 .setParameter("end", end)
@@ -56,7 +56,7 @@ public class GroundRentalRepository {
      * 인자로 받은 차량 중 반납되지 않은 대여기록 반환. TODO: 삭제
      */
     public List<GroundRental> findNotReturned(Long groundId) {
-        String jpql = "select gr from GroundRental gr where gr.returned = 'N' and gr.ground = :groundId";
+        String jpql = "select gr from GroundRental gr where gr.canceled = 'N' and gr.ground = :groundId";
         return em.createQuery(jpql, GroundRental.class)
                 .setParameter("groundId", groundId)
                 .getResultList();
