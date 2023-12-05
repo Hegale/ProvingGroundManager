@@ -33,6 +33,7 @@ public class CarRentalController {
         return "car_rental/car_rent_history";
     }
 
+
     @GetMapping("/car_rental/select/{carTypeId}")
     /** 차량 선택 후 날짜 선택 페이지 */
     public String selectDate(@PathVariable Long carTypeId, Model model) {
@@ -58,6 +59,7 @@ public class CarRentalController {
 
         return "redirect:/car_rental"; // 대여 내역으로 이동
     }
+
 
 
     /*

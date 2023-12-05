@@ -1,6 +1,7 @@
 package pg.provingground.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -34,35 +35,42 @@ public class CarTypeRepository {
                 .getResultList();
     }
 
-    // TODO: 코드 최적화
     /** 조건과 일치하는 차종 검색 (엔진, 차종) */
-    public List<CarType> findByCondition(String engine, String type) {
-        String jpql = "select t from CarType t";
-        if (!engine.isEmpty() || !type.isEmpty()) {
-            jpql += " where ";
-        }
-        if (!engine.isEmpty()) {
-            jpql += "t.engine like :engine";
-        }
-        if (!engine.isEmpty() && !type.isEmpty()) {
-            jpql += " and";
-        }
-        if (!type.isEmpty()) {
-            jpql += "t.type like :type";
-        }
+    public List<CarType> findByCondition(String engine, String type, String name) {
+        String jpql = getSearchString(engine, type, name);
 
         TypedQuery<CarType> query = em.createQuery(jpql, CarType.class);
 
         // 파라미터 바인딩
-        if (!engine.isEmpty()) {
+        if (engine != null && !engine.isEmpty()) {
             query.setParameter("engine", "%" + engine + "%");
         }
-        if (!type.isEmpty()) {
+        if (type != null && !type.isEmpty()) {
             query.setParameter("type", "%" + type + "%");
         }
+        if (name != null && !name.isEmpty()) {
+            query.setParameter("name", "%" + name + "%");
+        }
 
-        return em.createQuery(jpql, CarType.class)
-                .getResultList();
+        return query.getResultList();
+    }
+
+    private String getSearchString(String engine, String type, String name) {
+        String jpql = "select t from CarType t";
+        boolean hasCondition = false;
+        if (engine != null && !engine.isEmpty()) {
+            jpql += " where t.engine like :engine";
+            hasCondition = true;
+        }
+        if (type != null && !type.isEmpty()) {
+            jpql += (hasCondition ? " and" : " where") + " t.type like :type";
+            hasCondition = true;
+        }
+        if (name != null && !name.isEmpty()) {
+            jpql += (hasCondition ? " and" : " where") + " t.name like :name";
+            hasCondition = true;
+        }
+        return jpql;
     }
 
 }
