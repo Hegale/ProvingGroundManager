@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarType;
+import pg.provingground.domain.Refuel;
 import pg.provingground.domain.Station;
 import pg.provingground.dto.CarDto;
 import pg.provingground.repository.StationRepository;
@@ -63,6 +64,7 @@ public class RefuelController {
         List<Station> stations = stationRepository.findAll();
 
         model.addAttribute("stations", stations);
+        model.addAttribute("carId", carId); //없어도 되나?
 
         return "refuel/refueling";
     }
@@ -72,7 +74,23 @@ public class RefuelController {
     public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId, @RequestParam int amount) {
         int validAmount = carService.validFuelAmount(carId, amount);
         // TODO: 유효한 주유구인지 확인하는 service method 호출
+        System.out.println("carId:" + carId + " | stationId:" + stationId + " | validAmount:" + validAmount);
         refuelService.refuel(1L, carId, stationId, LocalDateTime.now(), validAmount);
+        // 주유 후 주유 내역으로 이동
+        return "redirect:/refuel";
+    }
+
+    @GetMapping("/refuel")
+    /** 주유 내역 확인 */
+    public String fuelHistory(Model model) {
+        // 해당 유저의 주유기록 받아오기
+        // TODO: Dto로 변환!
+        //List<Refuel> refuels = refuelService.findUserRefuel(1L); 이거 못읽어옴..왜??
+
+        List<Refuel> refuels = refuelService.findAllRefuel();
+
+        model.addAttribute("refuels", refuels);
+
         return "refuel/fueling_history";
     }
 

@@ -65,7 +65,7 @@ public class CarService {
         Car car = carRepository.findOne(carId);
         // 연료 탱크의 남은 공간
         int leftCapacity = car.getType().getFuelCapacity() - car.getFuel();
-        return Math.min(amount, leftCapacity);
+        return Math.min(amount * 1000, leftCapacity) ;
     }
 
 }

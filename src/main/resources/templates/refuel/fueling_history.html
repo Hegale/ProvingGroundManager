@@ -108,43 +108,24 @@
                   <tr>
                     <th class="number" scope="col">NO</th>
                     <!-- 가로구분  -->
-                    <th scope="col">차량 이름</th>
-                    <th scope="col">대여일</th>
-                    <th scope="col">반납 여부</th>
-                    <th scope="col">취소 / 반납</th>
+                    <th scope="col">차량</th>
+                    <th scope="col">주유구</th>
+                    <th scope="col">주유일시</th>
+                    <th scope="col">주유량</th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- 목록 하나 시작 -->
-                  <tr th:each="rental : ${rentals}">
-                    <td class="number" th:text="${rental.carRentalId.toString()}">7</td>
+                  <tr th:each="refuel : ${refuels}">
+                    <td class="number" th:text="${refuel.refuelingId}">7</td>
                     <td>
-                      <p th:text="${rental.carName}"></p>
+                      <!-- TODO: 성능 ?? DTO 고민! -->
+                      <p th:text="${refuel.car.type.name}">차량</p>
                     </td>
-                    <td class="last-child" th:text="${rental.startTime.toString()}">대여일</td>
-                    <td class="last-child" th:text="${rental.returned}">반납 여부</td>
-                    <td class="last-child">
+                    <td class="last-child" th:text="${refuel.station.name}">주유구</td>
+                    <td class="last-child" th:text="${refuel.time.toString()}">주유일시</td>
+                    <td class="last-child" th:text="${#numbers.formatDecimal(refuel.amount / 1000, 1, 'COMMA', 0, 'POINT')}">주유량</td>
 
-                      <button type="button"
-                              th:if="${rental.returned == 'Y'}"
-                              disabled
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        반납 완료
-                      </button>
-                      <button
-                              th:if="${rental.cancelable == 'Y'}"
-                              th:onclick="'javascript:cancel('+${rental.carRentalId}+');'"
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        취소
-                      </button>
-                      <button type="button"
-                              th:if="${rental.returnable == 'Y'}"
-                              th:onclick="'javascript:cancel('+${rental.carRentalId}+');'"
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        반납
-                      </button>
-
-                    </td>
                   </tr>
                   <!-- 목록 하나 끝-->
                 </tbody>

@@ -28,21 +28,20 @@
           </ul>
           <div class="form-wrap">
 
-            <form>
-
+            <form method="post">
 
               <div class="form-body">
 
                 <div class="juykim-car-search">
-                  <select name="stationId" th:each="station : ${stations}" id="stationSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
-                    <option value="${station.stationdId} text="${station.name}">주유구명</option>
+                  <select name="stationId"  id="stationSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                    <option th:each="station : ${stations}" th:value="${station.stationId}" th:text="${station.name}">주유구명</option>
                   </select>
                 </div>
-                <fieldset class="fieldset">
+                <fieldset class="fieldset" style="margin-top:3rem;">
                   <legend class="legend">주유량 *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="password" class="inputset-input form-control" placeholder="주유량을 입력해 주세요." aria-label="영문/숫자 조합의 8-15자로 입력해 주세요.">
+                      <input th:name="amount" type="text" class="inputset-input form-control" placeholder="주유량을 입력해 주세요" aria-label="주유량">
                     </div>
                   </div>
                 </fieldset>
@@ -51,10 +50,15 @@
 
 
               <div class="form-footer btn-box">
-                <a class="btnset btnset-mono btnset-lg btnset-rect" href="javascript:void(0)">취소</a>
-                <a class="btnset2 btnset-lg btnset-rect" href="javascript:void(0)">주유하기</a>
+                <!-- <a href="/refuel/new" class="btnset btnset-lg btnset-mono btnset-line">
+                  취소
+                </a>-->
+                  <!--<button class="btnset btnset-lg btnset-mono btnset-line juykim-fuel-cancel"
+                          onclick="location.href='/refuel/new'">취소</button> -->
+                <button type="submit" class="btnset btnset-lg btnset-mono btnset-line" href="javascript:void(0)">주유하기</button>
               </div>
             </form>
+
           </div>
         </div>
       </div>

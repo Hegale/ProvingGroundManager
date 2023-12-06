@@ -39,8 +39,12 @@ public class RefuelService {
         return refuel.getRefuelingId();
     }
 
-    public List<Refuel> findUserRefuel(User user) {
-        return refuelRepository.findUserRefuel(user.getUserId());
+    public List<Refuel> findUserRefuel(Long userId) {
+        return refuelRepository.findUserRefuel(userId);
+    }
+
+    public List<Refuel> findAllRefuel() {
+        return refuelRepository.findAll();
     }
 
 }

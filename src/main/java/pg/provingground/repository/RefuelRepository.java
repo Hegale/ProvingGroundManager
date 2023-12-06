@@ -22,6 +22,10 @@ public class RefuelRepository {
         return em.find(Refuel.class, id);
     }
 
+    public List<Refuel> findAll() {
+        return em.createQuery("SELECT r FROM Refuel r", Refuel.class).getResultList();
+    }
+
     /** 특정 유저의 주유기록 검색 */
     public List<Refuel> findUserRefuel(Long userId) {
         return em.createQuery(
