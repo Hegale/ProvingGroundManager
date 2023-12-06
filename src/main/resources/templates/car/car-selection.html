@@ -63,7 +63,7 @@
             <div class="juykim-contents-wrap">
               <div class="contents-cardlist contents-cardlist-active">
 
-                <a th:href="@{'/car_rental/select/' + ${type.carTypeId}}" class="cardset cardset-hor" th:each="type : ${types}">
+                <a th:href="@{'/car-rental/select/' + ${type.carTypeId}}" class="cardset cardset-hor" th:each="type : ${types}">
                   <figure class="cardset-figure">
                     <img class="cardset-img" th:src="@{'/images/car_img/' + ${type.name} + '.jpg'}" alt="">
                   </figure>

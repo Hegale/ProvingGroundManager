@@ -172,7 +172,7 @@
     function cancel(carRentalId) {
       var form = document.createElement("form");
       form.setAttribute("method", "post");
-      form.setAttribute("action", "/car_rental/" + carRentalId + "/return");
+      form.setAttribute("action", "/car-rental/" + carRentalId + "/return");
       document.body.appendChild(form);
       form.submit();
     }

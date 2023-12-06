@@ -28,16 +28,16 @@ public class GroundRentalController {
     private final GroundRentalService groundRentalService;
     private final UserRepository userRepository; //임시. 테스트 이후 삭제
 
-    @GetMapping("/ground_rental")
+    @GetMapping("/ground-rental")
     /** 시험장 대여 내역 */
     public String list(Model model) {
         User user = userRepository.findOne(1L);
         List<GroundRentalHistory> rentals = groundRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
-        return "ground_rental/ground_rental_history";
+        return "ground/ground-rental-history";
     }
 
-    @GetMapping("/ground_rental/select/{groundId}")
+    @GetMapping("/ground-rental/select/{groundId}")
     /** 시험장 선택 후 날짜 선택 */
     public String selectDate(@PathVariable Long groundId, Model model) {
         GroundRentalForm form = new GroundRentalForm(1L, groundId);
@@ -47,10 +47,10 @@ public class GroundRentalController {
         // TODO: ajax로 불가능한 날짜 및 시간 처리하는 로직 구현
         //model.addAttribute("availableTimes", times);
 
-        return "ground_rental/ground_date_selection";
+        return "ground/ground-date-selection";
     }
 
-    @PostMapping("/ground_rental/select/{groundId}")
+    @PostMapping("/ground-rental/select/{groundId}")
     /** 예약에 필요한 정보들 확정 후 예약 실행 */
     public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form) {
         // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
@@ -58,14 +58,14 @@ public class GroundRentalController {
         LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         groundRentalService.rental(1L, groundId, time);
 
-        return "redirect:/ground_rental"; // 대여 내역으로 이동
+        return "redirect:/ground-rental"; // 대여 내역으로 이동
     }
 
-    @PostMapping("/ground_rental/{groundRentalId}/cancel")
+    @PostMapping("/ground-rental/{groundRentalId}/cancel")
     public String cancelRental(@PathVariable("groundRentalId") Long groundRentalId) {
         groundRentalService.cancelRental(groundRentalId);
 
-        return "redirect:/ground_rental";
+        return "redirect:/ground-rental";
     }
 
 

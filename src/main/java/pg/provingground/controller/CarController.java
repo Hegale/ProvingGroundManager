@@ -18,7 +18,7 @@ public class CarController {
 
     private final CarTypeService carTypeService;
 
-    @GetMapping("/car_rental/new")
+    @GetMapping("/car-rental/new")
     /** 차량 선택 페이지. 검색에 따른 차종 결과 출력 */
     public String carTypeList(@ModelAttribute CarSearchForm searchForm, Model model) {
         List<CarType> types = carTypeService.findCarTypesByCondition(searchForm);
@@ -27,11 +27,11 @@ public class CarController {
         model.addAttribute("types", types);
         model.addAttribute("searchForm", searchForm);
 
-        return "car_rental/car_selection";
+        return "car/car-selection";
     }
 
 
-    @PostMapping("/car_rental/new")
+    @PostMapping("/car-rental/new")
     public String searchCarType(@ModelAttribute CarSearchForm searchForm, RedirectAttributes redirectAttributes) {
         System.out.println("form result: " + searchForm.type + " | " + searchForm.engine + " | " + searchForm.name);
 
@@ -40,10 +40,10 @@ public class CarController {
         redirectAttributes.addAttribute("engine", searchForm.getEngine());
         redirectAttributes.addAttribute("name", searchForm.getName());
 
-        return "redirect:/car_rental/new/search";
+        return "redirect:/car-rental/new/search";
     }
 
-    @GetMapping("/car_rental/new/search")
+    @GetMapping("/car-rental/new/search")
     //차종 조건을 통해 검색
     public String carTypeListByCondition(Model model, @ModelAttribute("searchForm") CarSearchForm searchForm) {
         List<CarType> types = carTypeService.findCarTypesByCondition(searchForm);
@@ -51,7 +51,7 @@ public class CarController {
         model.addAttribute("types", types);
         model.addAttribute("searchForm", searchForm);
 
-        return "car_rental/car_selection";
+        return "car/car-selection";
     }
 
 

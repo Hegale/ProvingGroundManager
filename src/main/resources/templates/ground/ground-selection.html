@@ -29,7 +29,7 @@
 
 
                 <div class="swiper-slide" th:each="ground : ${grounds}">
-                  <a class="cardset cardset-border" th:href="@{'/ground_rental/select/' + ${ground.groundId}}">
+                  <a class="cardset cardset-border" th:href="@{'/ground-rental/select/' + ${ground.groundId}}">
                     <figure class="cardset-figure">
                       <img class="cardset-img" th:src="@{'/images/pv_img/' + ${ground.name} + '.jpg'}" alt="">
                     </figure>

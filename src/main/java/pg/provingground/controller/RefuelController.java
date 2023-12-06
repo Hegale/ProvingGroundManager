@@ -36,10 +36,10 @@ public class RefuelController {
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);
 
-        return "refuel/fuel_select_car";
+        return "refuel/fuel-select-car";
     }
 
-    @GetMapping("/refuel/new/car_number")
+    @GetMapping("/refuel/new/car-number")
     /** 주유 전 차량 선택 */
     public String carListByNumber(@RequestParam String carNumber, Model model) {
         // 차량 번호로 검색
@@ -55,7 +55,7 @@ public class RefuelController {
         model.addAttribute("typeSearchForm", typeSearchForm);
         model.addAttribute("carNumber", carNumber);
 
-        return "refuel/fuel_select_car";
+        return "refuel/fuel-select-car";
     }
 
     @GetMapping("/refuel/select/{carId}")
@@ -91,7 +91,7 @@ public class RefuelController {
 
         model.addAttribute("refuels", refuels);
 
-        return "refuel/fueling_history";
+        return "refuel/fueling-history";
     }
 
 }

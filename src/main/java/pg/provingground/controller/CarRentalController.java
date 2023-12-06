@@ -24,22 +24,22 @@ public class CarRentalController {
     private final CarRentalService carRentalService;
     private final UserRepository userRepository; // 테스트를 위한 임시 선언. 이후 삭제
 
-    @GetMapping("/car_rental")
+    @GetMapping("/car-rental")
     /** 차량 대여 내역 */
     public String list(Model model) {
         User user = userRepository.findOne(1L);
         List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
-        return "car_rental/car_rent_history";
+        return "car/car-rent-history";
     }
 
-    @PostMapping("/car_rental/{carRentalId}/return")
+    @PostMapping("/car-rental/{carRentalId}/return")
     public String returnRental(@PathVariable("carRentalId") Long carRentalId) {
         carRentalService.cancelRental(carRentalId);
-        return "redirect:/car_rental";
+        return "redirect:/car-rental";
     }
 
-    @GetMapping("/car_rental/select/{carTypeId}")
+    @GetMapping("/car-rental/select/{carTypeId}")
     /** 차량 선택 후 날짜 선택 페이지 */
     public String selectDate(@PathVariable Long carTypeId, Model model) {
         CarRentalForm form = new CarRentalForm(1L, carTypeId);
@@ -50,10 +50,10 @@ public class CarRentalController {
         // TODO: ajax로 불가능한 날짜 및 시간 비활성화하는 로직 구현
         model.addAttribute("availableTimes", times);
 
-        return "car_rental/car_date_selection";
+        return "car/car-date-selection";
     }
 
-    @PostMapping("/car_rental/select/{carTypeId}")
+    @PostMapping("/car-rental/select/{carTypeId}")
     /** 대여에 필요한 정보들 확정 후 대여 시행 */
     public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form) {
         // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
@@ -62,7 +62,7 @@ public class CarRentalController {
         Long carId = carRentalService.getSchedulableCar(carTypeId, time);
         carRentalService.rental(1L, carId, time);
 
-        return "redirect:/car_rental"; // 대여 내역으로 이동
+        return "redirect:/car-rental"; // 대여 내역으로 이동
     }
 
     /*

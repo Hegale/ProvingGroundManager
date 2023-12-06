@@ -23,8 +23,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 // 해당 페이지의 모든 요청(get, post..)에 대해 해당 권한을 갖고 있어야 접근 가능하게 함.
                 // 즉, 인증이 필요한 페이지 나열
-                .requestMatchers("/car_rental").hasRole("USER")
-                .requestMatchers("/ground_rental").hasRole("USER")
                 // 특정 URI를 제외한 나머지 URI 인가
                 .anyRequest().permitAll()
                 .and()

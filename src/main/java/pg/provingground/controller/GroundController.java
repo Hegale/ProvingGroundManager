@@ -17,11 +17,11 @@ public class GroundController {
 
     private final GroundService groundService;
 
-    @GetMapping("/ground_rental/new")
+    @GetMapping("/ground-rental/new")
     public String list(Model model) {
         List<Ground> grounds = groundService.findItems();
         model.addAttribute("grounds", grounds);
-        return "ground_rental/ground_selection";
+        return "ground/ground-selection";
     }
 
 }

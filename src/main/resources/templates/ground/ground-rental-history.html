@@ -190,7 +190,7 @@
   function cancel(groundRentalId) {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
-    form.setAttribute("action", "/ground_rental/" + groundRentalId + "/cancel");
+    form.setAttribute("action", "/ground-rental/" + groundRentalId + "/cancel");
     document.body.appendChild(form);
     form.submit();
   }
