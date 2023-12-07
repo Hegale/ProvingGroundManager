@@ -22,6 +22,7 @@ public class RefuelService {
 
     private final RefuelRepository refuelRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final CarRepository carRepository;
     private final StationRepository stationRepository;
 
@@ -29,7 +30,7 @@ public class RefuelService {
     @Transactional
     public Long refuel(Long userId, Long carId, Long stationId, LocalDateTime time, int amount) {
         // 참조 객체들 찾아오기
-        User user = userRepository.findOne(userId);
+        User user = userService.getLoginUserById(userId);
         Car car = carRepository.findOne(carId);
         Station station = stationRepository.findOne(stationId);
 

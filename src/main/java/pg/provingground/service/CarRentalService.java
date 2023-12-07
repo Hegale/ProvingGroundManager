@@ -29,13 +29,14 @@ public class CarRentalService {
     private final CarRentalRepository carRentalRepository;
     private final CarTypeRepository carTypeRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final CarRepository carRepository;
 
     /** 차량 대여 */
     @Transactional
     public Long rental(Long userId, Long carId, LocalDateTime time) {
 
-        User user = userRepository.findOne(userId);
+        User user = userService.getLoginUserById(userId);
         Car car = carRepository.findOne(carId);
 
         CarRental carRental = CarRental.createCarRental(user, car, time);

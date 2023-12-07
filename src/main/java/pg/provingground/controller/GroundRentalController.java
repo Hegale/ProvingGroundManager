@@ -16,6 +16,7 @@ import pg.provingground.dto.GroundRentalHistory;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.GroundRentalService;
+import pg.provingground.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,11 +28,12 @@ public class GroundRentalController {
 
     private final GroundRentalService groundRentalService;
     private final UserRepository userRepository; //임시. 테스트 이후 삭제
+    private final UserService userService;
 
     @GetMapping("/ground-rental")
     /** 시험장 대여 내역 */
     public String list(Model model) {
-        User user = userRepository.findOne(1L);
+        User user = userService.getLoginUserById(1L);
         List<GroundRentalHistory> rentals = groundRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
         return "ground/ground-rental-history";

@@ -21,23 +21,23 @@ public class User {
     private Role role;
      */
 
-    private String role;
+    private UserRole role;
 
     @Column(unique = true) // 아이디는 유일해야 한다.
-    private String id;
+    private String username;
 
     private String password;
 
-    private String name;
+    private String nickname;
 
     @Column(name = "phone_num", unique = true) // 이속성 그냥 없내느것도 생각해보기
     private String phoneNum;
 
-    public static User createUser(String id, String password, String name, String phoneNum) {
+    public static User createUser(String username, String password, String nickname, UserRole role, String phoneNum) {
         User user = new User();
-        user.id = id;
+        user.username = username;
         user.password = password;
-        user.name = name;
+        user.nickname = nickname;
         user.phoneNum = phoneNum;
         // TODO: Role도 추가
         return user;

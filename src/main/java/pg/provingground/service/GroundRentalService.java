@@ -26,13 +26,14 @@ public class GroundRentalService {
 
     private final GroundRentalRepository groundRentalRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final GroundRepository groundRepository;
 
     /** 시험장 예약 */
     @Transactional
     public Long rental(Long userId, Long groundId, LocalDateTime time) {
 
-        User user = userRepository.findOne(userId);
+        User user = userService.getLoginUserById(userId);
         Ground ground = groundRepository.findOne(groundId);
 
         // TODO: 실제 생성하기 직전, 그 사이에 추가로 예약이 진행된 것은 없는지 확인해야 함.

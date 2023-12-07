@@ -125,11 +125,18 @@
         </div>
         <div class="header-right">
             <div class="header-utils">
+                <a>
                 <button class="btn-search">
                     <img src="/icons/ico_search_white.svg" alt="검색">
                 </button>
+                </a>
+                <a href="/login">
                 <button class="btn-user">
                     <img src="/icons/ico_user_white.svg" alt="마이페이지">
+                </button>
+                </a>
+                <button class="btn-logout" th:onclick="|location.href='@{/logout}'|">
+                    <img src="/icons/ico_logout.svg" alt="로그아웃">
                 </button>
                 <button class="btn-allmenu">
                     <img src="/icons/ico_menu3_white.svg" alt="PC메뉴">

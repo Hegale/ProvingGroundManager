@@ -1,12 +1,16 @@
 package pg.provingground;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
 import pg.provingground.repository.*;
+import pg.provingground.security.BCryptConfig;
+import pg.provingground.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,6 +28,9 @@ public class TestDataBuilder {
     private final CarRentalRepository carRentalRepository;
     private final GroundRentalRepository groundRentalRepository;
     private final StationRepository stationRepository;
+    private final UserService userService;
+    private final EntityManager em;
+    private final BCryptPasswordEncoder encoder;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -85,10 +92,12 @@ public class TestDataBuilder {
         List<String> phoneNums = List.of(
                 "010-1234-5678", "010-0000-1111", "010-2222-3333", "010-4444-5555");
         for (int i = 0; i < 4; ++i) {
-            System.out.println("지금 i = " + i);
-            User user = User.createUser(ids.get(i), passwds.get(i), names.get(i), phoneNums.get(i));
-            userRepository.save(user);
+            User user = User.createUser(
+                    ids.get(i), encoder.encode(passwds.get(i)), names.get(i), UserRole.USER, phoneNums.get(i));
+            em.persist(user);
         }
+        User user = User.createUser("a", encoder.encode("a"), "tester", UserRole.USER, "000");
+        em.persist(user);
     }
 
 
@@ -136,7 +145,7 @@ public class TestDataBuilder {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void buildCarRentalData() {
-        User user = userRepository.findOne(1L); // pikachu
+        User user = userService.getLoginUserById(1L); // pikachu
         for (int i = 0; i < 12; ++i) {
             Car car = carRepository.findOne((long) i + 1);
             CarRental carRental = CarRental.createCarRental(user, car,
@@ -167,7 +176,7 @@ public class TestDataBuilder {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void buildGroundRentalData() {
-        User user = userRepository.findOne(1L); // pikachu
+        User user = userService.getLoginUserById(1L); // pikachu
         for (int i = 0; i < 12; ++i) {
             Ground ground = groundRepository.findOne((long) i % 8 + 1);
             GroundRental groundRental = GroundRental.createGroundRental(user, ground,

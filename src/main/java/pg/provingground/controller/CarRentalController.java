@@ -12,6 +12,7 @@ import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.CarRentalService;
+import pg.provingground.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,12 +23,12 @@ import java.util.List;
 public class CarRentalController {
 
     private final CarRentalService carRentalService;
-    private final UserRepository userRepository; // 테스트를 위한 임시 선언. 이후 삭제
+    private final UserService userService;
 
     @GetMapping("/car-rental")
     /** 차량 대여 내역 */
     public String list(Model model) {
-        User user = userRepository.findOne(1L);
+        User user = userService.getLoginUserById(1L);
         List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
         return "car/car-rent-history";
