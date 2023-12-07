@@ -47,4 +47,5 @@
 ![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/0cd8c0bc-2241-4d90-9031-8191bab48d18)
 
 ### 물리 ERD
-![physicerd](https://github.com/Hegale/ProvingGroundManager/assets/92227496/e0fc197f-cf73-4de8-8fad-c1d8b1b84ba8)
+![image](https://github.com/Hegale/ProvingGroundManager/assets/92227496/9c3ef1cb-dd37-41ad-b563-c068b4c045a1)
+
