@@ -17,17 +17,15 @@
       <div class="content-container">
         <div class="form-wrap">
           <div class="form-header">
-            <h3 class="form-tit">LOGIN</h3>
+            <h3 class="form-tit">MY PAGE</h3>
           </div>
+
           <div class="form-body">
-
-            <form th:method="post" th:action="@{/login}" th:object="${loginForm}">
-
               <div class="tabset tabset-fluid border-bottom">
                 <ul class="tabset-list tabset-lg">
                   <li class="tabset-item">
                     <a class="tabset-link active" href="javascript:void(0)">
-                      <span>회원 로그인</span>
+                      <span>유저야</span>
                     </a>
                   </li>
                 </ul>
@@ -58,7 +56,7 @@
               </div>
               <ul class="contents-list d-flex justify-content-center">
                 <li class="contents-item">
-                  <a href="/join" class="contents-link">회원가입</a>
+                  <a href="javascript:void(0)" class="contents-link">회원가입</a>
                 </li>
                 <li class="contents-item">
                   <a href="javascript:void(0)" class="contents-link">아이디 찾기</a>
@@ -70,7 +68,9 @@
               <div class="btn-box juykim-btnbox" style="text-align:center;">
                 <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block;">로그인</button>
               </div>
-            </form>
+
+
+
           </div>
         </div>
       </div>

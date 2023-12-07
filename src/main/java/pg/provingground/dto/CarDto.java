@@ -11,13 +11,13 @@ public class CarDto {
 
     private Long carId;
     private String number;
-    private int fuel;
+    private Long fuel;
 
     private String name;
     private String type;
     private String engine;
 
-    public CarDto(Long carId, String number, int fuel,
+    public CarDto(Long carId, String number, Long fuel,
                   String name, String type, String engine) {
         this.carId = carId;
         this.number = number;

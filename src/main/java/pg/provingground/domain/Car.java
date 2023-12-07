@@ -22,6 +22,11 @@ public class Car {
 
     private String number;
 
-    private int fuel; // 잔여 연료, cc단위
+    private Long fuel; // 잔여 연료, cc단위
+
+
+    public void fueling(Long amount) {
+        this.fuel += amount;
+    }
 
 }

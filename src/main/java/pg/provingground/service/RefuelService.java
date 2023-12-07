@@ -28,13 +28,17 @@ public class RefuelService {
 
     /** 주유 */
     @Transactional
-    public Long refuel(Long userId, Long carId, Long stationId, LocalDateTime time, int amount) {
+    public Long refuel(String username, Long carId, Long stationId, LocalDateTime time, Long amount) {
         // 참조 객체들 찾아오기
-        User user = userService.getLoginUserById(userId);
+        User user = userService.getLoginUserByUsername(username);
         Car car = carRepository.findOne(carId);
         Station station = stationRepository.findOne(stationId);
 
+        // 새 주유 기록을 저장
         Refuel refuel = Refuel.createRefuel(user, car, station, time, amount);
+
+        // 차량에 잔여연료 업데이트, 더티체킹
+        car.fueling(amount);
 
         refuelRepository.save(refuel);
         return refuel.getRefuelingId();

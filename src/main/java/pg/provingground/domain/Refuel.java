@@ -17,7 +17,7 @@ public class Refuel {
 
     private LocalDateTime time;
 
-    private int amount;
+    private Long amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
@@ -34,7 +34,7 @@ public class Refuel {
 
     // === 생성 메서드 === //
     /** 새 refuel 객체 생성 */
-    public static Refuel createRefuel(User user, Car car, Station station, LocalDateTime time, int amount) {
+    public static Refuel createRefuel(User user, Car car, Station station, LocalDateTime time, Long amount) {
         Refuel refuel = new Refuel();
         refuel.user = user;
         refuel.car = car;

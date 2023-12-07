@@ -1,6 +1,8 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,11 +73,16 @@ public class RefuelController {
 
     @PostMapping("/refuel/select/{carId}")
     /** 차 선택 후 주유 */
-    public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId, @RequestParam int amount) {
-        int validAmount = carService.validFuelAmount(carId, amount);
+    public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId, @RequestParam Long amount) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Long validAmount = carService.validFuelAmount(carId, amount);
+
         // TODO: 유효한 주유구인지 확인하는 service method 호출
         System.out.println("carId:" + carId + " | stationId:" + stationId + " | validAmount:" + validAmount);
-        refuelService.refuel(1L, carId, stationId, LocalDateTime.now(), validAmount);
+        refuelService.refuel(username, carId, stationId, LocalDateTime.now(), validAmount);
+
         // 주유 후 주유 내역으로 이동
         return "redirect:/refuel";
     }

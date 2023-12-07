@@ -293,13 +293,13 @@
 }
 
 /* personal-seLPF6Qg10 [jYlPf6qsy6] */
-.personal-seLPF6Qg10 .juykim-car-search { width: 20%; /*23rem;이었다*/}
+.personal-seLPF6Qg10 .juykim-car-search { width: 30%; /*23rem;이었다*/ margin-right:2rem;}
 .personal-seLPF6Qg10 .juykim-search-button { width: 10rem; }
 .personal-seLPF6Qg10 .juykim-underline { border: none; margin-top: 1.3rem; margin-bottom: 3rem; border-top: 1px solid gray; }
 .personal-seLPF6Qg10 .contents-inner { padding: 10rem 2.4rem; }
 .personal-seLPF6Qg10 .textset { margin-top: 0; margin-bottom: 4rem; }
 .personal-seLPF6Qg10 .tabset.tabset-brick { margin-bottom: 4rem; }
-.personal-seLPF6Qg10 .contents-search { display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 4rem; }
+.personal-seLPF6Qg10 .contents-search { display: flex; flex-direction: row; justify-content: space-between; /*align-items: center;*/ margin-bottom: 4rem; }
 .personal-seLPF6Qg10 .inputset { width: 40.3rem; }
 .personal-seLPF6Qg10 .contents-result { font-size: 1.8rem; font-weight: 500; }
 .personal-seLPF6Qg10 .contents-result span { color: var(--secondary); }

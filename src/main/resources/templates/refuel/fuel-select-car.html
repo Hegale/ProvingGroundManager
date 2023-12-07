@@ -48,10 +48,8 @@
                             </select>
                         </div>
 
-                        <div class="juykim-search-box"></div>
-
                         <div class="inputset juykim-search-box">
-                            <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘"></button>
+                            <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
                             <input th:field="*{name}" type="text" class="inputset-input form-control" placeholder="차종으로 검색하기" aria-label="내용">
                         </div>
 
@@ -104,7 +102,7 @@
                                 <td class="last-child juykim-cars" th:text="${car.name}">차량</td>
                                 <td class="last-child juykim-cars" th:text="${car.type}">차종</td>
                                 <td class="last-child juykim-cars" th:text="${car.engine}">엔진</td>
-                                <td class="last-child juykim-cars" th:text="${car.fuel.toString()}">잔여 연료</td>
+                                <td class="last-child juykim-cars" th:text="${#numbers.formatDecimal(car.fuel / 1000, 1, 'COMMA', 0, 'POINT')}">잔여 연료</td>
                                 <td class="last-child juykim-cars">
                                     <!--th:onclick="'javascript:refuel('+${rental.carId}+');'"-->
                                     <a th:href="@{'/refuel/select/' + ${car.carId}}">
