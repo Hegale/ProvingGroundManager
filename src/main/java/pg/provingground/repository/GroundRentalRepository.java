@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.*;
+import pg.provingground.dto.GroundRentalHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,6 +34,17 @@ public class GroundRentalRepository {
         return em.createQuery(
                 "select g from GroundRental g where g.user = :user", GroundRental.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<GroundRentalHistory> findAllByUserAndTime(User user, LocalDate date) {
+        return em.createQuery(
+                        "select new pg.provingground.dto.GroundRentalHistory(g.groundRentalId, g.ground.name, g.startTime) " +
+                                "from GroundRental g " +
+                                "where g.user = :user " +
+                                "and FUNCTION('DATE', g.startTime) = :date", GroundRentalHistory.class)
+                .setParameter("user", user)
+                .setParameter("date", date)
                 .getResultList();
     }
 

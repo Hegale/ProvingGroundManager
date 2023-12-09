@@ -40,4 +40,10 @@ public class CarRentalHistory {
         returnable = (returned.equals("N") && cancelable.equals("N")) ? "Y" : "N";
     }
 
+    public CarRentalHistory(Long carRentalId, String carName, LocalDateTime startTime) {
+        carRentalId = carRentalId;
+        carName = carName;
+        startTime = startTime;
+    }
+
 }

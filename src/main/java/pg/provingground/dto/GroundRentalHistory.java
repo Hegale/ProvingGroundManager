@@ -32,4 +32,10 @@ public class GroundRentalHistory {
                 ? "Y" : "N";
     }
 
+    public GroundRentalHistory(Long groundRentalId, String groundName, LocalDateTime startTime) {
+        groundRentalId = groundRentalId;
+        groundName = groundName;
+        startTime = startTime;
+    }
+
 }

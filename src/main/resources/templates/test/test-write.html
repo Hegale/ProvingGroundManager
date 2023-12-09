@@ -88,26 +88,26 @@
                     </div>
                   </td>
                   <th>
-                    <label class="req label" for="Company">대여차량​​<br></label>
+                    <label class="req label" for="Company">대여차량<br></label>
                   </th>
                   <td>
                     <div class="selectset selectset-lg">
-                      <button class="selectset-toggle btn" type="button">
+                      <button class="juykim-car-select selectset-toggle btn" type="button">
                         <span>템플릿을 선택하세요</span>
                       </button>
                       <ul class="selectset-list">
                         <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="템플릿1">
+                          <button class="car-select selectset-link btn" type="button" data-value="템플릿1">
                             <span>템플릿1</span>
                           </button>
                         </li>
                         <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="템플릿2">
+                          <button class="car-select selectset-link btn" type="button" data-value="템플릿2">
                             <span>템플릿2</span>
                           </button>
                         </li>
-                        <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="템플릿3">
+                        <li class="car-select selectset-item">
+                          <button class="car-select selectset-link btn" type="button" data-value="템플릿3">
                             <span>템플릿3</span>
                           </button>
                         </li>
@@ -253,6 +253,22 @@
                   $("#selectedDate").val(dateText);
                 }
               });
+
+      $(document).ready(function () {
+        var selectedItems = [];
+        $(".car-select").click(function () {
+          var value = $(this).attr("data-value");
+          var index = selectedItems.indexOf(value);
+          if (index == -1) {
+            selectedItems.push(value);
+            $(this).addClass('selected');
+          } else {
+            selectedItems.splice(index, 1);
+            $(this).removeClass('selected');
+          }
+          $(".juykim-car-select span").text(selectedItems.join(", "));
+        });
+      });
 
     })
   </script>

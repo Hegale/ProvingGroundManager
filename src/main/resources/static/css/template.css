@@ -492,9 +492,34 @@ progress { vertical-align: baseline; }
 .selectset .selectset-toggle:disabled { border-color: var(--border-color); background-color: var(--bg-color); color: var(--text-color4); opacity: 1; } 
 .selectset .selectset-toggle:disabled::after { opacity: .5; } 
 .selectset .selectset-list { display: none; position: absolute; left: 0; width: 100%; z-index: 9; overflow: hidden; background-color: #ffffff; border: 1px solid var(--primary); border-top: none; } 
+
 .selectset .selectset-link::after { content: none; position: absolute; top: 50%; right: 1.8rem; transform: translateY(-50%); font-family: var(--ff-ico); font-size: var(--fs-h5); color: var(--primary); } 
 .selectset .selectset-link.on, .selectset .selectset-link:hover { background-color: rgba(var(--primary-rgb), .1); } 
 .selectset .selectset-link.on::after { content: '\e918'; } 
+
+
+.selectset .car-select.selectset-link::after { 
+  content: none; 
+  position: absolute; 
+  top: 50%; 
+  right: 1.8rem; 
+  transform: translateY(-50%); 
+  font-family: var(--ff-ico); 
+  font-size: var(--fs-h5); 
+  color: var(--primary); 
+} 
+
+.selectset .car-select.selectset-link.on, 
+.selectset .car-select.selectset-link:hover, 
+.selectset .car-select.selectset-link.selected { 
+  background-color: rgba(var(--primary-rgb), .1); 
+} 
+
+.selectset .car-select.selectset-link.on::after,
+.selectset .car-select.selectset-link.selected::after { 
+  content: '\e918'; 
+} 
+
 .selectset .selectset-select { position: relative; width: 100%; color: var(--text-color3); height: var(--ht-md); padding: 0 1.6rem; font-size: var(--fs-p1); text-align: left; border-radius: 0; border: 1px solid var(--border-color); padding-right: calc(1.6rem + 2rem + 1.6rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background-image: none; -webkit-appearance: none; -moz-appearance: none; } 
 .selectset .selectset-arrow { display: block; } 
 .selectset .selectset-arrow::after { content: '\e90c'; position: absolute; top: 50%; right: 1.6rem; z-index: 1; transform: translateY(-50%); font-family: var(--ff-ico); font-size: var(--fs-h4); } 

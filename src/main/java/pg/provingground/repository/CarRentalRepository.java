@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
+import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.dto.GroundRentalHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,6 +36,17 @@ public class CarRentalRepository {
         return em.createQuery(
                 "select c from CarRental c where c.user = :user", CarRental.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<CarRentalHistory> findAllByUserAndTime(User user, LocalDate date) {
+        return em.createQuery(
+                        "select new pg.provingground.dto.CarRentalHistory(c.carRentalId, c.car.type.name, c.startTime) " +
+                                "from CarRental c " +
+                                "where c.user = :user " +
+                                "and FUNCTION('DATE', c.startTime) = :date", CarRentalHistory.class)
+                .setParameter("user", user)
+                .setParameter("date", date)
                 .getResultList();
     }
 
