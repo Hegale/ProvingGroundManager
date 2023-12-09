@@ -37,54 +37,61 @@
                       <div class="datepicker rental-datepicker"></div>
                     </div>
                     <script th:inline="javascript">
-
                       $(function(){
 
-                        $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
-                        // TODO: 특정 날짜만 활성화
                         var availableTimes = [[${availableTimes}]];
+                        var pathArray = window.location.pathname.split('/');
+                        var groundId = pathArray[pathArray.length - 1];  // URL의 마지막 부분이 carTypeId
+
+
+                        $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
 
                         $('.datepicker').datepicker(
-                          {
-                            dateFormat: 'yy-mm-dd',
-                            maxDate: '30',
-                            minDate: '1',
-                            onSelect: function(dateText, inst) {
+                                {
+                                  dateFormat: 'yy-mm-dd',
+                                  maxDate: '30',
+                                  minDate: '1',
+                                  onSelect: function(dateText, inst) {
+                                    // 모든 날짜 셀의 배경색을 초기화
+                                    $('.ui-state-active').css('backgroundColor', '');
 
-                              /*
-                              $.ajax({
-                                url: '/getAvailableTimes', // 서버에 요청할 URL
-                                type: 'get',
-                                data: { date: dateText }, // 선택된 날짜를 서버에 전달
-                                success: function(data) {
-                                  // 기존에 출력된 시간을 모두 삭제
-                                  $('.time-container').empty();
+                                    // 선택한 날짜 셀의 배경색을 변경
+                                    setTimeout(function() {
+                                      $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                                    }, 0);
 
-                                  // 서버로부터 받은 가능한 시간을 출력
-                                  data.forEach(function(time) {
-                                    $('.time-container').append('<p>' + time + '</p>');
-                                  });
-                                }
+                                    $.ajax({
+                                      url: '/ground-rental/select/' + groundId + '/date', // 서버에 요청할 URL
+                                      type: 'get',
+                                      data: { date: dateText }, // 선택된 날짜를 서버에 전달
+                                      success: function(data) {
+                                        // 서버로부터 받은 정보를 html에 표시
+                                        var timesHtml = data.availableTimes.map(function(time) {
+                                          return '<label class="time-btn">' +
+                                                  '<input type="radio" name="selectedTime" value="' + time + '">' +
+                                                  '<span>' + time + ':00</span>' +
+                                                  '</label>';
+                                        }).join('');
 
-                              */
+                                        $('.juykim-timebtnbox').html(timesHtml);
+                                        // ...
+                                      },
 
-                              // 모든 날짜 셀의 배경색을 초기화
-                              $('.ui-state-active').css('backgroundColor', '');
+                                      error: function(error) {
+                                        console.error(error);
+                                      }
+                                    });
 
-                              // 선택한 날짜 셀의 배경색을 변경기
-                              setTimeout(function() {
-                                  $('.ui-state-active').css('backgroundColor', '#D8D8D8');
-                              }, 0);
+                                    // 선택한 날짜를 페이지에 출력
+                                    $('#selectedDateDisplay').text(dateText);
 
-                              // 선택한 날짜를 페이지에 출력
-                              $('#selectedDateDisplay').text(dateText);
+                                    $("#selectedDate").val(dateText);
 
-                              $("#selectedDate").val(dateText);
+                                    $("#userDate").val(dateText);
 
-                              $("#userDate").val(dateText);
+                                  }
+                                });
 
-                            }
-                          });
                       })
                     </script>
                   </div>

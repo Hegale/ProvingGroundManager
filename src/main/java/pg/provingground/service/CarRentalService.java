@@ -67,28 +67,9 @@ public class CarRentalService {
         throw new NoAvailableCarException("해당 시간대에 예약 가능한 차량이 없습니다!");
     }
 
-
-    /* 차량 대여가 불가능한 시간대 구해서 반환
-    public List<LocalDateTime> getUnAvailableTimes(Long carTypeId) {
-        Map<LocalDateTime, Integer> rentedCarsPerTimeSlot = carRentalRepository.countRentedCarsPerTimeSlot(carTypeId);
-        long carCount = carRepository.countCarsPerCarType(carTypeId);
-        List<LocalDateTime> unavailableTimes = new ArrayList<>();
-
-        for (LocalDateTime time : rentedCarsPerTimeSlot.keySet()) {
-            // 해당 시간대에 예약되지 않은 차량이 남아 있다면?
-            if (rentedCarsPerTimeSlot.get(time) != carCount) {
-                unavailableTimes.add(time);
-            }
-        }
-        return unavailableTimes;
-    }
-
-     */
-
     /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
     public List<String> getAvailableTimes(Long carTypeId, String selectedDate) {
 
-        // 불가능한 시간을 전부 받아와서 계산하기보다는, 클릭할 때마다 가능한 시간을 계산하기
         LocalDate date = LocalDate.parse(selectedDate);
         // 해당 차종의 총 차량 대수
         long carCount = carRepository.countCarsPerCarType(carTypeId);

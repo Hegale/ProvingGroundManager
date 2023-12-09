@@ -88,14 +88,9 @@ public class CarRentalController {
 
     @GetMapping("/car-rental/select/{carTypeId}/date")
     /** 날짜가 선택될 때마다 가능한 시간 반환 */
-    public ResponseEntity<?> getInformation(@PathVariable Long carTypeId, @RequestParam String date) {
+    public ResponseEntity<?> getTimes(@PathVariable Long carTypeId, @RequestParam String date) {
         // 'date'를 이용해서 '가능한 시간' 정보를 계산
         List<String> availableTimes = carRentalService.getAvailableTimes(carTypeId, date);
-
-        System.out.print("가능한 시간:");
-        for (String time : availableTimes) {
-            System.out.print(" " + time);
-        }
 
         // 계산한 정보를 JSON 형태로 응답
         Map<String, Object> response = new HashMap<>();

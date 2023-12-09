@@ -13,7 +13,9 @@ import pg.provingground.repository.GroundRentalRepository;
 import pg.provingground.repository.GroundRepository;
 import pg.provingground.repository.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,6 @@ public class GroundRentalService {
     }
 
     /** 대여 취소 및 차량 반납 */
-    // TODO: 오늘 이후의 예약은 반납, 그 이전은 취소. 그 구분은 컨트롤러에서
     @Transactional
     public void cancelRental(Long carRentalId) {
         GroundRental rental = groundRentalRepository.findOne(carRentalId);
@@ -66,7 +67,27 @@ public class GroundRentalService {
         return groundRentalRepository.getGroundRentalStatus(groundId);
     }
 
-    /** TODO: 해당 시험장 대여가 가능한 시간대 구현.. 일단 car부터 ajax로 완성하고 */
+    /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
+    public List<String> getAvailableTimes(Long groundId, String selectedDate) {
+
+        LocalDate date = LocalDate.parse(selectedDate);
+        // date 날짜의 carTypeId 차량들의 대여 현황
+        Map<LocalTime, Long> countByTime = groundRentalRepository.findAvailableTimesCount(groundId, date);
+
+        List<String> availableTimes = new ArrayList<>();
+        LocalTime startTime = LocalTime.of(10, 0);
+        LocalTime endTime = LocalTime.of(18, 0);
+        int intervalHours = 2;
+
+        // 10:00부터 18:00까지 두 시간 간격으로 검색
+        for (LocalTime time = startTime; !time.isAfter(endTime); time = time.plusHours(intervalHours)) {
+            if (countByTime.getOrDefault(time, 0L) == 0) {
+                availableTimes.add(String.format("%02d", time.getHour()));
+            }
+        }
+
+        return availableTimes;
+    }
 
     /** [관리자 기능] 전체 대여 내역 검색 */
     public List<GroundRental> findRentals() {

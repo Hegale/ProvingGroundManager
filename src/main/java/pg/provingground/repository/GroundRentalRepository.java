@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -33,6 +34,32 @@ public class GroundRentalRepository {
                 "select g from GroundRental g where g.user = :user", GroundRental.class)
                 .setParameter("user", user)
                 .getResultList();
+    }
+
+    /** 해당 날짜 예약건들을 <시간별, 예약건수> 로 반환 */
+    public Map<LocalTime, Long> findAvailableTimesCount(Long groundId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        List<Object[]> results = em.createQuery(
+                        "SELECT g.startTime, COUNT(g) " +
+                                "FROM GroundRental g " +
+                                "WHERE g.startTime BETWEEN :start AND :end AND g.ground.groundId = :groundId " +
+                                "AND g.canceled = 'N' " +
+                                "GROUP BY g.startTime", Object[].class)
+                .setParameter("start", startOfDay)
+                .setParameter("end", endOfDay)
+                .setParameter("groundId", groundId)
+                .getResultList();
+
+        Map<LocalTime, Long> countByTime = new HashMap<>();
+        for (Object[] result : results) {
+            LocalTime time = ((LocalDateTime) result[0]).toLocalTime();
+            Long count = (Long) result[1];
+            countByTime.put(time, count);
+        }
+
+        return countByTime;
     }
 
     /** 시간대별 시험장 예약현황 반환. */
