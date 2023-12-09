@@ -1,6 +1,7 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +33,8 @@ public class GroundRentalController {
 
     @GetMapping("/ground-rental")
     /** 시험장 대여 내역 */
-    public String list(Model model) {
-        User user = userService.getLoginUserById(1L);
+    public String list(Model model, Authentication auth) {
+        User user = userService.getLoginUserByUsername(auth.getName());
         List<GroundRentalHistory> rentals = groundRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
         return "ground/ground-rental-history";
@@ -41,8 +42,9 @@ public class GroundRentalController {
 
     @GetMapping("/ground-rental/select/{groundId}")
     /** 시험장 선택 후 날짜 선택 */
-    public String selectDate(@PathVariable Long groundId, Model model) {
-        GroundRentalForm form = new GroundRentalForm(1L, groundId);
+    public String selectDate(@PathVariable Long groundId, Model model, Authentication auth) {
+        Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
+        GroundRentalForm form = new GroundRentalForm(userId, groundId);
         //List<AvailableTimeForm> times = groundRentalService.getAvailableTimeForms(groundId);
 
         model.addAttribute("form", form);
@@ -54,17 +56,20 @@ public class GroundRentalController {
 
     @PostMapping("/ground-rental/select/{groundId}")
     /** 예약에 필요한 정보들 확정 후 예약 실행 */
-    public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form) {
+    public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form, Authentication auth) {
         // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
         String dateTimeString = form.getSelectedDate() + "T" + form.getSelectedTime() + ":00:00";
         LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        groundRentalService.rental(1L, groundId, time);
+        Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
+
+        groundRentalService.rental(userId, groundId, time);
 
         return "redirect:/ground-rental"; // 대여 내역으로 이동
     }
 
     @PostMapping("/ground-rental/{groundRentalId}/cancel")
     public String cancelRental(@PathVariable("groundRentalId") Long groundRentalId) {
+
         groundRentalService.cancelRental(groundRentalId);
 
         return "redirect:/ground-rental";

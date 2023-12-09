@@ -46,7 +46,7 @@ public class CarRentalRepository {
             em.createQuery(
                             "SELECT r " +
                                     "FROM CarRental r " +
-                                    "WHERE r.carRentalId = :carRentalId AND r.user.uuserId = :userId", CarRental.class)
+                                    "WHERE r.carRentalId = :carRentalId AND r.user.userId = :userId", CarRental.class)
                     .setParameter("carRentalId", carRentalId)
                     .setParameter("userId", userId)
                     .getSingleResult();
