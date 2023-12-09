@@ -1,9 +1,13 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import pg.provingground.dto.TestForm;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,8 +20,13 @@ public class TestController {
     }
 
     @GetMapping("/test/new")
-    // TODO: 테스트 내용 작성하는 Dto, 파일 저장 위한 객체, 날짜를 통한 대여 내역 검색 구현
-    public String newTest(Model model) {
+    // TODO: 파일 저장 위한 객체, 날짜를 통한 대여 내역 검색 구현
+    public String newTest(@ModelAttribute TestForm testForm, @RequestParam(required = false) String testDate,
+                          Model model, Authentication auth) {
+
+        testForm.setTestDate(testDate);
+        model.addAttribute("testForm", testForm);
+
         return "test/test-write";
     }
 

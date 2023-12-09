@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
@@ -24,6 +27,7 @@
           <div class="contents-form tableset">
             <div class="tableset-inner">
 
+              <form th:object="${testForm}" action="/test/new" method="get">
 
 
               <table class="tableset-table table">
@@ -41,19 +45,23 @@
                   <td colspan="3" style="display: flex; justify-content: space-between;">
 
                     <div class="inputset inputset-lg" style="">
-                      <input type="text" class="inputset-input form-control" placeholder="내용을 입력하세요" aria-label="내용">
+                      <!-- inputset-input form-control  : style -->
+                      <input th:field="*{testDate}" class="datepicker inputset-input form-control"
+                             id="selectedDate" name="testDate"
+                             th:attr="placeholder=${testDate != null && !testDate.isEmpty() ? testDate : '날짜 선택'}"
+                             aria-label="내용">
+                      <!--<input type="hidden" id="selectedDate" name="selectedDate" th:value="${testForm.testDate}">-->
                     </div>
-                    <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
+                    <button type="submit" name="dateSearch" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
 
                   </td>
                   <td></td>
                   <td></td>
 
-
                 </tr>
                 <tr>
                   <th>
-                    <label class="req label" for="Name">주행시험장</label>
+                    <label class="req label">주행시험장</label>
                   </th>
                   <td>
                     <div class="selectset selectset-lg">
@@ -206,6 +214,11 @@
                 </tr>
                 </tbody>
               </table>
+
+              </form>
+
+
+
             </div>
           </div>
         </div>
@@ -215,9 +228,39 @@
   </main>
 
   <div th:replace="fragments/footer :: footer" />
+  <script th:inline="javascript">
+
+    $(function(){
+
+      $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+
+      $('.datepicker').datepicker(
+              {
+
+                onSelect: function(dateText, inst) {
+                  // 모든 날짜 셀의 배경색을 초기화
+                  $('.ui-state-active').css('backgroundColor', '');
+
+                  // 선택한 날짜 셀의 배경색을 변경
+                  setTimeout(function() {
+                    $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                  }, 0);
+
+
+                  // 선택한 날짜를 페이지에 출력
+                  $('#selectedDateDisplay').text(dateText);
+
+                  $("#selectedDate").val(dateText);
+                }
+              });
+
+    })
+  </script>
+  <script src="/js/weather.js"></script>
   <script src="/js/setting.js"></script>
   <script src="/js/plugin.js"></script>
   <script src="/js/template.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/script.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
 </body>

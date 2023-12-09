@@ -44,6 +44,7 @@
                 morningTempSection.innerText = temperature;
                 morningDescSection.innerText = description;
                 morningIconSection.src = `http://openweathermap.org/img/w/${icon}.png`;
+                //morningIconSection.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
             }
 
             // 오후 예보를 화면에 표시합니다.
@@ -55,6 +56,7 @@
                 afternoonTempSection.innerText = temperature;
                 afternoonDescSection.innerText = description;
                 afternoonIconSection.src = `http://openweathermap.org/img/w/${icon}.png`;
+                //afternoonIconSection.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
             }
 
             // 오전 예보와 오후 예보 둘 다 받아올 수 없으면 알림을 띄웁니다.

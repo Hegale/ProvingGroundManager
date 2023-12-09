@@ -67,8 +67,23 @@
     padding: 2rem;
     background-color: #F2F2F2;
     margin-top: 3rem;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .opilsol-N11 .juykim-weather-day {
+    background-color: white;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+  } 
   
+  .opilsol-N11 .juykim-weather-inner {
+    width: 50%;
+  } 
+
+
   .opilsol-N11 .juykim-date-confirm {
     display: flex;
     justify-content: flex-end;

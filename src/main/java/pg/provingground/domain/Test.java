@@ -24,11 +24,11 @@ public class Test {
     // TODO: 기타 NULL 가능한 속성 추가
     //private LineSt path;
 
-    /*
+    @OneToMany(mappedBy = "test")
+    private List<CarRental> carRentalIds;
 
-    // ManyToMany. carRental로 변경
-    private List<Car> cars;
-    private Ground ground;
-     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ground_rental_id")
+    private GroundRental groundRentalID;
 
 }
