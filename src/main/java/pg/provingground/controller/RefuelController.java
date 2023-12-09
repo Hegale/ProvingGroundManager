@@ -45,9 +45,8 @@ public class RefuelController {
     /** 주유 전 차량 선택 */
     public String carListByNumber(@RequestParam String carNumber, Model model) {
         // 차량 번호로 검색
-        // TODO: 차량 번호로 검색 안되고 있음
         List<CarDto> cars = carService.findByCarNumber(carNumber);
-        CarSearchForm typeSearchForm = new CarSearchForm(); //테스트
+        CarSearchForm typeSearchForm = new CarSearchForm();
         System.out.println("차량번호 : " + carNumber);
         for (CarDto car : cars) {
             System.out.println("차량 id : " + car.getCarId() + " | 차 : " + car.getName() + " | 차종 : " + car.getType());

@@ -32,6 +32,7 @@ public class CarController {
 
 
     @PostMapping("/car-rental/new")
+    /** 차종으로 검색 */
     public String searchCarType(@ModelAttribute CarSearchForm searchForm, RedirectAttributes redirectAttributes) {
         System.out.println("form result: " + searchForm.type + " | " + searchForm.engine + " | " + searchForm.name);
 

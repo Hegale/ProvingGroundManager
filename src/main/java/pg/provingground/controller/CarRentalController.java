@@ -2,13 +2,16 @@ package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.dto.MessageDto;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.CarRentalService;
@@ -27,15 +30,22 @@ public class CarRentalController {
 
     @GetMapping("/car-rental")
     /** 차량 대여 내역 */
-    public String list(Model model) {
-        User user = userService.getLoginUserById(1L);
+    public String list(Model model, Authentication auth) {
+        // 해당 유저의 차량 대여 내역을 보여준다.
+        User user = userService.getLoginUserByUsername(auth.getName());
         List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
         model.addAttribute("rentals", rentals);
         return "car/car-rent-history";
     }
 
     @PostMapping("/car-rental/{carRentalId}/return")
-    public String returnRental(@PathVariable("carRentalId") Long carRentalId) {
+    /** 차량 대여 반납 및 취소 */
+    public String returnRental(@PathVariable("carRentalId") Long carRentalId, Authentication auth, RedirectAttributes redirectAttributes) {
+        // 정보 요청자가 해당 기록의 주인이 아닐 시
+        if (!carRentalService.isOwnerMatched(carRentalId, userService.getLoginUserByUsername(auth.getName()))) {
+            redirectAttributes.addFlashAttribute("errorMessage", "해당 권한이 없습니다!");
+            return "redirect:/car-rental";
+        }
         carRentalService.cancelRental(carRentalId);
         return "redirect:/car-rental";
     }
@@ -65,16 +75,5 @@ public class CarRentalController {
 
         return "redirect:/car-rental"; // 대여 내역으로 이동
     }
-
-    /*
-    @GetMapping("/car_rental/{carTypeId}")
-    /** 차량 선택 -> 날짜 선택
-    public String dateSelect(@PathVariable Long carTypeId, Model model) {
-        // TODO: carTypeId를 사용하여 예약 가능 날짜 및 시간 계산
-        System.out.println("Controller method called with carTypeId: " + carTypeId);
-        //model.addAttribute("carType", carTypeId); // 차량 타입 전달
-        // model.addAttribute("dates", date); // 가능한 날짜 전달
-        return "car_rental/car_date_selection";
-    }*/
 
 }

@@ -1,6 +1,7 @@
 package pg.provingground.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
@@ -37,6 +38,22 @@ public class CarRentalRepository {
 
     public CarRental findOne(Long id) {
         return em.find(CarRental.class, id);
+    }
+
+    /** 차량 대여 내역의 대여자와 인자로 받은 유저가 일치하는지 확인 */
+    public boolean isUserMatched(Long carRentalId, Long userId) {
+        try {
+            em.createQuery(
+                            "SELECT r " +
+                                    "FROM CarRental r " +
+                                    "WHERE r.carRentalId = :carRentalId AND r.user.uuserId = :userId", CarRental.class)
+                    .setParameter("carRentalId", carRentalId)
+                    .setParameter("userId", userId)
+                    .getSingleResult();
+            return true;
+        } catch(NoResultException nre) {
+            return false;
+        }
     }
 
     /** 해당 차종의 해당 시간대 예약을 반환 */

@@ -111,6 +111,11 @@ public class CarRentalService {
         return history;
     }
 
+    /** 요청을 보낸 유저가 해당 차량 대여 기록의 주인인지 확인 */
+    public boolean isOwnerMatched(Long carRentalId, User user) {
+        return carRentalRepository.isUserMatched(carRentalId, user.getUserId());
+    }
+
     public CarType findType(Long carTypeId) {
         return carTypeRepository.findOne(carTypeId);
     }

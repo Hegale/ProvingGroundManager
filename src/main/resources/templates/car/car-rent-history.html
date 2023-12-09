@@ -187,6 +187,8 @@
     <!-- [E]opilsol-N24 -->
   </main>
 
+  <div th:replace="fragments/footer :: footer" />
+
   <script>
     function cancel(carRentalId) {
       var form = document.createElement("form");
@@ -195,9 +197,15 @@
       document.body.appendChild(form);
       form.submit();
     }
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage !== 'default') {
+      alert(errorMessage);
+    }
+    /*]]>*/
+
   </script>
 
-  <div th:replace="fragments/footer :: footer" />
   <!-- [E]opilsol-N3 -->
   <script src="/js/setting.js"></script>
   <script src="/js/plugin.js"></script>
