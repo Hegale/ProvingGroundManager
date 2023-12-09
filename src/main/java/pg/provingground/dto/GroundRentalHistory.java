@@ -33,9 +33,9 @@ public class GroundRentalHistory {
     }
 
     public GroundRentalHistory(Long groundRentalId, String groundName, LocalDateTime startTime) {
-        groundRentalId = groundRentalId;
-        groundName = groundName;
-        startTime = startTime;
+        this.groundRentalId = groundRentalId;
+        this.groundName = groundName;
+        this.startTime = startTime;
     }
 
 }

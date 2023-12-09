@@ -41,9 +41,9 @@ public class CarRentalHistory {
     }
 
     public CarRentalHistory(Long carRentalId, String carName, LocalDateTime startTime) {
-        carRentalId = carRentalId;
-        carName = carName;
-        startTime = startTime;
+        this.carRentalId = carRentalId;
+        this.carName = carName;
+        this.startTime = startTime;
     }
 
 }

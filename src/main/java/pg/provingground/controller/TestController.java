@@ -36,14 +36,30 @@ public class TestController {
     public String newTest(@ModelAttribute TestForm testForm, @RequestParam(required = false) String testDate,
                           Model model, Authentication auth) {
 
+        testForm.setTestDate(testDate);
         User user = userService.getLoginUserByUsername(auth.getName());
-        LocalDate date = LocalDate.parse(testForm.getTestDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate date;
+        System.out.println("선택 날짜 : " + testDate);
+        if (testDate != null) {
+            date = LocalDate.parse(testForm.getTestDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } else {
+            date = null;
+        }
 
         List<GroundRentalHistory> grounds = testService.getUsersGroundList(user, date);
         List<CarRentalHistory> cars = testService.getUsersCarList(user, date);
 
+        if (date != null) {
+        for (GroundRentalHistory g : grounds) {
+            System.out.print("시험장은? " + g.getGroundName() + " | " + g.getStartTime());
+        }
 
-        testForm.setTestDate(testDate);
+        for (CarRentalHistory c : cars) {
+            System.out.print("차량은? " + c.getCarName() + " | " + c.getStartTime());
+        }
+        }
+
+
         model.addAttribute("testForm", testForm);
         model.addAttribute("grounds", grounds);
         model.addAttribute("cars", cars);
