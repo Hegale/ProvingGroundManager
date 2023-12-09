@@ -14,6 +14,7 @@ import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public class CarRentalService {
         throw new NoAvailableCarException("해당 시간대에 예약 가능한 차량이 없습니다!");
     }
 
-    /** 차량 대여가 불가능한 시간대 구해서 반환*/
+
+    /* 차량 대여가 불가능한 시간대 구해서 반환
     public List<LocalDateTime> getUnAvailableTimes(Long carTypeId) {
         Map<LocalDateTime, Integer> rentedCarsPerTimeSlot = carRentalRepository.countRentedCarsPerTimeSlot(carTypeId);
         long carCount = carRepository.countCarsPerCarType(carTypeId);
@@ -81,7 +83,34 @@ public class CarRentalService {
         return unavailableTimes;
     }
 
-    /** 특정 차종의 대여 현황을 통해 대여 가능한 시간대를 폼으로 변경해 반환 */
+     */
+
+    /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
+    public List<String> getAvailableTimes(Long carTypeId, String selectedDate) {
+
+        // 불가능한 시간을 전부 받아와서 계산하기보다는, 클릭할 때마다 가능한 시간을 계산하기
+        LocalDate date = LocalDate.parse(selectedDate);
+        // 해당 차종의 총 차량 대수
+        long carCount = carRepository.countCarsPerCarType(carTypeId);
+        // date 날짜의 carTypeId 차량들의 대여 현황
+        Map<LocalTime, Long> countByTime = carRentalRepository.findAvailableTimesCount(carTypeId, date);
+
+        List<String> availableTimes = new ArrayList<>();
+        LocalTime startTime = LocalTime.of(10, 0);
+        LocalTime endTime = LocalTime.of(18, 0);
+        int intervalHours = 2;
+
+        // 10:00부터 18:00까지 두 시간 간격으로 검색
+        for (LocalTime time = startTime; !time.isAfter(endTime); time = time.plusHours(intervalHours)) {
+            if (countByTime.getOrDefault(time, 0L) < carCount) {
+                availableTimes.add(String.format("%02d", time.getHour()));
+            }
+        }
+
+        return availableTimes;
+    }
+
+    /* 특정 차종의 대여 현황을 통해 대여 가능한 시간대를 폼으로 변경해 반환
     public List<AvailableTimeForm> getAvailableTimeForms(Long carTypeId) {
         List<AvailableTimeForm> availableTimeForms = new ArrayList<>();
         List<LocalDateTime> unavailableTimes = getUnAvailableTimes(carTypeId);
@@ -101,6 +130,7 @@ public class CarRentalService {
         }
         return availableTimeForms; // 해당 차종을 대여할 수 없는 시간대 반환
     }
+     */
 
     /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */
     public List<CarRentalHistory> findRentalHistory(User user) {

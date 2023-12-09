@@ -2,6 +2,8 @@ package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,9 @@ import pg.provingground.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -55,12 +59,15 @@ public class CarRentalController {
     public String selectDate(@PathVariable Long carTypeId, Model model, Authentication auth) {
         Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
         CarRentalForm form = new CarRentalForm(userId, carTypeId);
-        List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
+        //List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
 
+        // 차량의 타입 전달
         model.addAttribute("type", carRentalService.findType(carTypeId));
+        // 선택한 날짜와 시간을 입력받아 올 폼 전달
         model.addAttribute("form", form);
+        // TODO: 불가능한 '날짜'만 우선적으로 보내기! 선택한 날짜에 대한 시간정보는 아래에서 할거임
         // TODO: 불가능한 날짜 및 시간 비활성화 -> ajax 힘드니까 '날짜 선택' 뭐 이정도로 바꾸기...
-        model.addAttribute("availableTimes", times);
+        //model.addAttribute("availableTimes", times);
 
         return "car/car-date-selection";
     }
@@ -78,5 +85,24 @@ public class CarRentalController {
 
         return "redirect:/car-rental"; // 대여 내역으로 이동
     }
+
+    @GetMapping("/car-rental/select/{carTypeId}/date")
+    /** 날짜가 선택될 때마다 가능한 시간 반환 */
+    public ResponseEntity<?> getInformation(@PathVariable Long carTypeId, @RequestParam String date) {
+        // 'date'를 이용해서 '가능한 시간' 정보를 계산
+        List<String> availableTimes = carRentalService.getAvailableTimes(carTypeId, date);
+
+        System.out.print("가능한 시간:");
+        for (String time : availableTimes) {
+            System.out.print(" " + time);
+        }
+
+        // 계산한 정보를 JSON 형태로 응답
+        Map<String, Object> response = new HashMap<>();
+        response.put("availableTimes", availableTimes);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 }
