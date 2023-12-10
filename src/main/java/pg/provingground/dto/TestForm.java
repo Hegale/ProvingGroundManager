@@ -11,6 +11,7 @@ import java.util.List;
 @Getter @Setter
 public class TestForm {
     String testDate;
+    String testTime;
 
     Long groundRentalId;
     List<Long> carRentalIds;
