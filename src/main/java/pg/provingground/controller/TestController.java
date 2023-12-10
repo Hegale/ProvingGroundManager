@@ -58,41 +58,15 @@ public class TestController {
         return "test/test-write";
     }
 
-    /*
-    @GetMapping("/test/new")
-    // TODO: 파일 저장 위한 객체, 날짜를 통한 대여 내역 검색 구현.. 이게 정상본인데 일단 수정시도할거임
-    public String newTest(@ModelAttribute TestForm testForm, @RequestParam(required = false) String testDate,
-                          @RequestParam(required = false) String testTime, Model model, Authentication auth) {
-
-        testForm.setTestDate(testDate);
-        User user = userService.getLoginUserByUsername(auth.getName());
-        LocalDate date;
-        System.out.println("선택한 시간 : " + testForm.getTestTime());
-        if (testDate != null) {
-            date = LocalDate.parse(testForm.getTestDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        } else {
-            date = null;
-        }
-
-        List<GroundRentalHistory> grounds = testService.getUsersGroundList(user, date);
-        List<CarRentalHistory> cars = testService.getUsersCarList(user, date);
-
-        model.addAttribute("testForm", testForm);
-        model.addAttribute("grounds", grounds);
-        model.addAttribute("cars", cars);
-
-        return "test/test-write";
-    }
-    */
-
     @PostMapping("/test/new")
-    // TODO: 인자로 받아올 친구들 추가
-    public String newTestResult(@RequestParam String carRentalIds, @ModelAttribute TestForm testForm) {
-        List<Long> carRentalIdList = Arrays.stream(carRentalIds.split(","))
+    // TODO: 인자로 받아올 친구들 추가 @RequestParam String carRentalIds,
+    public String newTestResult(@ModelAttribute TestForm testForm) {
+        List<Long> carRentalIdList = Arrays.stream(testForm.getCarRentalIds().split(","))
                 .map(Long::valueOf)
                 .toList();
 
-        System.out.println("차량은?? : " + carRentalIds);
+        System.out.println("차량은?? : " + testForm.getCarRentalIds());
+        System.out.println("날짜 : "+ testForm.getTestDate() + "| 시간 : " + testForm.getTestTime());
         return "redirect:/";
     }
 

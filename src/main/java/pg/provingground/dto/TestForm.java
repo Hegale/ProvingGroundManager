@@ -13,8 +13,8 @@ public class TestForm {
     String testDate;
     String testTime;
 
-    Long groundRentalId;
-    List<Long> carRentalIds;
+    String groundRentalId;
+    String carRentalIds;
 
     String partners; // TODO: 추후 협력사를 테이블로 분리하는 것 고려
 

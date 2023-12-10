@@ -27,7 +27,7 @@
           <div class="contents-form tableset">
             <div class="tableset-inner">
 
-              <form th:object="${testForm}" action="/test/new" method="get">
+              <form id="myForm" th:object="${testForm}" action="/test/new" method="get">
 
 
               <table class="tableset-table table">
@@ -90,7 +90,7 @@
                     </div>
 
                     <!-- name="dateSearch" 삭제함 -->
-                    <button type="submit" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
+                    <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
 
                   </td>
                   <td></td>
@@ -125,7 +125,7 @@
                       </button>
                       <ul class="selectset-list">
                         <li class="selectset-item" th:each="car : ${cars}">
-                          <button class="car-select selectset-link btn" type="button" th:data-value="${car.carName}">
+                          <button class="car-select selectset-link btn" type="button" th:data-value="${car.carName}" th:data-rental-id="${car.carRentalId}">
                             <span th:text="${car.carName}">차량 이름</span>
                           </button>
                         </li>
@@ -230,7 +230,7 @@
                     <a href="/">
                       <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">작성 취소</button>
                     </a>
-                    <button type="submit" id="submit-button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 작성</button>
+                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 작성</button>
                   </td>
                 </tr>
                 </tbody>
@@ -250,6 +250,21 @@
 
   <div th:replace="fragments/footer :: footer" />
   <script th:inline="javascript">
+    document.getElementById('postButton').addEventListener('click', function (event) {
+      event.preventDefault();
+      var form = document.getElementById('myForm');
+      form.method = 'post';
+      form.action = '/test/new';  // POST 요청의 목적지
+      form.submit();
+    });
+
+    document.getElementById('getButton').addEventListener('click', function (event) {
+      event.preventDefault();
+      var form = document.getElementById('myForm');
+      form.method = 'get';
+      form.action = '/test/new';  // GET 요청의 목적지
+      form.submit();
+    });
 
     $(function(){
 
@@ -279,7 +294,6 @@
         $('.time-select').click(function() {
           // 선택한 시간을 텍스트로 가져옴
           var testTime = $(this).text().trim();
-          console.log("선택 시간 :" + testTime);
           // 선택한 시간을 숨겨진 입력 필드에 설정
           $('#hiddenTime').val(testTime);
         });
@@ -295,12 +309,12 @@
             // 이미 선택된 항목이면 배열에서 제거
             selectedItems = selectedItems.filter(item => item.carRentalId !== carRentalId);
             $(this).removeClass('selected');
-            console.log(selectedItems); // 확인 ㄱ
+            console.log("선택 취소 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
           } else {
             // 새로 선택된 항목이면 배열에 추가
             selectedItems.push({ carName, carRentalId });
             $(this).addClass('selected');
-            console.log(selectedItems); // 확인 ㄱ
+            console.log("선택 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
           }
 
           $("#carRentalIds").val(selectedItems.map(item => item.carRentalId).join(","));  // <input> 태그의 값 업데이트
