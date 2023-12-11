@@ -88,7 +88,7 @@ public class UserContoller {
 
     @GetMapping("/admin")
     public String adminPage(Model model) {
-        return "admin"; //왜 검증안해?
+        return "admin/admin-home"; //왜 검증안해?
     }
 
 }

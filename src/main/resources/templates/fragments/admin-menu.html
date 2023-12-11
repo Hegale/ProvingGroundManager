@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div class="left-side-bar">
+
+<div class="left-side-bar" th:fragment="admin-menu">
     <div class="status-ico">
         <span>▶</span>
         <span>▼</span>
@@ -9,53 +10,40 @@
 
     <ul>
         <li>
-            <a href="#">1차 메뉴 아이템1</a>
+            <a href="#">차량</a>
             <ul>
-                <li><a href="#">2차 메뉴 아이템1</a></li>
-                <li><a href="#">2차 메뉴 아이템2</a></li>
-                <li><a href="#">2차 메뉴 아이템3</a></li>
-                <li><a href="#">2차 메뉴 아이템4</a></li>
-                <li><a href="#">2차 메뉴 아이템5</a></li>
+                <li><a href="#">차량 목록 확인</a></li>
+                <li><a href="#">차량 등록</a></li>
+                <li><a href="#">차량 대여 내역</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">1차 메뉴 아이템2</a>
+            <a href="#">주행시험장</a>
             <ul>
-                <li><a href="#">2차 메뉴 아이템1</a></li>
-                <li><a href="#">2차 메뉴 아이템2</a></li>
-                <li><a href="#">2차 메뉴 아이템3</a></li>
-                <li><a href="#">2차 메뉴 아이템4</a></li>
-                <li><a href="#">2차 메뉴 아이템5</a></li>
+                <li><a href="#">시험장 목록 확인</a></li>
+                <li><a href="#">시험장 등록</a></li>
+                <li><a href="#">시험장 예약 내역</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">1차 메뉴 아이템3</a>
+            <a href="#">시험</a>
             <ul>
-                <li><a href="#">2차 메뉴 아이템1</a></li>
-                <li><a href="#">2차 메뉴 아이템2</a></li>
-                <li><a href="#">2차 메뉴 아이템3</a></li>
-                <li><a href="#">2차 메뉴 아이템4</a></li>
-                <li><a href="#">2차 메뉴 아이템5</a></li>
+                <li><a href="#">시험 목록 확인</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">1차 메뉴 아이템4</a>
+            <a href="#">주유</a>
             <ul>
-                <li><a href="#">2차 메뉴 아이템1</a></li>
-                <li><a href="#">2차 메뉴 아이템2</a></li>
-                <li><a href="#">2차 메뉴 아이템3</a></li>
-                <li><a href="#">2차 메뉴 아이템4</a></li>
-                <li><a href="#">2차 메뉴 아이템5</a></li>
+                <li><a href="#">주유구 목록 확인</a></li>
+                <li><a href="#">주유구 등록</a></li>
+                <li><a href="#">주유 내역</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">1차 메뉴 아이템5</a>
+            <a href="#">사용자</a>
             <ul>
-                <li><a href="#">2차 메뉴 아이템1</a></li>
-                <li><a href="#">2차 메뉴 아이템2</a></li>
-                <li><a href="#">2차 메뉴 아이템3</a></li>
-                <li><a href="#">2차 메뉴 아이템4</a></li>
-                <li><a href="#">2차 메뉴 아이템5</a></li>
+                <li><a href="#">사용자 목록 확인</a></li>
+                <li><a href="#">사용자 추가</a></li>
             </ul>
         </li>
     </ul>
