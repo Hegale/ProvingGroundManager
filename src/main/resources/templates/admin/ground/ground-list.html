@@ -19,12 +19,12 @@
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <div class="textset textset-h2">
-                    <h2 class="h2">차량 주유하기</h2>
+                    <h2 class="h2">주행시험장 목록</h2>
                 </div>
 
-                <!-- 검색 박스 시작 -->
+                <!-- 검색 박스 시작
                 <div class="contents-search juykim-search-top">
-                    <form action="/admin/car-list" th:object="${typeSearchForm}" method="get" class="contents-search">
+                    <form action="/admin/car/car-list" th:object="${typeSearchForm}" method="get" class="contents-search">
                         <div class="juykim-car-search">
 
 
@@ -56,14 +56,14 @@
 
                     </form>
 
-                    <form action="/admin/car-list/car-number" method="get">
+                    <form action="/admin/car/car-list/car-number" method="get">
                         <div class="inputset juykim-search-box">
                             <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘"></button>
                             <input name="carNumber" type="text" class="inputset-input form-control" placeholder="차량번호로 검색하기" aria-label="내용">
                         </div>
                     </form>
                 </div>
-                <!-- 검색란 끝-->
+                 검색란 끝-->
 
                 <div class="tableset">
 
@@ -77,42 +77,34 @@
                                 <col>
                                 <col>
                                 <col>
-                                <col>
-                                <col>
                             </colgroup>
                             <thead class="thead-border-top" style="text-align:center;">
                             <tr>
-                                <th class="number" scope="col">Car ID</th>
+                                <th class="number" scope="col">Ground ID</th>
                                 <!-- 가로구분  -->
-                                <th scope="col">차량 번호</th>
-                                <th scope="col">차량</th>
-                                <th scope="col">차종</th>
-                                <th scope="col">엔진</th>
-                                <th scope="col">잔여 연료</th>
-                                <th scope="col">차량 수정/삭제</th>
+                                <th scope="col">시험장 이름</th>
+                                <th scope="col">최대 이용 가능 차량</th>
+                                <th scope="col">주행거리</th>
+                                <th scope="col">시험장 수정/삭제</th>
                             </tr>
                             </thead>
                             <tbody>
                             <!-- 목록 하나 시작 -->
 
-                            <tr th:each="car : ${cars}">
-                                <td class="number juykim-cars" th:text="${car.carId.toString()}">7</td>
-                                <td>
-                                    <p th:text="${car.number}"></p>
-                                </td>
-                                <td class="last-child juykim-cars" th:text="${car.name}">차량</td>
-                                <td class="last-child juykim-cars" th:text="${car.type}">차종</td>
-                                <td class="last-child juykim-cars" th:text="${car.engine}">엔진</td>
-                                <td class="last-child juykim-cars" th:text="${#numbers.formatDecimal(car.fuel / 1000, 1, 'COMMA', 0, 'POINT')}">잔여 연료</td>
+                            <tr th:each="ground : ${grounds}">
+                                <td class="number juykim-cars" th:text="${ground.groundId}">7</td>
+                                <td class="last-child juykim-cars"><p th:text="${ground.name}"></p></td>
+                                <td class="last-child juykim-cars" th:text="${ground.car_maximum}"></td>
+                                <td class="last-child juykim-cars" th:text="${ground.distance}"></td>
                                 <td class="last-child juykim-cars">
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <a th:href="@{'/admin/car-list/edit/' + ${car.carId}}">
+                                    <div style="display: flex; justify-content: center">
+                                        <a th:href="@{'/admin/ground/list/edit/' + ${ground.groundId}}">
                                             <button type="button"
                                                     class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                                                 수정
                                             </button>
                                         </a>
-                                        <form method="post" th:action="@{'/admin/car-list/' + ${car.carId}}">
+                                        <form method="post" th:action="@{'/admin/ground/list/' + ${ground.groundId}}">
                                             <input type="hidden" name="_method" value="DELETE" />
 
                                             <button type="submit"

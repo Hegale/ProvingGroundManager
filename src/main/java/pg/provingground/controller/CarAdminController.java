@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class AdminController {
+public class CarAdminController {
 
     private final CarTypeService carTypeService;
     private final CarService carService;
@@ -23,7 +23,7 @@ public class AdminController {
         return "admin/admin-home"; //왜 검증안해?
     }
 
-    @GetMapping("/admin/car-list")
+    @GetMapping("/admin/car/list")
     /** 차종으로 차량 검색 */
     public String carListPage(@ModelAttribute CarSearchForm typeSearchForm, Model model) {
         // 조건에 맞는 차종 가져오기
@@ -33,10 +33,10 @@ public class AdminController {
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);
 
-        return "admin/car-list";
+        return "admin/car/car-list";
     }
 
-    @GetMapping("/admin/car-list/car-number")
+    @GetMapping("/admin/car/list/car-number")
     /** 주유 전 차량 선택 */
     public String carNumberListPage(@RequestParam String carNumber, Model model) {
         // 차량 번호로 검색
@@ -47,14 +47,14 @@ public class AdminController {
         model.addAttribute("typeSearchForm", typeSearchForm);
         model.addAttribute("carNumber", carNumber);
 
-        return "admin/car-list";
+        return "admin/car/car-list";
     }
 
-    @DeleteMapping("/admin/car-list/{carId}")
+    @DeleteMapping("/admin/car/list/{carId}")
     /** 차량 삭제 */
     public String carDelete(@PathVariable Long carId) {
         carService.deleteCar(carId); // 예외 캐치
-        return "redirect:/admin/car-list";
+        return "redirect:/admin/car/list";
     }
 
 }

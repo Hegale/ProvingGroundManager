@@ -3,6 +3,8 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ public class GroundRental {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ground_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ground ground;
 
     @ManyToOne(fetch = FetchType.LAZY)

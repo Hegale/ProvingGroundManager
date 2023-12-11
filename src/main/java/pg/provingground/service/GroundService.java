@@ -3,6 +3,7 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pg.provingground.domain.Car;
 import pg.provingground.domain.Ground;
 import pg.provingground.repository.GroundRepository;
 
@@ -18,6 +19,12 @@ public class GroundService {
     @Transactional
     public void saveGround(Ground ground) {
         groundRepository.save(ground);
+    }
+
+    @Transactional
+    public void deleteGround(Long groundId) {
+        Ground ground = groundRepository.findOne(groundId);
+        groundRepository.delete(ground);
     }
 
     // TODO: 시험장 수정 메소드 구현
