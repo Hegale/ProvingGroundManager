@@ -29,6 +29,7 @@
     padding-top: 10rem;
     left: -155px;
     transition: left .3s;
+    z-index: 100;
 }
 
 .left-side-bar > .status-ico {

@@ -68,4 +68,11 @@ public class CarService {
         return Math.min(amount * 1000, leftCapacity) ;
     }
 
+    /** 차량을 삭제 */
+    @Transactional
+    public void deleteCar(Long carId) {
+        Car car = carRepository.findOne(carId);
+        carRepository.delete(car);
+    }
+
 }

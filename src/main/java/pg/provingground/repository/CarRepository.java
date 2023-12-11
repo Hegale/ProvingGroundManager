@@ -28,7 +28,7 @@ public class CarRepository {
     }
 
     public List<Car> findAll() {
-        return em.createQuery("select c from Car c", Car.class).getResultList();
+        return em.createQuery("select c from Car c order by c.fuel", Car.class).getResultList();
     }
 
     /** 차량번호를 통한 차량 검색 */
@@ -37,7 +37,8 @@ public class CarRepository {
                 "SELECT c " +
                         "FROM Car c " +
                         "JOIN FETCH c.type t " +
-                        "WHERE c.number like :number",
+                        "WHERE c.number like :number " +
+                        "ORDER BY c.fuel",
                 Car.class)
                 .setParameter("number", "%" + number + "%")
                 .getResultList();
@@ -54,7 +55,6 @@ public class CarRepository {
                 .getResultList();
     }
 
-    @Transactional
     public void delete(Car car) {
         if (car != null) {
             em.remove(car);

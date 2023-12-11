@@ -3,9 +3,7 @@ package pg.provingground.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarType;
 import pg.provingground.dto.CarDto;
 import pg.provingground.service.CarService;
@@ -31,7 +29,6 @@ public class AdminController {
         // 조건에 맞는 차종 가져오기
         List<CarType> types = carTypeService.findCarTypesByCondition(typeSearchForm);
         List<CarDto> cars = carService.findByCarType(types);
-        System.out.println("form result: " + typeSearchForm.type + " | " + typeSearchForm.engine + " | " + typeSearchForm.name);
 
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);
@@ -45,16 +42,19 @@ public class AdminController {
         // 차량 번호로 검색
         List<CarDto> cars = carService.findByCarNumber(carNumber);
         CarSearchForm typeSearchForm = new CarSearchForm();
-        System.out.println("차량번호 : " + carNumber);
-        for (CarDto car : cars) {
-            System.out.println("차량 id : " + car.getCarId() + " | 차 : " + car.getName() + " | 차종 : " + car.getType());
-        }
 
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);
         model.addAttribute("carNumber", carNumber);
 
         return "admin/car-list";
+    }
+
+    @DeleteMapping("/admin/car-list/{carId}")
+    /** 차량 삭제 */
+    public String carDelete(@PathVariable Long carId) {
+        carService.deleteCar(carId); // 예외 캐치
+        return "redirect:/admin/car-list";
     }
 
 }

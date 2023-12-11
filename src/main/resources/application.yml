@@ -1,12 +1,8 @@
 spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/proving_ground # mariadb
-    # url: jdbc:h2:tcp://localhost/~/proving_ground
     username: root
     password: Likepotato13^^
-    #username: juykim
-    # password:
-    #driver-class-name: org.h2.Driver
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
@@ -15,6 +11,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mvc: # post를 delete로 변경하기 위함
+    hiddenmethod:
+      filter:
+        enabled: true
     #database-platform: org.hibernate.spatial.dialect.mariadb.MariaDB103SpatialDialect
 
 logging:

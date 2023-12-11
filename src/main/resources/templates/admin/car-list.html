@@ -89,7 +89,7 @@
                                 <th scope="col">차종</th>
                                 <th scope="col">엔진</th>
                                 <th scope="col">잔여 연료</th>
-                                <th scope="col">주유하기</th>
+                                <th scope="col">차량 수정/삭제</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -105,13 +105,21 @@
                                 <td class="last-child juykim-cars" th:text="${car.engine}">엔진</td>
                                 <td class="last-child juykim-cars" th:text="${#numbers.formatDecimal(car.fuel / 1000, 1, 'COMMA', 0, 'POINT')}">잔여 연료</td>
                                 <td class="last-child juykim-cars">
-                                    <!--th:onclick="'javascript:refuel('+${rental.carId}+');'"-->
-                                    <a th:href="@{'/refuel/select/' + ${car.carId}}">
-                                        <button type="button"
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <a th:href="@{'/admin/car-list/edit/' + ${car.carId}}">
+                                            <button type="button"
+                                                    class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                                                수정
+                                            </button>
+                                        </a>
+                                        <form method="post" th:action="@{'/admin/car-list/' + ${car.carId}}">
+                                            <input type="hidden" name="_method" value="DELETE" />
+
+                                            <button type="submit"
                                                 class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                                            주유하기
-                                        </button>
-                                    </a>
+                                            삭제 </button>
+                                        </form>
+                                    </div>
                                 </td>
 
                             </tr>
@@ -128,8 +136,6 @@
     </div>
     <!-- [E]personal-seLPF6Qg10 -->
 </main>
-
-
 
 <div th:replace="fragments/footer :: footer" />
 
