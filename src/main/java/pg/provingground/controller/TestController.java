@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.dto.GroundRentalHistory;
 import pg.provingground.dto.TestForm;
+import pg.provingground.dto.TestHistory;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
@@ -34,8 +32,19 @@ public class TestController {
 
     @GetMapping("/test")
     // TODO: 시험일 등으로 검색하는 기능 추가. 관리자 기능 + 자기가 등록한 것만 볼 수 있게끔
-    public String testHistory(Model model) {
+    public String testHistory(Model model, Authentication auth) {
+        User user = userService.getLoginUserByUsername(auth.getName());
+        List<TestHistory> tests = testService.getTestHistory(user);
+
+        model.addAttribute("tests", tests);
+
         return "test/test-history";
+    }
+
+    @GetMapping("/test/{testId}/fix")
+    /** 특정 시험 내역을 수정 혹은 삭제, 해당 페이지로 이동 */
+    public String fixHistory(@PathVariable String testId) {
+        return "test/test-write"; // 수정 및 삭제 전용 페이지로 이동.
     }
 
     @GetMapping("/test/new")
@@ -68,13 +77,15 @@ public class TestController {
 
     @PostMapping("/test/new")
     // TODO: 시험장 등록 시행, 유효값 판별
-    public String newTestResult(@ModelAttribute TestForm testForm, @RequestParam(value = "files", required = false) MultipartFile[] files) {
+    public String newTestResult(@ModelAttribute TestForm testForm, @RequestParam(value = "files", required = false) MultipartFile[] files, Authentication auth) {
+
+        String userName = auth.getName();
         // 여러 개 받아온 차량대여 목록을 변환
         testForm.setCarRentalIdsList(Arrays.stream(testForm.getCarRentalIds().split(","))
                 .map(Long::valueOf)
                 .toList());
 
-        testService.addTest(testForm);
+        testService.addTest(testForm, userService.getLoginUserByUsername(userName));
 
         /* 파일 등록
         for (MultipartFile file : files) {
