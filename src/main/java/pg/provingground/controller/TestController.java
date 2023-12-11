@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
 import pg.provingground.dto.GroundRentalHistory;
@@ -15,7 +16,10 @@ import pg.provingground.dto.TestForm;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -39,17 +43,21 @@ public class TestController {
     public String newTest(@ModelAttribute TestForm testForm, Model model, Authentication auth) {
 
         User user = userService.getLoginUserByUsername(auth.getName());
-        LocalDate date;
-        System.out.println("선택한 날짜 : " + testForm.getTestDate());
-        System.out.println("선택한 시간 : " + testForm.getTestTime());
-        if (testForm.getTestDate() != null) {
-            date = LocalDate.parse(testForm.getTestDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDateTime dateTime;
+
+        // 폼에서 받아온 시간을 LocalDateTime으로 변경
+        if (testForm.getTestDate() != null && testForm.getTestTime() != null) {
+            String dateTimeStr = testForm.getTestDate() + "T" + testForm.getTestTime();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+            dateTime = LocalDateTime.parse(dateTimeStr, formatter);
         } else {
-            date = null;
+            dateTime = null;
         }
 
-        List<GroundRentalHistory> grounds = testService.getUsersGroundList(user, date);
-        List<CarRentalHistory> cars = testService.getUsersCarList(user, date);
+        // 해당 날짜의 대여내역을 각각 받아오기
+        List<GroundRentalHistory> grounds = testService.getUsersGroundList(user, dateTime);
+        List<CarRentalHistory> cars = testService.getUsersCarList(user, dateTime);
 
         model.addAttribute("testForm", testForm);
         model.addAttribute("grounds", grounds);
@@ -59,15 +67,32 @@ public class TestController {
     }
 
     @PostMapping("/test/new")
-    // TODO: 인자로 받아올 친구들 추가 @RequestParam String carRentalIds,
-    public String newTestResult(@ModelAttribute TestForm testForm) {
-        List<Long> carRentalIdList = Arrays.stream(testForm.getCarRentalIds().split(","))
+    // TODO: 시험장 등록 시행, 유효값 판별
+    public String newTestResult(@ModelAttribute TestForm testForm, @RequestParam(value = "files", required = false) MultipartFile[] files) {
+        // 여러 개 받아온 차량대여 목록을 변환
+        testForm.setCarRentalIdsList(Arrays.stream(testForm.getCarRentalIds().split(","))
                 .map(Long::valueOf)
-                .toList();
+                .toList());
 
-        System.out.println("차량은?? : " + testForm.getCarRentalIds());
-        System.out.println("시험장은?? : " + testForm.getGroundRentalId());
-        System.out.println("날짜 : "+ testForm.getTestDate() + "| 시간 : " + testForm.getTestTime());
+        testService.addTest(testForm);
+
+        /* 파일 등록
+        for (MultipartFile file : files) {
+            if (file.isEmpty()) {
+                continue; // 비어 있으면 다음 파일로 넘어감
+            }
+            try {
+                // TODO: 검증로직?
+                File dest = new File("/Users/juyeon/autoever/userFiles/" + file.getOriginalFilename());
+                file.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 적절한 오류 처리를 추가한다.
+            }
+        }
+
+         */
+
         return "redirect:/";
     }
 

@@ -15,6 +15,7 @@ public class TestForm {
 
     String groundRentalId;
     String carRentalIds;
+    List<Long> carRentalIdsList;
 
     String partners; // TODO: 추후 협력사를 테이블로 분리하는 것 고려
 

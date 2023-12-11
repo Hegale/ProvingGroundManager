@@ -27,7 +27,8 @@
           <div class="contents-form tableset">
             <div class="tableset-inner">
 
-              <form id="myForm" th:object="${testForm}" action="/test/new" method="get">
+              <!--  enctype="multipart/form-data" 옵션 삭제 -->
+              <form id="myForm" th:object="${testForm}" action="/test/new" method="post">
 
 
               <table class="tableset-table table">
@@ -45,7 +46,7 @@
                   <td colspan="3" style="display: flex; justify-content: space-between;">
 
                     <!-- 날짜 선택 -->
-                    <div class="inputset inputset-lg" style="">
+                    <div class="inputset inputset-lg" style="width: 22rem;">
                       <!-- inputset-input form-control  : style -->
                       <input th:field="*{testDate}" class="datepicker inputset-input form-control"
                              id="selectedDate" name="testDate"
@@ -55,7 +56,7 @@
                     </div>
 
                     <!-- 시간 선택 -->
-                    <div class="selectset selectset-lg">
+                    <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
                       <button class="selectset-toggle btn" type="button">
                         <span>시간을 선택하세요</span>
                       </button>
@@ -93,7 +94,6 @@
                     <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
 
                   </td>
-                  <td></td>
                   <td></td>
 
                 </tr>
@@ -141,30 +141,7 @@
                   </th>
                   <td class="d-flex justify-content-start align-items-center" colspan="3">
                     <div class="inputset col-4">
-                      <input type="text" class="inputset-input form-control" id="Email" aria-label="이메일">
-                    </div>
-                    <span class="at">@</span>
-                    <div class="selectset">
-                      <button class="selectset-toggle btn" type="button">
-                        <span>선택해주세요</span>
-                      </button>
-                      <ul class="selectset-list">
-                        <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="선택해주세요">
-                            <span>선택해주세요</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="naver.com">
-                            <span>naver.com</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="selectset-link btn" type="button" data-value="gmail.com">
-                            <span>gmail.com</span>
-                          </button>
-                        </li>
-                      </ul>
+                      <input type="text" th:field="*{partners}" class="inputset-input form-control" id="Email" aria-label="이메일">
                     </div>
                   </td>
                 </tr>
@@ -192,17 +169,17 @@
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <input type="text" class="inputset-input form-control" id="Title" aria-label="제목">
+                      <input type="text" th:field="*{title}" class="inputset-input form-control" id="Title" aria-label="제목">
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <th>
-                    <label class="req label" for="Inquiry">문의내용</label>
+                    <label class="req label" for="Inquiry">시험 내용</label>
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <textarea class="inputset-input form-control textarea" id="Inquiry" aria-label="문의내용"></textarea>
+                      <textarea th:field="*{contents}" class="inputset-input form-control textarea" id="Inquiry" aria-label="문의내용"></textarea>
                     </div>
                   </td>
                 </tr>
@@ -215,7 +192,7 @@
                       <label>
                         <div class="fileset-body">
                           <div class="fileset-group">
-                            <input type="file" class="fileset-input">
+                            <input type="file" class="fileset-input" name="file" multiple>
                             <button class="fileset-cancel"></button>
                           </div>
                           <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">파일첨부</span>
@@ -239,8 +216,6 @@
 
               </form>
 
-
-
             </div>
           </div>
         </div>
@@ -251,6 +226,7 @@
 
   <div th:replace="fragments/footer :: footer" />
   <script th:inline="javascript">
+
     document.getElementById('postButton').addEventListener('click', function (event) {
       event.preventDefault();
       var form = document.getElementById('myForm');

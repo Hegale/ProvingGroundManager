@@ -32,6 +32,12 @@ public class CarRentalRepository {
         return em.createQuery("select c from CarRental c", CarRental.class).getResultList();
     }
 
+    public List<CarRental> findByIds(List<Long> ids) {
+        return em.createQuery("select c from CarRental c where c.id in :ids", CarRental.class)
+                .setParameter("ids", ids)
+                .getResultList();
+    }
+
     public List<CarRental> findAllByUser(User user) {
         return em.createQuery(
                 "select c from CarRental c where c.user = :user", CarRental.class)
@@ -39,14 +45,14 @@ public class CarRentalRepository {
                 .getResultList();
     }
 
-    public List<CarRentalHistory> findAllByUserAndTime(User user, LocalDate date) {
+    public List<CarRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime) {
         return em.createQuery(
                         "select new pg.provingground.dto.CarRentalHistory(c.carRentalId, c.car.type.name, c.startTime) " +
                                 "from CarRental c " +
                                 "where c.user = :user " +
-                                "and FUNCTION('DATE', c.startTime) = :date", CarRentalHistory.class)
+                                "and c.startTime = :dateTime", CarRentalHistory.class)
                 .setParameter("user", user)
-                .setParameter("date", date)
+                .setParameter("dateTime", dateTime)
                 .getResultList();
     }
 
