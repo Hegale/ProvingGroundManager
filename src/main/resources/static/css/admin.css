@@ -17,10 +17,12 @@
     top: 0;
     left: 100%;
     background-color: #000000;
+    opacity : 0.5;
 }
 
 .left-side-bar {
     background-color: #000000;
+    opacity : 0.9;
     height: 100%;
     width: 180px;
     position: fixed;
