@@ -66,6 +66,7 @@ public class TestController {
                 .toList();
 
         System.out.println("차량은?? : " + testForm.getCarRentalIds());
+        System.out.println("시험장은?? : " + testForm.getGroundRentalId());
         System.out.println("날짜 : "+ testForm.getTestDate() + "| 시간 : " + testForm.getTestTime());
         return "redirect:/";
     }
