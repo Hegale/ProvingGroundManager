@@ -14,13 +14,6 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    /*
-    // 권한 아이디. 외래키
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Role role;
-     */
-
     private UserRole role;
 
     @Column(unique = true) // 아이디는 유일해야 한다.
@@ -38,6 +31,7 @@ public class User {
         user.username = username;
         user.password = password;
         user.nickname = nickname;
+        user.role = role;
         user.phoneNum = phoneNum;
         // TODO: Role도 추가
         return user;

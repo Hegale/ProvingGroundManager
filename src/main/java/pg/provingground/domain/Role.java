@@ -9,6 +9,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
+// TODO: 삭제
 public class Role {
 
     @Id @GeneratedValue

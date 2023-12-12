@@ -1,14 +1,19 @@
 package pg.provingground.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.User;
+import pg.provingground.dto.admin.UserDto;
+import pg.provingground.dto.admin.UserSearchForm;
 import pg.provingground.dto.form.JoinForm;
 import pg.provingground.dto.form.LoginForm;
 import pg.provingground.repository.UserRepository;
+import pg.provingground.repository.UserSearchRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,7 +22,29 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserSearchRepository userSearchRepository;
     private final BCryptPasswordEncoder encoder;
+
+    /**
+     * [관리자] 유저 검색
+     */
+    public List<UserDto> getUsersByConditions(UserSearchForm userSearchForm) {
+        return userSearchRepository.findByCriteria(userSearchForm);
+    }
+
+    /**
+     * [관리자] 유저 삭제
+     */
+    @Transactional
+    // TODO: 자기자신은 삭제하지 못하게 하는 메소드 추가
+    public void delete(Long userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+        } else {
+            // 예외 처리: 유저가 존재하지 않는 경우
+            throw new EntityNotFoundException("User not found with id " + userId);
+        }
+    }
 
     /**
      * username 중복 체크

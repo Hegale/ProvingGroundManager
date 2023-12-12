@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ko">
+
+<head th:replace="fragments/header :: header">
+    <title>페이지</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<div th:replace="fragments/body_header :: body_header" />
+
+<div th:replace="fragments/admin-menu :: admin-menu" />
+
+
+<!-- [E]thwhole-enlPbA0Maj -->
+<main class="th-layout-main ">
+    <!-- [S]personal-seLPF6Qg10 -->
+    <div class="personal-seLPF6Qg10" data-bid="jYlPf6qsy6" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="h2">사용자 목록</h2>
+                </div>
+
+                <div class="tableset">
+
+                    <div class="tableset-inner">
+                        <!-- 검색란 시작 -->
+                        <form action="/admin/user/list" th:object="${userSearchForm}" method="get">
+                            <div class="admin-search-area">
+                                <div class="inputset">
+                                    <input th:field="*{userId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="사용자 식별 아이디 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="아이디 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{nickname}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="닉네임 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset"> <!-- TODO: Y/N 토글로 수정 필요 -->
+                                    <input th:field="*{role}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="권한 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{phoneNum}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="휴대폰번호 검색" aria-label="내용">
+                                </div>
+
+                                <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
+                            </div>
+
+                        </form>
+
+                        <!-- 위의 검색란 끝-->
+                        <table class="tableset-table table">
+                            <!-- 아래 있을 col의 속성 미리지정하는부분?-->
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead class="thead-border-top" style="text-align:center;">
+                            <tr>
+                                <th class="number" scope="col">NO</th>
+                                <!-- 가로구분  -->
+                                <th scope="col">아이디</th>
+                                <th scope="col">닉네임</th>
+                                <th scope="col">권한</th>
+                                <th scope="col">휴대폰번호</th>
+                                <th scope="col">사용자 정보 수정/삭제</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 목록 하나 시작 -->
+                            <tr th:each="user : ${userDtos}">
+                                <td class="admin-list number" th:text="${user.userId.toString()}">7</td>
+                                <td class="admin-list"><p th:text="${user.username}">차종</p></td>
+                                <td class="admin-list"><p th:text="${user.nickname}">차량번호</p></td>
+                                <td class="admin-list last-child" th:text="${user.role}">대여일</td>
+                                <td class="admin-list last-child" th:text="${user.phoneNum}">반납 여부</td>
+                                <td>
+                                    <div style="display: flex; justify-content: center">
+                                        <a th:href="@{'/admin/user/list/edit/' + ${user.userId}}">
+                                            <button type="button"
+                                                    class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                                                수정
+                                            </button>
+                                        </a>
+                                        <form method="post" th:action="@{'/admin/user/list/' + ${user.userId}}">
+                                            <input type="hidden" name="_method" value="DELETE" />
+
+                                            <button type="submit"
+                                                    class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                                                삭제 </button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <!-- 목록 하나 끝-->
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- [E]personal-seLPF6Qg10 -->
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+
+<script src="../resources/js/setting.js"></script>
+<script src="../resources/js/plugin.js"></script>
+<script src="../resources/js/template.js"></script>
+<script src="../resources/js/common.js"></script>
+<script src="../resources/js/script.js"></script>
+<script src="../resources/js/jquery-ui.min.js"></script>
+
+</body>
+</html>
