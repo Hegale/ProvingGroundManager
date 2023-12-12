@@ -18,6 +18,8 @@ public class Station {
     @Column(unique = true)
     private String name;
 
+    private FuelType fuelType;
+
     public static Station createStation(String name) {
         Station station = new Station();
         station.name = name;

@@ -19,26 +19,29 @@
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <div class="textset textset-h2">
-                    <h2 class="h2">시험장 예약 목록</h2>
+                    <h2 class="h2">차량 대여 목록</h2>
                 </div>
 
                 <div class="tableset">
 
                     <div class="tableset-inner">
                         <!-- 검색란 시작 -->
-                        <form action="/admin/ground-rental/list" th:object="${groundRentalSearchForm}" method="get">
+                        <form action="/admin/car-rental/list" th:object="${carRentalSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
-                                    <input th:field="*{groundRentalId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="예약 번호로 검색" aria-label="내용">
+                                    <input th:field="*{carRentalId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여번호로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{groundName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험장 이름으로 검색" aria-label="내용">
+                                    <input th:field="*{carName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차종으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="예약일로 검색" aria-label="내용">
+                                    <input th:field="*{carNumber}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량번호로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여일로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset"><!-- TODO: Y/N 토글로 수정 필요 -->
-                                    <input th:field="*{canceled}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="취소여부로 검색" aria-label="내용">
+                                    <input th:field="*{returned}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="반납여부로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
                                     <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="유저명으로 검색" aria-label="내용">
@@ -58,25 +61,28 @@
                                 <col>
                                 <col>
                                 <col>
+                                <col>
                             </colgroup>
                             <thead class="thead-border-top" style="text-align:center;">
                             <tr>
                                 <th class="number" scope="col">NO</th>
                                 <!-- 가로구분  -->
-                                <th scope="col">시험장 이름</th>
-                                <th scope="col">예약 일시</th>
-                                <th scope="col">취소 여부</th>
+                                <th scope="col">차량 이름</th>
+                                <th scope="col">차량 번호</th>
+                                <th scope="col">대여일시</th>
+                                <th scope="col">반납 여부</th>
                                 <th scope="col">대여자 id</th>
                             </tr>
                             </thead>
                             <tbody>
                             <!-- 목록 하나 시작 -->
-                            <tr th:each="groundRental : ${groundRentalDtos}">
-                                <td class="admin-list number" th:text="${groundRental.groundRentalId.toString()}">7</td>
-                                <td class="admin-list"><p th:text="${groundRental.groundName}">차종</p></td>
-                                <td class="admin-list last-child" th:text="${groundRental.startTime.toString()}">대여일</td>
-                                <td class="admin-list last-child" th:text="${groundRental.canceled}">반납 여부</td>
-                                <td class="admin-list last-child" th:text="${groundRental.username}">대여자 이름</td>
+                            <tr th:each="carRental : ${carRentalDtos}">
+                                <td class="admin-list number" th:text="${carRental.carRentalId.toString()}">7</td>
+                                <td class="admin-list"><p th:text="${carRental.carName}">차종</p></td>
+                                <td class="admin-list"><p th:text="${carRental.carNumber}">차량번호</p></td>
+                                <td class="admin-list last-child" th:text="${carRental.startTime.toString()}">대여일</td>
+                                <td class="admin-list last-child" th:text="${carRental.returned}">반납 여부</td>
+                                <td class="admin-list last-child" th:text="${carRental.username}">대여자 이름</td>
                             </tr>
                             <!-- 목록 하나 끝-->
                             </tbody>
