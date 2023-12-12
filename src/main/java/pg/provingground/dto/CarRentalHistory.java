@@ -21,6 +21,10 @@ public class CarRentalHistory {
     /* 출력을 위해 변환된 값들 */
     private String carName;
 
+    private String userName;
+
+    private Long userId;
+
     private LocalDateTime startTime;
 
     /* 대여 시행일 이전이며, 선반납되지 않았다면 */
@@ -38,6 +42,8 @@ public class CarRentalHistory {
         cancelable = (returned.equals("N") && startTime.isAfter(LocalDate.now().plusDays(1).atStartOfDay()))
                 ? "Y" : "N";
         returnable = (returned.equals("N") && cancelable.equals("N")) ? "Y" : "N";
+        this.userId = carRental.getUser().getUserId();
+        this.userName = carRental.getUser().getNickname();
     }
 
     public CarRentalHistory(Long carRentalId, String carName, LocalDateTime startTime) {

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+<head th:replace="fragments/header :: header">
+    <title>페이지</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<div th:replace="fragments/body_header :: body_header" />
+
+<div th:replace="fragments/admin-menu :: admin-menu" />
+
+
+<!-- [E]thwhole-enlPbA0Maj -->
+<main class="th-layout-main ">
+    <!-- [S]personal-seLPF6Qg10 -->
+    <div class="personal-seLPF6Qg10" data-bid="jYlPf6qsy6" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="h2">차량 대여 목록</h2>
+                </div>
+
+                <!--
+                <div class="contents-search juykim-search-top">
+                    <form action="/admin/car/list" th:object="${typeSearchForm}" method="get" class="contents-search">
+                        <div class="juykim-car-search">
+
+
+                            <select th:field="*{type}" id="typeSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                                <option value="">차종</option>
+                                <option value="승용">승용</option>
+                                <option value="SUV">SUV</option>
+                                <option value="수소/전기차">수소/전기차</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
+
+                        <div class="juykim-car-search">
+                            <select th:field="*{engine}" id="engineSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                                <option value="">엔진</option>
+                                <option value="가솔린">가솔린</option>
+                                <option value="LPG">LPG</option>
+                                <option value="하이브리드">하이브리드</option>
+                                <option value="디젤">디젤</option>
+                                <option value="전기">전기</option>
+                                <option value="수소">수소</option>
+                            </select>
+                        </div>
+
+                        <div class="inputset juykim-search-box">
+                            <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
+                            <input th:field="*{name}" type="text" class="inputset-input form-control" placeholder="차종으로 검색하기" aria-label="내용">
+                        </div>
+
+                    </form>
+
+                    <form action="/admin/car/list/car-number" method="get">
+                        <div class="inputset juykim-search-box">
+                            <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘"></button>
+                            <input name="carNumber" type="text" class="inputset-input form-control" placeholder="차량번호로 검색하기" aria-label="내용">
+                        </div>
+                    </form>
+                </div>
+                검색란 끝-->
+
+                <div class="tableset">
+
+
+                    <div class="tableset-inner">
+                        <!-- 위의 검색란 끝-->
+                        <table class="tableset-table table">
+                            <!-- 아래 있을 col의 속성 미리지정하는부분?-->
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead class="thead-border-top" style="text-align:center;">
+                            <tr>
+                                <th class="number" scope="col">NO</th>
+                                <!-- 가로구분  -->
+                                <th scope="col">차량 이름</th>
+                                <th scope="col">대여일시</th>
+                                <th scope="col">반납 여부</th>
+                                <th scope="col">대여자 id</th>
+                                <th scope="col">대여자명</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 목록 하나 시작 -->
+                            <tr th:each="rental : ${rentals}">
+                                <td class="admin-list number" th:text="${rental.carRentalId.toString()}">7</td>
+                                <td class="admin-list"><p th:text="${rental.carName}">대여 차량</p></td>
+                                <td class="admin-list last-child" th:text="${rental.startTime.toString()}">대여일</td>
+                                <td class="admin-list last-child" th:text="${rental.returned}">반납 여부</td>
+                                <td class="admin-list last-child" th:text="${rental.userId}">대여자 id</td>
+                                <td class="admin-list last-child" th:text="${rental.userName}">대여자 닉네임</td>
+                            </tr>
+                            <!-- 목록 하나 끝-->
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- [E]personal-seLPF6Qg10 -->
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+
+<script src="../resources/js/setting.js"></script>
+<script src="../resources/js/plugin.js"></script>
+<script src="../resources/js/template.js"></script>
+<script src="../resources/js/common.js"></script>
+<script src="../resources/js/script.js"></script>
+<script src="../resources/js/jquery-ui.min.js"></script>
+
+</body>
+</html>

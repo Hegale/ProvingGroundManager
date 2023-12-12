@@ -54,6 +54,13 @@ public class CarRentalService {
         rental.cancel();
     }
 
+    /** [관리자] 모든 차량 대여 내역 반환 */
+    public List<CarRentalHistory> getAllRentals() {
+        return carRentalRepository.findAll().stream()
+                .map(carRental -> new CarRentalHistory(carRental))  // CarRental 객체를 CarRentalHistory 객체로 변환
+                .collect(Collectors.toList());
+    }
+
     /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
     public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
         List<Car> unavailableCars = carRentalRepository.findUnavailableCars(carTypeId, time);

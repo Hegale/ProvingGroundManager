@@ -12,6 +12,7 @@ import pg.provingground.repository.*;
 import pg.provingground.security.BCryptConfig;
 import pg.provingground.service.UserService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class TestDataBuilder {
     private final CarRentalRepository carRentalRepository;
     private final GroundRentalRepository groundRentalRepository;
     private final StationRepository stationRepository;
+    private final TestRepository testRepository;
     private final UserService userService;
     private final EntityManager em;
     private final BCryptPasswordEncoder encoder;
@@ -193,6 +195,30 @@ public class TestDataBuilder {
             Station station = Station.createStation(names.get(i));
             stationRepository.save(station);
         }
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void buildTestData() {
+        User user = userService.getLoginUserById(1L); // pikachu
+        List<String> titles = List.of(
+                "차량 제동거리 비교실험", "젖은 노면에서의 주행경로 오차", "오프로드 환경에서의 연료효율성", "차량 주행 안정성 비교", "최고속도 시 차량상태 비교확인");
+        String contents = "첨부파일을 확인해 주세요.";
+        List<String> partners = List.of(
+                "A사", "A사, B사", "K사", "H사", "A사, B사, K사, H사");
+
+
+        for (long i = 0; i < 5; ++i) {
+            GroundRental groundRental = groundRentalRepository.findOne(i);
+            List<CarRental> carRentals = new ArrayList<>();
+            carRentals.add(carRentalRepository.findOne((2 * i) % 20));
+            carRentals.add(carRentalRepository.findOne((2 * i + 1) % 20));
+            LocalDateTime date = LocalDateTime.of(2023, 12, (int)(i + 1), (int)((10 + 2 * i) % 18), 0);
+            Test test = Test.createTest(titles.get((int)i), contents, partners.get((int)i), date,
+                    user, carRentals, groundRental);
+            testRepository.save(test);
+        }
+
     }
 
 }

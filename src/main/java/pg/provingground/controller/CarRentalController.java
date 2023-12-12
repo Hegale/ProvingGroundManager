@@ -13,6 +13,7 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.dto.DateSearchForm;
 import pg.provingground.dto.MessageDto;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.AvailableTimeForm;
@@ -34,11 +35,14 @@ public class CarRentalController {
 
     @GetMapping("/car-rental")
     /** 차량 대여 내역 */
-    public String list(Model model, Authentication auth) {
+    public String list(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
         // 해당 유저의 차량 대여 내역을 보여준다.
         User user = userService.getLoginUserByUsername(auth.getName());
         List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
+
         model.addAttribute("rentals", rentals);
+        model.addAttribute("dateSearchForm", dateSearchForm);
+
         return "car/car-rent-history";
     }
 

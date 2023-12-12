@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
@@ -38,52 +41,17 @@
                       <p class="p1">날짜 검색</p>
                     </th>
                     <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>날짜 선택</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
+                      <form th:object="${dateSearchForm}">
+                        <!-- 날짜 선택 -->
+                        <div class="inputset inputset-lg" style="width: 22rem;">
+                          <input th:field="*{startDate}" class="datepicker inputset-input form-control"
+                                 id="selectedDate" name="testDate"
+                                 th:attr="placeholder=${startDate != null && !startDate.isEmpty() ? startDate : '날짜 선택'}"
+                                 aria-label="내용">
+                        </div>
+                      </form>
                     </th>
                     <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>날짜 선택</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
                     </th>
                     <th scope="col">
                     </th>
@@ -206,7 +174,29 @@
       alert(errorMessage);
     }
     /*]]>*/
+    $(function() {
 
+      $.datepicker.setDefaults({dateFormat: 'yy-mm-dd'});
+
+      $('.datepicker').datepicker(
+              {
+                onSelect: function (dateText, inst) {
+                  // 모든 날짜 셀의 배경색을 초기화
+                  $('.ui-state-active').css('backgroundColor', '');
+
+                  // 선택한 날짜 셀의 배경색을 변경
+                  setTimeout(function () {
+                    $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                  }, 0);
+
+
+                  // 선택한 날짜를 페이지에 출력
+                  $('#selectedDateDisplay').text(dateText);
+
+                  $("#selectedDate").val(dateText);
+                }
+              });
+    })
   </script>
 
   <!-- [E]opilsol-N3 -->
@@ -215,4 +205,5 @@
   <script src="/js/template.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/script.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
 </body>
