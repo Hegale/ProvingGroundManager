@@ -1,4 +1,4 @@
-package pg.provingground.dto;
+package pg.provingground.dto.history;
 
 
 import lombok.Getter;

@@ -3,13 +3,11 @@ package pg.provingground.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
-import pg.provingground.dto.CarRentalHistory;
-import pg.provingground.dto.GroundRentalHistory;
+import pg.provingground.dto.history.CarRentalHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

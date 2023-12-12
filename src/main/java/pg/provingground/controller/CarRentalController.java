@@ -1,7 +1,6 @@
 package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -9,14 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pg.provingground.domain.Car;
-import pg.provingground.domain.CarRental;
 import pg.provingground.domain.User;
-import pg.provingground.dto.CarRentalHistory;
-import pg.provingground.dto.DateSearchForm;
-import pg.provingground.dto.MessageDto;
-import pg.provingground.repository.UserRepository;
-import pg.provingground.service.AvailableTimeForm;
+import pg.provingground.dto.history.CarRentalHistory;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.service.CarRentalService;
 import pg.provingground.service.UserService;
 

@@ -2,8 +2,6 @@ package pg.provingground.domain;
 
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
-import pg.provingground.dto.GroundRentalHistory;
-import pg.provingground.dto.TestForm;
 
 import java.time.LocalDateTime;
 import java.util.List;

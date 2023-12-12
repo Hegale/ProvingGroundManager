@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.*;
-import pg.provingground.dto.GroundRentalHistory;
+import pg.provingground.dto.history.GroundRentalHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

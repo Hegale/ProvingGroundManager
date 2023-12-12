@@ -7,21 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pg.provingground.domain.User;
-import pg.provingground.dto.CarRentalHistory;
-import pg.provingground.dto.GroundRentalHistory;
-import pg.provingground.dto.TestForm;
-import pg.provingground.dto.TestHistory;
+import pg.provingground.dto.history.CarRentalHistory;
+import pg.provingground.dto.history.GroundRentalHistory;
+import pg.provingground.dto.form.TestForm;
+import pg.provingground.dto.history.TestHistory;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor

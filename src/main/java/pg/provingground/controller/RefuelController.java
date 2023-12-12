@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.Refuel;
 import pg.provingground.domain.Station;
-import pg.provingground.dto.CarDto;
+import pg.provingground.dto.admin.CarDto;
 import pg.provingground.repository.StationRepository;
 import pg.provingground.service.CarService;
 import pg.provingground.service.CarTypeService;

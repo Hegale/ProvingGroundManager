@@ -1,23 +1,20 @@
 package pg.provingground.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
-import pg.provingground.dto.CarRentalHistory;
-import pg.provingground.dto.GroundRentalHistory;
-import pg.provingground.dto.TestForm;
-import pg.provingground.dto.TestHistory;
+import pg.provingground.dto.history.CarRentalHistory;
+import pg.provingground.dto.history.GroundRentalHistory;
+import pg.provingground.dto.form.TestForm;
+import pg.provingground.dto.history.TestHistory;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.GroundRentalRepository;
 import pg.provingground.repository.TestRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)

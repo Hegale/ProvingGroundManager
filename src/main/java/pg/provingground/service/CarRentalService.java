@@ -7,7 +7,7 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.User;
-import pg.provingground.dto.CarRentalHistory;
+import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.CarRepository;

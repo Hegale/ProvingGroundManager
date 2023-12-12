@@ -3,14 +3,10 @@ package pg.provingground.repository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
-import pg.provingground.dto.CarDto;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor

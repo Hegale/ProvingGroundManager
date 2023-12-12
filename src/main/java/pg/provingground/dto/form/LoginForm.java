@@ -1,4 +1,4 @@
-package pg.provingground.dto;
+package pg.provingground.dto.form;
 
 
 import lombok.Getter;

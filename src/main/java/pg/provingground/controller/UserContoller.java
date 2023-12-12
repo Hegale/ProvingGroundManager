@@ -2,7 +2,6 @@ package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,10 +10,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import pg.provingground.domain.User;
-import pg.provingground.dto.JoinForm;
-import pg.provingground.dto.LoginForm;
+import pg.provingground.dto.form.JoinForm;
+import pg.provingground.dto.form.LoginForm;
 import pg.provingground.service.UserService;
 
 @Controller

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
-import pg.provingground.dto.CarDto;
+import pg.provingground.dto.admin.CarDto;
 import pg.provingground.repository.CarRepository;
 
 import java.util.List;

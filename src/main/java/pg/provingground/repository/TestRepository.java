@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.Test;
 import pg.provingground.domain.User;
-import pg.provingground.dto.TestForm;
-import pg.provingground.dto.TestHistory;
+import pg.provingground.dto.history.TestHistory;
 
 import java.util.List;
 

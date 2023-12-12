@@ -4,17 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pg.provingground.domain.CarRental;
-import pg.provingground.domain.Ground;
-import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
-import pg.provingground.dto.GroundRentalHistory;
+import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.repository.UserRepository;
-import pg.provingground.service.AvailableTimeForm;
 import pg.provingground.service.GroundRentalService;
 import pg.provingground.service.UserService;
 
