@@ -1,4 +1,4 @@
-package pg.provingground.controller;
+package pg.provingground.controller.admin;
 
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class GroundAdminController {
     }
 
     @DeleteMapping("/admin/ground/list/{groundId}")
-    /** 차량 삭제 */
-    public String carDelete(@PathVariable Long groundId) {
+    /** 주행시험장 삭제 */
+    public String groundDelete(@PathVariable Long groundId) {
         groundService.deleteGround(groundId); // 예외 캐치
         return "redirect:/admin/ground/list";
     }
