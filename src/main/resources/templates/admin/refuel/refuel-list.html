@@ -19,32 +19,32 @@
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <div class="textset textset-h2">
-                    <h2 class="h2">차량 대여 목록</h2>
+                    <h2 class="h2">주유 내역</h2>
                 </div>
 
                 <div class="tableset">
 
                     <div class="tableset-inner">
                         <!-- 검색란 시작 -->
-                        <form action="/admin/car-rental/list" th:object="${carRentalSearchForm}" method="get">
+                        <form action="/admin/car-rental/list" th:object="${refuelSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
-                                    <input th:field="*{carRentalId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여번호로 검색" aria-label="내용">
+                                    <input th:field="*{refuelId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유번호로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{carName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차종으로 검색" aria-label="내용">
+                                    <input th:field="*{stationName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유구 이름으로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset"> <!-- TODO: dateRangePicker 수정 필요 -->
+                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유일시로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset"> <!-- TODO: 토글로 수정 필요 -->
+                                    <input th:field="*{fuelType}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="연료 타입으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{carNumber}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량번호로 검색" aria-label="내용">
+                                    <input th:field="*{carName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량이름으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여일로 검색" aria-label="내용">
-                                </div>
-                                <div class="inputset"><!-- TODO: Y/N 토글로 수정 필요 -->
-                                    <input th:field="*{returned}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="반납여부로 검색" aria-label="내용">
-                                </div>
-                                <div class="inputset">
-                                    <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="유저명으로 검색" aria-label="내용">
+                                    <input th:field="*{carNumber}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량 번호로 검색" aria-label="내용">
                                 </div>
 
                                 <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
@@ -62,27 +62,30 @@
                                 <col>
                                 <col>
                                 <col>
+                                <col>
                             </colgroup>
                             <thead class="thead-border-top" style="text-align:center;">
                             <tr>
                                 <th class="number" scope="col">NO</th>
                                 <!-- 가로구분  -->
+                                <th scope="col">주유구</th>
+                                <th scope="col">주유일시</th>
+                                <th scope="col">연료 타입</th>
                                 <th scope="col">차량 이름</th>
                                 <th scope="col">차량 번호</th>
-                                <th scope="col">대여일시</th>
-                                <th scope="col">반납 여부</th>
-                                <th scope="col">대여자 id</th>
+                                <th scope="col">주유량</th>
                             </tr>
                             </thead>
                             <tbody>
                             <!-- 목록 하나 시작 -->
-                            <tr th:each="carRental : ${carRentalDtos}">
-                                <td class="admin-list number" th:text="${carRental.carRentalId.toString()}">7</td>
-                                <td class="admin-list"><p th:text="${carRental.carName}">차종</p></td>
-                                <td class="admin-list"><p th:text="${carRental.carNumber}">차량번호</p></td>
-                                <td class="admin-list last-child" th:text="${carRental.startTime.toString()}">대여일</td>
-                                <td class="admin-list last-child" th:text="${carRental.returned}">반납 여부</td>
-                                <td class="admin-list last-child" th:text="${carRental.username}">대여자 이름</td>
+                            <tr th:each="refuel : ${refuelDtos}">
+                                <td class="admin-list number" th:text="${refuel.refuelingId.toString()}">7</td>
+                                <td class="admin-list"><p th:text="${refuel.stationName}">주유구명</p></td>
+                                <td class="admin-list"><p th:text="${refuel.time}">주유일시</p></td>
+                                <td class="admin-list last-child" th:text="${refuel.fuelType.toString()}">연료타입</td>
+                                <td class="admin-list last-child" th:text="${refuel.carName}">차량이름</td>
+                                <td class="admin-list last-child" th:text="${refuel.carNumber}">차량번호</td>
+                                <td class="admin-list last-child" th:text="${refuel.amount}">주유량</td>
                             </tr>
                             <!-- 목록 하나 끝-->
                             </tbody>

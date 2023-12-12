@@ -7,6 +7,8 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.Refuel;
 import pg.provingground.domain.Station;
 import pg.provingground.domain.User;
+import pg.provingground.dto.admin.RefuelDto;
+import pg.provingground.dto.admin.RefuelSearchForm;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.RefuelRepository;
 import pg.provingground.repository.StationRepository;
@@ -50,6 +52,11 @@ public class RefuelService {
 
     public List<Refuel> findAllRefuel() {
         return refuelRepository.findAll();
+    }
+
+    /** [관리자] 조건에 따른 주유 내역 검색 */
+    public List<RefuelDto> searchRefuelsByConditions(RefuelSearchForm searchForm) {
+        return refuelRepository.searchRefuels(searchForm);
     }
 
 }
