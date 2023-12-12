@@ -22,64 +22,38 @@
                     <h2 class="h2">차량 대여 목록</h2>
                 </div>
 
-                <!-- 검색란 시작 -->
-
-                <form action="/admin/car-rental/list" th:object="${carRentalSearchForm}" method="get" class="contents-search">
-
-                    <table class="tableset-table table">
-                        <colgroup>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                        </colgroup>
-                        <thead class="thead-border-top">
-                        <tr>
-                            <th class="number" scope="col">
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{carRentalId}" type="text" class="inputset-input form-control" placeholder="대여번호로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                            <th scope="col">
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{carName}" type="text" class="inputset-input form-control" placeholder="차종으로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                            <th scope="col">
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{carNumber}" type="text" class="inputset-input form-control" placeholder="차량번호로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                            <th scope="col"> <!-- TODO: datepicker로 수정 필요 -->
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{startDate}" type="text" class="inputset-input form-control" placeholder="대여일로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                            <th scope="col"> <!-- TODO: Y/N 토글로 수정 필요 -->
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{returned}" type="text" class="inputset-input form-control" placeholder="반납여부로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                            <th scope="col">
-                                <div class="inputset juykim-search-box admin-search-box">
-                                    <input th:field="*{username}" type="text" class="inputset-input form-control" placeholder="유저명으로 검색" aria-label="내용">
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                    </table>
-
-                    <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
-
-                </form>
-                <!-- 검색란 끝-->
-
                 <div class="tableset">
 
-
                     <div class="tableset-inner">
+                        <!-- 검색란 시작 -->
+
+                        <form action="/admin/car-rental/list" th:object="${carRentalSearchForm}" method="get">
+                            <div class="admin-search-area">
+                                <div class="inputset">
+                                    <input th:field="*{carRentalId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여번호로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{carName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차종으로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{carNumber}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량번호로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여일로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset"><!-- TODO: Y/N 토글로 수정 필요 -->
+                                    <input th:field="*{returned}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="반납여부로 검색" aria-label="내용">
+                                </div>
+                                <div class="inputset">
+                                    <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="유저명으로 검색" aria-label="내용">
+                                </div>
+
+                                <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
+                            </div>
+
+                        </form>
+                        <!-- 검색란 끝-->
+
                         <!-- 위의 검색란 끝-->
                         <table class="tableset-table table">
                             <!-- 아래 있을 col의 속성 미리지정하는부분?-->

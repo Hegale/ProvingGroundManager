@@ -4,11 +4,20 @@
 }
 
 .admin-search-box {
-    width: 12rem;
+    width: 5rem;
 }
 
 .admin-list {
     text-align: center;
+}
+
+.admin-car-rental-search {
+}
+
+.admin-search-area {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .left-side-bar body,
