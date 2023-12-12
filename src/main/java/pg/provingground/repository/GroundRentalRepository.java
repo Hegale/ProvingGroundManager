@@ -1,14 +1,19 @@
 package pg.provingground.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pg.provingground.domain.*;
+import pg.provingground.dto.admin.GroundRentalSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,13 +96,54 @@ public class GroundRentalRepository {
                 .getResultList();
     }
 
-    /**
-     * 인자로 받은 차량 중 반납되지 않은 대여기록 반환. TODO: 삭제
-     */
-    public List<GroundRental> findNotReturned(Long groundId) {
-        String jpql = "select gr from GroundRental gr where gr.canceled = 'N' and gr.ground = :groundId";
-        return em.createQuery(jpql, GroundRental.class)
-                .setParameter("groundId", groundId)
-                .getResultList();
+    /** [관리자] 대여 조건 검색 구현 */
+    public List<GroundRental> findByCriteria(GroundRentalSearchForm searchForm) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<GroundRental> cq = cb.createQuery(GroundRental.class);
+        Root<GroundRental> groundRental = cq.from(GroundRental.class);
+
+        // 연관된 엔티티 로드를 위한 fetch join
+        Fetch<GroundRental, Ground> groundFetch = groundRental.fetch("ground", JoinType.LEFT);
+        Fetch<GroundRental, User> userFetch = groundRental.fetch("user", JoinType.LEFT);
+
+        // 조건을 설정하기 위한 Join
+        Join<GroundRental, Ground> groundJoin = groundRental.join("ground", JoinType.LEFT);
+        Join<GroundRental, User> userJoin = groundRental.join("user", JoinType.LEFT);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        // 검색 조건: groundRentalId
+        if (searchForm.getGroundRentalId() != null) {
+            predicates.add(cb.equal(groundRental.get("groundRentalId"), searchForm.getGroundRentalId()));
+        }
+
+        // 검색 조건: groundName
+        if (searchForm.getGroundName() != null && !searchForm.getGroundName().isEmpty()) {
+            predicates.add(cb.like(groundJoin.get("name"), "%" + searchForm.getGroundName() + "%"));
+        }
+
+        // 검색 조건: startDate와 endDate
+        if (searchForm.getStartDate() != null && !searchForm.getStartDate().isEmpty() &&
+                searchForm.getEndDate() != null && !searchForm.getEndDate().isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime startDate = LocalDateTime.parse(searchForm.getStartDate(), formatter);
+            LocalDateTime endDate = LocalDateTime.parse(searchForm.getEndDate(), formatter);
+            predicates.add(cb.between(groundRental.get("startTime"), startDate, endDate));
+        }
+
+        // 검색 조건: canceled
+        if (searchForm.getCanceled() != null && !searchForm.getCanceled().isEmpty()) {
+            predicates.add(cb.equal(groundRental.get("canceled"), searchForm.getCanceled()));
+        }
+
+        // 검색 조건: username
+        if (searchForm.getUsername() != null && !searchForm.getUsername().isEmpty()) {
+            predicates.add(cb.like(userJoin.get("username"), "%" + searchForm.getUsername() + "%"));
+        }
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        TypedQuery<GroundRental> query = em.createQuery(cq);
+        return query.getResultList();
     }
+
 }
