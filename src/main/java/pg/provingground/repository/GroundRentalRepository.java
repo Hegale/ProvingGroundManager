@@ -39,7 +39,7 @@ public class GroundRentalRepository {
 
     public List<GroundRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime) {
         return em.createQuery(
-                        "select new pg.provingground.dto.GroundRentalHistory(g.groundRentalId, g.ground.name, g.startTime) " +
+                        "select new pg.provingground.dto.history.GroundRentalHistory(g.groundRentalId, g.ground.name, g.startTime) " +
                                 "from GroundRental g " +
                                 "where g.user = :user " +
                                 "and g.startTime = :dateTime", GroundRentalHistory.class)

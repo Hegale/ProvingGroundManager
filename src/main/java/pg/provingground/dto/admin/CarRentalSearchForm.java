@@ -16,11 +16,13 @@ public class CarRentalSearchForm {
     private String carName;
 
     // === 차량으로 검색 === //
-    private Long carNumber; // 굳이?
+    private String carNumber; // 굳이?
 
     // === 날짜 범위로 검색 === //
-    private LocalDate start;
-    private LocalDate end;
+    private String startDate;
+    private String endDate;
+
+    private String returned;
 
     // === 유저로 검색 === //
     private String username;

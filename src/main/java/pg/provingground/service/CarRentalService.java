@@ -7,6 +7,8 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.User;
+import pg.provingground.dto.admin.CarRentalDto;
+import pg.provingground.dto.admin.CarRentalSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.repository.CarRentalRepository;
@@ -54,6 +56,11 @@ public class CarRentalService {
         rental.cancel();
     }
 
+    /** [관리자] 검색 조건에 따른 차량 대여 내역 반환 */
+    public List<CarRentalDto> getRentalsByConditions(CarRentalSearchForm carRentalSearchForm) {
+        return carRentalRepository.searchCarRentals(carRentalSearchForm);
+    }
+
     /** [관리자] 모든 차량 대여 내역 반환 */
     public List<CarRentalHistory> getAllRentals() {
         return carRentalRepository.findAll().stream()
@@ -98,28 +105,6 @@ public class CarRentalService {
         return availableTimes;
     }
 
-    /* 특정 차종의 대여 현황을 통해 대여 가능한 시간대를 폼으로 변경해 반환
-    public List<AvailableTimeForm> getAvailableTimeForms(Long carTypeId) {
-        List<AvailableTimeForm> availableTimeForms = new ArrayList<>();
-        List<LocalDateTime> unavailableTimes = getUnAvailableTimes(carTypeId);
-
-        for (int i = 1; i <= 30; ++i) {
-            LocalDateTime date = LocalDateTime.now().plusDays(i).with(LocalTime.of(10, 0));
-            AvailableTimeForm timeForm = new AvailableTimeForm(date);
-
-            // 2시간 간격으로 6번 반복 (10:00, 12:00, 14:00, 16:00, 18:00)
-            for (int j = 0; j < 5; j++) {
-                // 대여 불가능한 시간의 경우, 폼에 추가하지 않는다
-                if (!unavailableTimes.contains(date.plusHours(2 * j))) {
-                    timeForm.addTimes(date.plusHours(2 * j).getHour());
-                }
-            }
-            availableTimeForms.add(timeForm);
-        }
-        return availableTimeForms; // 해당 차종을 대여할 수 없는 시간대 반환
-    }
-     */
-
     /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */
     public List<CarRentalHistory> findRentalHistory(User user) {
         List<CarRental> rentals = carRentalRepository.findAllByUser(user);
@@ -136,11 +121,6 @@ public class CarRentalService {
 
     public CarType findType(Long carTypeId) {
         return carTypeRepository.findOne(carTypeId);
-    }
-
-    /** [관리자 기능] 전체 대여 내역 검색 */
-    public List<CarRental> findRentals() {
-        return carRentalRepository.findAll();
     }
 
 }

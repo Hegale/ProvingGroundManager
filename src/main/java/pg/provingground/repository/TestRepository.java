@@ -21,7 +21,7 @@ public class TestRepository {
 
     public List<TestHistory> findAllByUser(User user) {
         return em.createQuery(
-                "SELECT new pg.provingground.dto.TestHistory(" +
+                "SELECT new pg.provingground.dto.history.TestHistory(" +
                         "t.testId, t.dateTime, t.groundRental.ground.name, t.carCount, t.partners, t.title) " +
                         "FROM Test t " +
                         "WHERE t.user = :user", TestHistory.class)
