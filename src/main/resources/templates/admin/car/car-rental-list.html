@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ko">
 
 <head th:replace="fragments/header :: header">
     <title>페이지</title>
@@ -26,7 +26,6 @@
 
                     <div class="tableset-inner">
                         <!-- 검색란 시작 -->
-
                         <form action="/admin/car-rental/list" th:object="${carRentalSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
@@ -52,7 +51,6 @@
                             </div>
 
                         </form>
-                        <!-- 검색란 끝-->
 
                         <!-- 위의 검색란 끝-->
                         <table class="tableset-table table">
@@ -81,7 +79,7 @@
                             <tr th:each="carRental : ${carRentalDtos}">
                                 <td class="admin-list number" th:text="${carRental.carRentalId.toString()}">7</td>
                                 <td class="admin-list"><p th:text="${carRental.carName}">차종</p></td>
-                                <td class="admin-list"><p th:text="${carRental.carName}">차량번호</p></td>
+                                <td class="admin-list"><p th:text="${carRental.carNumber}">차량번호</p></td>
                                 <td class="admin-list last-child" th:text="${carRental.startTime.toString()}">대여일</td>
                                 <td class="admin-list last-child" th:text="${carRental.returned}">반납 여부</td>
                                 <td class="admin-list last-child" th:text="${carRental.username}">대여자 이름</td>
@@ -89,7 +87,6 @@
                             <!-- 목록 하나 끝-->
                             </tbody>
                         </table>
-
 
                     </div>
 
