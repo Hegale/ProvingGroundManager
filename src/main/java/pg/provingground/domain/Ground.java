@@ -22,6 +22,15 @@ public class Ground {
     private int distance;
 
     // private Double Coordinate; ; 일단 보류. JTS 사용할수도 있음
-    private int fuel_consumption;
+    //private int fuel_consumption;
+
+    public static Ground createGround(String name, String description, int car_maximum, int distance) {
+        Ground ground = new Ground();
+        ground.name = name;
+        ground.description = description;
+        ground.car_maximum = car_maximum;
+        ground.distance = distance;
+        return ground;
+    }
 
 }

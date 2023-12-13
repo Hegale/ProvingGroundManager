@@ -31,7 +31,7 @@
           <div class="tableset-inner">
 
             <!--  enctype="multipart/form-data" 옵션 삭제 -->
-            <form id="myForm" th:object="${stationForm}" method="post">
+            <form id="myForm" th:object="${groundForm}" method="post">
 
 
               <table class="tableset-table table">
@@ -44,44 +44,55 @@
                 <tbody>
                 <tr>
                   <th>
-                    <span class="req label">주유구 이름</span>
+                    <span class="req label">주행시험장 이름</span>
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <input type="text" th:field="*{name}" class="inputset-input form-control" placeholder="주유구 이름을 입력해 주세요." aria-label="주유구명">
+                      <input type="text" th:field="*{name}" class="inputset-input form-control" placeholder="등록할 주행시험장의 이름을 입력해 주세요." aria-label="시험장">
                     </div>
                   </td>
                 </tr>
 
                 <tr>
                   <th>
-                    <span class="req label">연료 타입</span>
+                    <span class="req label">시험장 설명</span>
                   </th>
                   <td colspan="3">
-                    <!-- 시간 선택 -->
-                    <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
-                      <button class="selectset-toggle btn" type="button">
-                        <span id="selectedFuelType">연료 타입을 선택하세요</span>
-                      </button>
-                      <input type="hidden" id="hiddenFuelType" th:field="*{fuelType}" />
-                      <ul class="selectset-list">
-                        <li class="selectset-item" th:each="fuelType : ${T(pg.provingground.domain.FuelType).values()}">
-                          <button class="fuelType-select selectset-link time-select btn" type="button"
-                                  th:text="${fuelType.displayName}" th:attr="data-value=${fuelType}">
-                            <span></span>
-                          </button>
-                        </li>
-                      </ul>
+                    <div class="inputset">
+                      <textarea th:field="*{description}" class="inputset-input form-control textarea" id="Inquiry" aria-label="문의내용"></textarea>
                     </div>
                   </td>
                 </tr>
+
+                <tr>
+                  <th>
+                    <span class="label">최대 이용가능 차량</span>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <input type="text" th:field="*{car_maximum}" class="inputset-input form-control" placeholder="등록할 주행시험장의 이름을 입력해 주세요." aria-label="시험장">
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>
+                    <span class="label">주행거리</span>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <input type="text" th:field="*{distance}" class="inputset-input form-control" placeholder="시험장의 주행거리를 입력해 주세요." aria-label="시험장">
+                    </div>
+                  </td>
+                </tr>
+
 
                 <tr>
                   <td style="border:none; display: flex; justify-content: right; align-items: right;">
                     <a href="/admin">
                       <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">등록 취소</button>
                     </a>
-                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">주유구 등록</button>
+                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험장 추가 등록</button>
                   </td>
                 </tr>
                 </tbody>
@@ -98,18 +109,6 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
-
-<script>
-  document.addEventListener('DOMContentLoaded', (event) => {
-    document.querySelectorAll('.fuelType-select').forEach(button => {
-      button.addEventListener('click', function() {
-        const selectedFuelType = this.getAttribute('data-value');
-        document.getElementById('hiddenFuelType').value = selectedFuelType;
-        document.getElementById('selectedFuelType').textContent = this.textContent;
-      });
-    });
-  });
-</script>
 <script src="/js/weather.js"></script>
 <script src="/js/setting.js"></script>
 <script src="/js/plugin.js"></script>

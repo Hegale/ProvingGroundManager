@@ -142,7 +142,7 @@ public class TestDataBuilder {
             ground.setDescription(descriptions.get(i));
             ground.setDistance(100);
             ground.setCar_maximum(3);
-            ground.setFuel_consumption(3000); // ml 단위
+            //ground.setFuel_consumption(3000); // ml 단위
             groundRepository.save(ground);
         }
     }

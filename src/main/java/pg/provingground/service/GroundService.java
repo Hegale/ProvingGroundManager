@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
+import pg.provingground.dto.admin.GroundForm;
 import pg.provingground.dto.admin.GroundRentalDto;
 import pg.provingground.dto.admin.GroundRentalSearchForm;
 import pg.provingground.repository.GroundRentalRepository;
@@ -23,7 +24,24 @@ public class GroundService {
     private final GroundRentalRepository groundRentalRepository;
 
     @Transactional
-    public void saveGround(Ground ground) {
+    public void addGround(GroundForm groundForm) {
+        int car_maximum;
+        int distance;
+        System.out.println("groundForm = |" + groundForm.getCar_maximum() + "|" + groundForm.getDistance());
+
+        try {
+            car_maximum = Integer.parseInt(groundForm.getCar_maximum());
+            distance = Integer.parseInt(groundForm.getDistance());
+            System.out.println("parse끝");
+            if (car_maximum <= 0 || distance <= 0) {
+                return ; // TODO: 적절한 예외처리 필요, 두 요소는 입력되지 않을 수 있다
+            }
+        } catch (NumberFormatException e) {
+            return ;
+        }
+
+        System.out.println("뭐가문제가?");
+        Ground ground = Ground.createGround(groundForm.getName(), groundForm.getDescription(), car_maximum, distance);
         groundRepository.save(ground);
     }
 
