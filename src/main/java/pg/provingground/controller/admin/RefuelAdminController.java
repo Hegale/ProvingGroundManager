@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.Station;
 import pg.provingground.dto.admin.RefuelDto;
 import pg.provingground.dto.admin.RefuelSearchForm;
+import pg.provingground.dto.admin.StationForm;
 import pg.provingground.repository.StationRepository;
 import pg.provingground.service.RefuelService;
 
@@ -50,6 +48,23 @@ public class RefuelAdminController {
     public String stationDelete(@PathVariable Long stationId) {
         Station station = stationRepository.findOne(stationId);
         stationRepository.delete(station); // 예외 캐치
+
+        return "redirect:/admin/station/list";
+    }
+
+    @GetMapping("/admin/station/new")
+    public String addStationPage(Model model) {
+        StationForm stationForm = new StationForm();
+
+        model.addAttribute("stationForm", stationForm);
+
+        return "admin/refuel/station-new";
+    }
+
+    @PostMapping("/admin/station/new")
+    public String addStation(@ModelAttribute StationForm stationForm) {
+        System.out.println("주유구이름 : " + stationForm.getName() + "타입 : " + stationForm.getFuelType());
+        refuelService.addStation(stationForm);
         return "redirect:/admin/station/list";
     }
 

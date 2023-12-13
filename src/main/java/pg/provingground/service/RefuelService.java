@@ -9,6 +9,7 @@ import pg.provingground.domain.Station;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.RefuelDto;
 import pg.provingground.dto.admin.RefuelSearchForm;
+import pg.provingground.dto.admin.StationForm;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.RefuelRepository;
 import pg.provingground.repository.StationRepository;
@@ -57,6 +58,13 @@ public class RefuelService {
     /** [관리자] 조건에 따른 주유 내역 검색 */
     public List<RefuelDto> searchRefuelsByConditions(RefuelSearchForm searchForm) {
         return refuelRepository.searchRefuels(searchForm);
+    }
+
+    /** [관리자] 주유구 추가 */
+    @Transactional
+    public void addStation(StationForm stationForm) {
+        Station station = Station.createStation(stationForm.getName(), stationForm.getFuelType());
+        stationRepository.save(station); // TODO: 스테이션 이름 중복 확인
     }
 
 }
