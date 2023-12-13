@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -106,15 +107,17 @@ public class TestDataBuilder {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void buildCarTestData() {
+
         for (int i = 0; i < 20; ++i){
             Car car = new Car();
             CarType carType = carTypeRepository.findOne((long)i % 10 + 1);
             car.setType(carType);
-            car.setNumber("12가 3456");
+            car.setNumber(generateRandomString());
             car.setFuel(0L);
             carRepository.save(car);
         }
     }
+
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -191,8 +194,9 @@ public class TestDataBuilder {
     @Transactional
     public void buildStationData() {
         List<String> names = List.of("주유구 A", "주유구 B", "주유구 C", "주유구 D", "주유구 E");
+        List<FuelType> fuelTypes = List.of(FuelType.GASOLINE, FuelType.DIESEL, FuelType.ELECTRIC, FuelType.LPG, FuelType.HYDROGEN);
         for (int i = 0; i < 5; ++i) {
-            Station station = Station.createStation(names.get(i));
+            Station station = Station.createStation(names.get(i),fuelTypes.get(i));
             stationRepository.save(station);
         }
     }
@@ -219,6 +223,24 @@ public class TestDataBuilder {
             testRepository.save(test);
         }
 
+    }
+
+
+    private String generateRandomString() {
+        Random random = new Random();
+
+        // 01부터 69까지의 숫자 생성
+        int number = 1 + random.nextInt(69);
+        String numberStr = String.format("%02d", number);
+
+        // 주어진 한글 문자들 중 하나 선택
+        String[] koreanChars = {"가", "나", "다", "라", "마", "거", "너", "더", "러", "머", "버", "서", "어", "저", "고", "노", "도", "로", "모", "보", "소", "오", "조", "구", "누", "두", "루", "무", "부", "수", "우", "주"};
+        String chosenChar = koreanChars[random.nextInt(koreanChars.length)];
+
+        // 랜덤한 네 자리 숫자 생성
+        int randomNum = 1000 + random.nextInt(9000);
+
+        return numberStr + chosenChar + " " + randomNum;
     }
 
 }

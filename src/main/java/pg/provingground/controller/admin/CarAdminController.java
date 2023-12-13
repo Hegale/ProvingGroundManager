@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pg.provingground.controller.CarSearchForm;
 import pg.provingground.domain.CarType;
 import pg.provingground.dto.admin.CarDto;
+import pg.provingground.dto.admin.CarForm;
 import pg.provingground.service.CarService;
 import pg.provingground.service.CarTypeService;
 
@@ -55,6 +56,33 @@ public class CarAdminController {
     /** 차량 삭제 */
     public String carDelete(@PathVariable Long carId) {
         carService.deleteCar(carId); // 예외 캐치
+        return "redirect:/admin/car/list";
+    }
+
+    @GetMapping("/admin/car/select")
+    /** 추가 등록할 차종 선택 */
+    public String selectCar(@ModelAttribute CarSearchForm searchForm, Model model) {
+        List<CarType> types = carTypeService.findCarTypesByCondition(searchForm);
+
+        model.addAttribute("types", types);
+        model.addAttribute("searchForm", searchForm);
+
+        return "admin/car/car-select";
+    }
+
+    @GetMapping("/admin/car/select/{carTypeId}")
+    public String selectCarNumber(@PathVariable Long carTypeId, Model model) {
+        CarForm carForm = new CarForm();
+
+        model.addAttribute("carForm", carForm);
+        // TODO: 차량번호 형식이 맞게 입력되는지 확인하기, 사업차량 같은 것도 검증?
+
+        return "admin/car/car-new";
+    }
+
+    @PostMapping("/admin/car/select/{carTypeId}")
+    public String createCar(@PathVariable Long carTypeId, @ModelAttribute CarForm carForm) {
+        carService.createCar(carTypeId, carForm.getNumber());
         return "redirect:/admin/car/list";
     }
 

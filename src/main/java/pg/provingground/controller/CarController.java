@@ -22,7 +22,6 @@ public class CarController {
     /** 차량 선택 페이지. 검색에 따른 차종 결과 출력 */
     public String carTypeList(@ModelAttribute CarSearchForm searchForm, Model model) {
         List<CarType> types = carTypeService.findCarTypesByCondition(searchForm);
-        System.out.println("form result: " + searchForm.type + " | " + searchForm.engine + " | " + searchForm.name);
 
         model.addAttribute("types", types);
         model.addAttribute("searchForm", searchForm);

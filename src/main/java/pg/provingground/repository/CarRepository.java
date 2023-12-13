@@ -40,6 +40,17 @@ public class CarRepository {
                 .getResultList();
     }
 
+    /** 이미 데이터베이스에 해당 차량번호의 차량이 존재하는지 조회 */
+    public boolean isDuplicateCarNumber(String carNumber) {
+        return !(em.createQuery(
+                        "SELECT c " +
+                                "FROM Car c " +
+                                "WHERE c.number like :number",
+                                Car.class)
+                .setParameter("number", carNumber)
+                .getResultList().isEmpty());
+    }
+
     /** 차종을 통한 차량 검색 */
     public List<Car> findByCarTypes(List<CarType> types) {
         return em.createQuery(

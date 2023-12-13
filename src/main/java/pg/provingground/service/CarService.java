@@ -7,6 +7,7 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
 import pg.provingground.dto.admin.CarDto;
 import pg.provingground.repository.CarRepository;
+import pg.provingground.repository.CarTypeRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class CarService {
 
     private final CarRepository carRepository;
+    private final CarTypeRepository carTypeRepository;
 
     /** 차량번호를 통한 차량 검색. 입력이 아예 들어오지 않을 경우 모든 차량을 반환. */
     public List<CarDto> findByCarNumber(String number) {
@@ -74,5 +76,18 @@ public class CarService {
         Car car = carRepository.findOne(carId);
         carRepository.delete(car);
     }
+
+    /** 차량 추가 */
+    @Transactional
+    public void createCar(Long carTypeId, String carNumber) {
+        if (carRepository.isDuplicateCarNumber(carNumber)) {
+            throw new IllegalArgumentException("이미 존재하는 차량입니다.");
+        }
+        CarType carType = carTypeRepository.findOne(carTypeId);
+        Car car = Car.createCar(carType, carNumber);
+
+        carRepository.save(car);
+    }
+
 
 }

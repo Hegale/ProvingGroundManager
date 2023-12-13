@@ -23,7 +23,7 @@ public class User {
 
     private String nickname;
 
-    @Column(name = "phone_num", unique = true) // 이속성 그냥 없내느것도 생각해보기
+    @Column(name = "phone_num", unique = true)
     private String phoneNum;
 
     public static User createUser(String username, String password, String nickname, UserRole role, String phoneNum) {
@@ -33,7 +33,6 @@ public class User {
         user.nickname = nickname;
         user.role = role;
         user.phoneNum = phoneNum;
-        // TODO: Role도 추가
         return user;
     }
 }

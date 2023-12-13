@@ -20,9 +20,10 @@ public class Station {
 
     private FuelType fuelType;
 
-    public static Station createStation(String name) {
+    public static Station createStation(String name, FuelType fuelType) {
         Station station = new Station();
         station.name = name;
+        station.fuelType = fuelType;
         return station;
     }
 

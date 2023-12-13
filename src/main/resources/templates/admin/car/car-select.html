@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="fragments/header :: header">
+    <title>페이지</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div th:replace="fragments/body_header :: body_header" />
+<div th:replace="fragments/admin-menu :: admin-menu" />
+
+<!-- [E]thwhole-enlPbA0Maj -->
+<main class="th-layout-main ">
+    <!-- [S]personal-seLPF6Qg10 -->
+    <div class="personal-seLPF6Qg10" data-bid="jYlPf6qsy6" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="h2">STEP 1. 차량 선택</h2>
+                </div>
+
+                <div class="contents-search" style="display: flex;">
+                    <!-- 검색 기능 위해 method="post"를 "get"으로 바꿈. -->
+                    <form th:object="${searchForm}" method="get" class="contents-search" style="width:100%;">
+                        <div class="juykim-car-search">
+
+
+                            <select th:field="*{type}" id="typeSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                                <option value="">차종</option>
+                                <option value="승용">승용</option>
+                                <option value="SUV">SUV</option>
+                                <option value="수소/전기차">수소/전기차</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
+
+                        <div class="juykim-car-search">
+                            <select th:field="*{engine}" id="engineSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
+                                <option value="">엔진</option>
+                                <option value="가솔린">가솔린</option>
+                                <option value="LPG">LPG</option>
+                                <option value="하이브리드">하이브리드</option>
+                                <option value="디젤">디젤</option>
+                                <option value="전기">전기</option>
+                                <option value="수소">수소</option>
+                            </select>
+                        </div>
+
+                        <div class="juykim-car-search"></div>
+
+                        <div class="inputset">
+                            <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘"></button>
+                            <input th:field="*{name}" type="text" class="inputset-input form-control" placeholder="검색할 차량 이름을 입력해 주세요." aria-label="내용">
+                        </div>
+                    </form>
+
+                </div>
+
+
+                <!-- 리스트 시작 -->
+                <div class="contents-group">
+                    <div class="juykim-contents-wrap">
+                        <div class="contents-cardlist contents-cardlist-active">
+
+                            <a th:href="@{'/admin/car/select/' + ${type.carTypeId}}" class="cardset cardset-hor" th:each="type : ${types}">
+                                <figure class="cardset-figure">
+                                    <img class="cardset-img" th:src="@{'/images/car_img/' + ${type.name} + '.jpg'}" alt="">
+                                </figure>
+                                <!-- 그림 오른쪽의 내용 -->
+                                <div class="cardset-body">
+                                    <!-- 공지사항 및 제목 -->
+                                    <div class="cardset-tit-group">
+                                        <h3 class="cardset-tit" style="font-size: 2.5rem;" th:text="${type.name}"> 더 뉴 아반떼 N </h3>
+                                    </div>
+                                    <hr class="juykim-underline">
+                                    <!-- 글 내용 -->
+                                    <p class="cardset-desc" th:utext="'복합 연비: ~' + ${type.fuelEfficiency.toString()} + 'km/l  |  배기량: ~' + ${type.displacement.toString()} + 'cc'"> 복합 연비 : ~10.6km/l | 배기량 : ~1,998cc </p>
+                                    <p class="cardset-text" th:text="${type.description}"> 더 낮아지고 와이드해진 디자인에 역동적인 디테일과 강력한 컬러. 고성능 퍼포먼스의 인테리어 컨셉 구현 </p>
+                                    <!-- 날짜 -->
+                                </div>
+                            </a>
+                            <!-- 목록 하나 끝 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [E]personal-seLPF6Qg10 -->
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+
+<!-- [E]opilsol-N3 -->
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+</body>

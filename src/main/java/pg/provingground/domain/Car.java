@@ -24,6 +24,14 @@ public class Car {
 
     private Long fuel; // 잔여 연료, cc단위
 
+    // === 생성 메서드 === //
+    public static Car createCar(CarType carType, String carNumber) {
+        Car car = new Car();
+        car.type = carType;
+        car.number = carNumber;
+        car.fuel = 0L;
+        return car;
+    }
 
     public void fueling(Long amount) {
         this.fuel += amount;
