@@ -31,14 +31,14 @@
                                 <div class="inputset">
                                     <input th:field="${testSearchForm.testId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 번호로 검색" aria-label="내용">
                                 </div>
-                                <!--
-                                <input type="hidden" th:field="*{startDate}" id="startDate">
-                                <input type="hidden" th:field="*{endDate}" id="endDate">
+
+                                <input type="hidden" th:field="${dateSearchForm.startDate}" id="startDate">
+                                <input type="hidden" th:field="${dateSearchForm.endDate}" id="endDate">
                                 <div class="inputset">
                                     <input name="dateRange" class="inputset-input form-control" placeholder="시험 날짜로 검색"
                                            id="dateRange">
                                 </div>
-                                -->
+
                                 <div class="inputset">
                                     <input th:field="${testSearchForm.type}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 종류로 검색" aria-label="내용">
                                 </div>
@@ -111,7 +111,7 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
-<!--
+
 <script th:inline="javascript">
     var start = moment().subtract(1, 'month').startOf('month'); // 지난 달의 첫째 날
     var end = moment().endOf('month'); // 이번 달의 마지막 날
@@ -139,7 +139,7 @@
         if (!storedEndDate) $('#endDate').val(end.format('YYYY-MM-DD'));
     });
 </script>
--->
+
 
 <script src="../resources/js/setting.js"></script>
 <script src="../resources/js/plugin.js"></script>

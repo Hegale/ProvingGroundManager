@@ -87,7 +87,7 @@ public class TestRepository {
         if (StringUtils.hasText(searchForm.getUsername())) {
             predicates.add(cb.like(userJoin.get("username"), "%" + searchForm.getUsername() + "%"));
         }
-        /* TODO: 날짜조건 재점검
+
         if (searchForm.getStartTime() != null && searchForm.getEndTime() != null) {
             predicates.add(cb.between(testRoot.get("dateTime"),
                     searchForm.getStartTime(),
@@ -100,7 +100,6 @@ public class TestRepository {
                     searchForm.getEndTime()));
         }
 
-         */
 
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
 
