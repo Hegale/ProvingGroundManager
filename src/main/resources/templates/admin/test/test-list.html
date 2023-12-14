@@ -26,34 +26,33 @@
 
                     <div class="tableset-inner">
                         <!-- 검색란 시작 -->
-                        <form action="/admin/car-rental/list" th:object="${testSearchForm}" method="get">
+                        <form action="/admin/test/list" th:object="${testSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
-                                    <input th:field="*{testId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 번호로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.testId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 번호로 검색" aria-label="내용">
                                 </div>
-                                <input type="hidden" th:field="${dateSearchForm.startDate}" id="startDate">
-                                <input type="hidden" th:field="${dateSearchForm.endDate}" id="endDate">
+                                <!--
+                                <input type="hidden" th:field="*{startDate}" id="startDate">
+                                <input type="hidden" th:field="*{endDate}" id="endDate">
                                 <div class="inputset">
                                     <input name="dateRange" class="inputset-input form-control" placeholder="시험 날짜로 검색"
                                            id="dateRange">
                                 </div>
+                                -->
                                 <div class="inputset">
-                                    <input th:field="*{testId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 날짜로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.type}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 종류로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{type}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 종류로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.partners}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="협력사 이름으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{partners}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="협력사 이름으로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.title}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 제목으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{title}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 제목으로 검색" aria-label="내용">
-                                </div>
-                                <div class="inputset"><!-- TODO: Y/N 토글로 수정 필요 -->
-                                    <input th:field="*{groundName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험장으로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.groundName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험장으로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="유저 아이디로 검색" aria-label="내용">
+                                    <input th:field="${testSearchForm.username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="유저 아이디로 검색" aria-label="내용">
                                 </div>
 
                                 <button class="inputset-icon icon-right icon-search btn" type="submit" aria-label="아이콘" style="margin-top:2.4rem;"></button>
@@ -80,20 +79,21 @@
                                 <th scope="col">진행일시</th>
                                 <th scope="col">시험 종류</th>
                                 <th scope="col">협력사</th>
+                                <th scope="col">시험 제목</th>
                                 <th scope="col">주행시험장</th>
                                 <th scope="col">등록자</th>
-                                <th scope="col">시험 제목</th>
                             </tr>
                             </thead>
                             <tbody>
                             <!-- 목록 하나 시작 -->
-                            <tr th:each="carRental : ${carRentalDtos}">
-                                <td class="admin-list number" th:text="${carRental.carRentalId.toString()}">7</td>
-                                <td class="admin-list"><p th:text="${carRental.carName}">차종</p></td>
-                                <td class="admin-list"><p th:text="${carRental.carNumber}">차량번호</p></td>
-                                <td class="admin-list last-child" th:text="${carRental.startTime.toString()}">대여일</td>
-                                <td class="admin-list last-child" th:text="${carRental.returned}">반납 여부</td>
-                                <td class="admin-list last-child" th:text="${carRental.username}">대여자 이름</td>
+                            <tr th:each="test : ${tests}">
+                                <td class="admin-list number" th:text="${test.testId}">7</td>
+                                <td class="admin-list"><p th:text="${test.dateTime.toString()}">진행일시</p></td>
+                                <td class="admin-list"><p th:text="${test.type}">시험종류</p></td>
+                                <td class="admin-list last-child" th:text="${test.partners}">협력사</td>
+                                <td class="admin-list last-child"><p th:text="${test.title}">시험제목</p></td>
+                                <td class="admin-list last-child" th:text="${test.groundName}">주행시험장</td>
+                                <td class="admin-list last-child" th:text="${test.username}">등록자</td>
                             </tr>
                             <!-- 목록 하나 끝-->
                             </tbody>
@@ -111,8 +111,10 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
-
-<script>
+<!--
+<script th:inline="javascript">
+    var start = moment().subtract(1, 'month').startOf('month'); // 지난 달의 첫째 날
+    var end = moment().endOf('month'); // 이번 달의 마지막 날
     $(function() {
         // 폼에서 날짜 값 읽기
         var storedStartDate = $('#startDate').val();
@@ -137,6 +139,7 @@
         if (!storedEndDate) $('#endDate').val(end.format('YYYY-MM-DD'));
     });
 </script>
+-->
 
 <script src="../resources/js/setting.js"></script>
 <script src="../resources/js/plugin.js"></script>

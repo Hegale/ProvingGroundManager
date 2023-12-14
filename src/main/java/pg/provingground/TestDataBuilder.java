@@ -4,12 +4,14 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
 import pg.provingground.repository.*;
 import pg.provingground.security.BCryptConfig;
+import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
 import java.time.LocalDate;
@@ -32,10 +34,12 @@ public class TestDataBuilder {
     private final StationRepository stationRepository;
     private final TestRepository testRepository;
     private final UserService userService;
+    private final TestService testService;
     private final EntityManager em;
     private final BCryptPasswordEncoder encoder;
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(1)
     @Transactional
     /** 차종 테스트 데이터 생성 */
     public void buildCarTypeTestData() {
@@ -83,6 +87,7 @@ public class TestDataBuilder {
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
+    @Order(1)
     // 유저 테스트 데이터 생성
     public void buildUserTestData() {
 
@@ -105,6 +110,7 @@ public class TestDataBuilder {
 
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(2)
     @Transactional
     public void buildCarTestData() {
 
@@ -120,6 +126,7 @@ public class TestDataBuilder {
 
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(1)
     @Transactional
     public void buildGroundData() {
         List<String> names = List.of(
@@ -148,20 +155,19 @@ public class TestDataBuilder {
     }
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(3)
     @Transactional
     public void buildCarRentalData() {
         User user = userService.getLoginUserById(1L); // pikachu
         for (int i = 0; i < 12; ++i) {
             Car car = carRepository.findOne((long) i + 1);
             CarRental carRental = CarRental.createCarRental(user, car,
-                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(12));
+                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
             carRentalRepository.save(carRental);
         }
-        // 3번 차량 두 대를 같은 시간대로 예약
-        Car car = carRepository.findOne(13L);
-        CarRental carRental = CarRental.createCarRental(user, car,
-                LocalDateTime.now().plusDays(3).with(LocalTime.MIDNIGHT).withHour(12));
-        carRentalRepository.save(carRental);
+        // 3번 차량에 대한 테스트 데이터 생성
+        Car car = carRepository.findOne(3L);
+        CarRental carRental;
 
         // 3번 차량 두 대를 5일 후에 한하여 전 시간 매진
         for (int i = 0; i < 5; ++i) {
@@ -169,7 +175,7 @@ public class TestDataBuilder {
                     LocalDateTime.now().plusDays(5).with(LocalTime.MIDNIGHT).withHour(10 + 2 * i));
             carRentalRepository.save(carRental);
         }
-        car = carRepository.findOne(3L);
+        car = carRepository.findOne(13L);
         for (int i = 0; i < 5; ++i) {
             carRental = CarRental.createCarRental(user, car,
                     LocalDateTime.now().plusDays(5).with(LocalTime.MIDNIGHT).withHour(10 + 2 * i));
@@ -179,18 +185,21 @@ public class TestDataBuilder {
     }
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(3)
     @Transactional
     public void buildGroundRentalData() {
         User user = userService.getLoginUserById(1L); // pikachu
         for (int i = 0; i < 12; ++i) {
             Ground ground = groundRepository.findOne((long) i % 8 + 1);
             GroundRental groundRental = GroundRental.createGroundRental(user, ground,
-                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT));
+                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
             groundRentalRepository.save(groundRental);
         }
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
+    @Order(1)
     @Transactional
     public void buildStationData() {
         List<String> names = List.of("주유구 A", "주유구 B", "주유구 C", "주유구 D", "주유구 E");
@@ -201,10 +210,12 @@ public class TestDataBuilder {
         }
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
+    @Order(4)
     @Transactional
     public void buildTestData() {
-        User user = userService.getLoginUserById(1L); // pikachu
+        User user = userService.getLoginUserById(1L); // juyeon
         List<String> titles = List.of(
                 "차량 제동거리 비교실험", "젖은 노면에서의 주행경로 오차", "오프로드 환경에서의 연료효율성", "차량 주행 안정성 비교", "최고속도 시 차량상태 비교확인");
         String contents = "첨부파일을 확인해 주세요.";
@@ -213,11 +224,10 @@ public class TestDataBuilder {
 
 
         for (long i = 0; i < 5; ++i) {
-            GroundRental groundRental = groundRentalRepository.findOne(i);
+            GroundRental groundRental = groundRentalRepository.findOne(i + 1);
             List<CarRental> carRentals = new ArrayList<>();
-            carRentals.add(carRentalRepository.findOne((2 * i) % 20));
-            carRentals.add(carRentalRepository.findOne((2 * i + 1) % 20));
-            LocalDateTime date = LocalDateTime.of(2023, 12, (int)(i + 1), (int)((10 + 2 * i) % 18), 0);
+            carRentals.add(carRentalRepository.findOne(i + 1));
+            LocalDateTime date = groundRental.getStartTime();
             Test test = Test.createTest(titles.get((int)i), contents, partners.get((int)i), date,
                     user, carRentals, groundRental);
             testRepository.save(test);

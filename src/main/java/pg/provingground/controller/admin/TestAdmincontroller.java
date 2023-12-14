@@ -14,6 +14,8 @@ import pg.provingground.service.TestService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -23,22 +25,20 @@ public class TestAdmincontroller {
     private final TestService testService;
 
     @GetMapping("/admin/test/list")
-    public String testList(@ModelAttribute TestSearchForm testSearchForm, @ModelAttribute DateSearchForm dateSearchForm, Model model) {
+    public String testList(@ModelAttribute TestSearchForm testSearchForm, Model model) {
 
         List<TestDto> tests;
 
-        if (dateSearchForm.getStartDate() != null && dateSearchForm.getEndDate() != null) {
-            // 지정 날짜 범위를 변환하여 입력
-            testSearchForm.setStartTime(DateTimeUtils.convertToStartOfDay(dateSearchForm.getStartDate()));
-            testSearchForm.setEndTime(DateTimeUtils.convertToEndOfDay(dateSearchForm.getEndDate()));
-            tests = testService.searchTest(testSearchForm);
-        } else {
-            tests = testService.allTest();
+        tests = testService.searchTest(testSearchForm);
+        // tests = testService.allTest();
+
+        for (TestDto test : tests) {
+            System.out.println("시험내역 = " + test.getTestId());
         }
 
         model.addAttribute("testSearchForm", testSearchForm);
-        model.addAttribute("dateSearchForm", dateSearchForm);
-        model.addAttribute("Tests", tests);
+        //model.addAttribute("dateSearchForm", dateSearchForm);
+        model.addAttribute("tests", tests);
 
         return "admin/test/test-list";
     }
