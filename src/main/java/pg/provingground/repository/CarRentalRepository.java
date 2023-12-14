@@ -43,10 +43,25 @@ public class CarRentalRepository {
                 .getResultList();
     }
 
+    /** 특정 유저의 대여 내역을 검색 */
     public List<CarRental> findAllByUser(User user) {
         return em.createQuery(
-                "select c from CarRental c where c.user = :user", CarRental.class)
+                        "select c from CarRental c where c.user = :user", CarRental.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    /** 특정 유저의 대여 내역을 시간 간격으로 검색 */
+    public List<CarRental> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate) {
+        return em.createQuery(
+                        "SELECT c " +
+                                "FROM CarRental c " +
+                                "WHERE c.user = :user AND c.startTime BETWEEN :startDate AND :endDate " +
+                                "ORDER BY c.startTime DESC",
+                        CarRental.class)
+                .setParameter("user", user)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .getResultList();
     }
 

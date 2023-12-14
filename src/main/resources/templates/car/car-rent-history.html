@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
@@ -29,41 +26,46 @@
                 <h3 class="h3 juykim-history-h3">차량 대여 내역</h3>
               </div>
               <!-- 위의 검색란 시작-->
-              <table class="tableset-table table">
-                <colgroup>
-                  <col>
-                  <col>
-                  <col>
-                </colgroup>
-                <thead class="thead-border-top">
-                  <tr>
-                    <th class="number" scope="col">
-                      <p class="p1">날짜 검색</p>
-                    </th>
-                    <th scope="col">
-                      <form th:object="${dateSearchForm}">
-                        <!-- 날짜 선택 -->
-                        <div class="inputset inputset-lg" style="width: 22rem;">
-                          <input th:field="*{startDate}" class="datepicker inputset-input form-control"
-                                 id="selectedDate" name="testDate"
-                                 th:attr="placeholder=${startDate != null && !startDate.isEmpty() ? startDate : '날짜 선택'}"
-                                 aria-label="내용">
+
+              <form th:object="${dateSearchForm}" method="get">
+                <table class="tableset-table table">
+                  <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                  </colgroup>
+                  <thead class="thead-border-top">
+                    <tr>
+                      <th class="number" scope="col">
+                        <p class="p1">날짜 검색</p>
+                      </th>
+                      <th scope="col">
+
+                          <!-- 날짜 선택 -->
+                        <!-- 숨겨진 필드 추가 -->
+                        <input type="hidden" th:field="*{startDate}" id="startDate">
+                        <input type="hidden" th:field="*{endDate}" id="endDate">
+                          <div class="inputset inputset-lg" style="width: 22rem;">
+                            <input name="dateRange" class="inputset-input form-control"
+                                   id="dateRange">
+                          </div>
+                      </th>
+                      <th scope="col">
+                        <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
+                      </th>
+                      <th scope="col">
+                      </th>
+                      <th scope="col">
+                        <div class="inputset inputset-line inputset-lg">
+                          <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
+                          <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용">
                         </div>
-                      </form>
-                    </th>
-                    <th scope="col">
-                    </th>
-                    <th scope="col">
-                    </th>
-                    <th scope="col">
-                      <div class="inputset inputset-line inputset-lg">
-                        <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-                        <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용">
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+
+              </form>
               <!-- 위의 검색란 끝-->
               <table class="tableset-table table">
                 <!-- 아래 있을 col의 속성 미리지정하는부분?-->
@@ -173,30 +175,36 @@
     if (errorMessage !== 'default') {
       alert(errorMessage);
     }
+
+    // 현재 날짜와 다음 달의 날짜를 계산
+    var start = moment().subtract(1, 'month').startOf('month'); // 지난 달의 첫째 날
+    var end = moment().endOf('month'); // 이번 달의 마지막 날
+
     /*]]>*/
-    $(function() {
+    $(function(){
+      // 폼에서 날짜 값 읽기
+      var storedStartDate = $('#startDate').val();
+      var storedEndDate = $('#endDate').val();
 
-      $.datepicker.setDefaults({dateFormat: 'yy-mm-dd'});
+      // 저장된 값이 있으면 사용하고, 없으면 기본값 설정
+      var start = storedStartDate ? moment(storedStartDate) : moment().subtract(1, 'month').startOf('month');
+      var end = storedEndDate ? moment(storedEndDate) : moment().endOf('month');
 
-      $('.datepicker').datepicker(
-              {
-                onSelect: function (dateText, inst) {
-                  // 모든 날짜 셀의 배경색을 초기화
-                  $('.ui-state-active').css('backgroundColor', '');
+      // Date Range Picker 초기화
+      $('#dateRange').daterangepicker({
+        locale: { format: 'YYYY-MM-DD' },
+        startDate: start,
+        endDate: end
+      }, function(start, end, label) {
+        $('#startDate').val(start.format('YYYY-MM-DD'));
+        $('#endDate').val(end.format('YYYY-MM-DD'));
+      });
 
-                  // 선택한 날짜 셀의 배경색을 변경
-                  setTimeout(function () {
-                    $('.ui-state-active').css('backgroundColor', '#D8D8D8');
-                  }, 0);
+      // 폼 필드에 초기 날짜 설정
+      if (!storedStartDate) $('#startDate').val(start.format('YYYY-MM-DD'));
+      if (!storedEndDate) $('#endDate').val(end.format('YYYY-MM-DD'));
+    });
 
-
-                  // 선택한 날짜를 페이지에 출력
-                  $('#selectedDateDisplay').text(dateText);
-
-                  $("#selectedDate").val(dateText);
-                }
-              });
-    })
   </script>
 
   <!-- [E]opilsol-N3 -->

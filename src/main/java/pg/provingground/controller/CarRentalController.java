@@ -32,10 +32,12 @@ public class CarRentalController {
     public String list(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
         // 해당 유저의 차량 대여 내역을 보여준다.
         User user = userService.getLoginUserByUsername(auth.getName());
-        List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user);
+        List<CarRentalHistory> rentals = carRentalService.findRentalHistory(user, dateSearchForm);
 
         model.addAttribute("rentals", rentals);
         model.addAttribute("dateSearchForm", dateSearchForm);
+
+        System.out.println("시작일 : " + dateSearchForm.getStartDate() + " | 종료일 : " + dateSearchForm.getEndDate());
 
         return "car/car-rent-history";
     }

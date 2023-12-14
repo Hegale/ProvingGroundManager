@@ -9,6 +9,7 @@ import pg.provingground.domain.CarType;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.CarRentalDto;
 import pg.provingground.dto.admin.CarRentalSearchForm;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.repository.CarRentalRepository;
@@ -19,6 +20,7 @@ import pg.provingground.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -106,11 +108,23 @@ public class CarRentalService {
     }
 
     /** 한 유저의 차량 대여 내역을 dto로 변환하여 반환 */
-    public List<CarRentalHistory> findRentalHistory(User user) {
-        List<CarRental> rentals = carRentalRepository.findAllByUser(user);
+    public List<CarRentalHistory> findRentalHistory(User user, DateSearchForm dateSearchForm) {
+        List<CarRental> rentals;
+
+        // 날짜를 선택하지 않았을 경우
+        if (dateSearchForm.getStartDate() == null || dateSearchForm.getEndDate() == null) {
+            rentals = carRentalRepository.findAllByUser(user);
+        } else { // 날짜를 선택했을 경우
+            // daterangepicker에서 받아온 결과를 LocalDate로 변환
+            LocalDate start = LocalDate.parse(dateSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate end = LocalDate.parse(dateSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            rentals = carRentalRepository.findAllByUserAndTimeInterval(user, LocalDateTime.of(start, LocalTime.MIN), LocalDateTime.of(end, LocalTime.MAX));
+        }
+
         List<CarRentalHistory> history = rentals.stream()
                 .map(CarRentalHistory::new)
                 .collect(Collectors.toList());
+
         return history;
     }
 
