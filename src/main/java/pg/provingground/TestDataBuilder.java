@@ -87,13 +87,13 @@ public class TestDataBuilder {
     public void buildUserTestData() {
 
         List<String> names = List.of(
-                "피카츄", "라이츄", "파이리", "꼬부기");
+                "김주연", "박지환", "김형진", "홍지민");
         List<String> ids = List.of(
-                "pikachu", "raichu", "pairii", "ggobugi");
+                "19011051", "32916610", "12702294", "73113289");
         List<String> passwds = List.of(
-                "pikachu123", "raichu123", "pairii123", "ggobugi123");
+                "juyeon5491", "jihwan1234", "kim1234", "jimin1234");
         List<String> phoneNums = List.of(
-                "010-1234-5678", "010-0000-1111", "010-2222-3333", "010-4444-5555");
+                "010-5919-5491", "010-3153-3121", "010-9312-1234", "010-8214-5555");
         for (int i = 0; i < 4; ++i) {
             User user = User.createUser(
                     ids.get(i), encoder.encode(passwds.get(i)), names.get(i), UserRole.USER, phoneNums.get(i));

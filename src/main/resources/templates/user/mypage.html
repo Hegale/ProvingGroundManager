@@ -25,49 +25,30 @@
                 <ul class="tabset-list tabset-lg">
                   <li class="tabset-item">
                     <a class="tabset-link active" href="javascript:void(0)">
-                      <span>유저야</span>
+                      <span th:text="${user.nickname} + '|' + ${user.role}">유저이름</span>
                     </a>
                   </li>
                 </ul>
               </div>
-              <div class="inputset inputset-line inputset-lg">
-                <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="아이디" aria-label="ID">
-              </div>
-              <div class="inputset inputset-line inputset-lg">
-                <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="비밀번호" aria-label="Password">
-              </div>
 
-              <div th:if="${#fields.hasGlobalErrors()}">
-                <br/>
-                <div th:each="error : ${#fields.globalDetailedErrors()}" th:text="${error}"></div>
-              </div>
-
-              <div class="contents-checkset d-flex justify-content-start">
-                <div class="checkset">
-                  <input id="checkset-c-3-1" class="checkset-input input-round" type="checkbox" value="" checked="">
-                  <label class="checkset-label" for="checkset-c-3-1"></label>
-                  <span class="checkset-text">자동 로그인</span>
-                </div>
-                <div class="checkset">
-                  <input id="checkset-c-3-2" class="checkset-input input-round" type="checkbox" value="">
-                  <label class="checkset-label" for="checkset-c-3-2"></label>
-                  <span class="checkset-text">아이디 저장</span>
-                </div>
-              </div>
-              <ul class="contents-list d-flex justify-content-center">
-                <li class="contents-item">
-                  <a href="javascript:void(0)" class="contents-link">회원가입</a>
-                </li>
-                <li class="contents-item">
-                  <a href="javascript:void(0)" class="contents-link">아이디 찾기</a>
-                </li>
-                <li class="contents-item">
-                  <a href="javascript:void(0)" class="contents-link">비밀번호 찾기</a>
-                </li>
-              </ul>
-              <div class="btn-box juykim-btnbox" style="text-align:center;">
-                <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block;">로그인</button>
-              </div>
+            <div class="btn-box juykim-btnbox" style="text-align:center;">
+              <a href="/admin">
+              <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block; margin-top: 3rem; width: 20rem; padding:0;">
+                관리자 페이지</button>
+              </a>
+            </div>
+            <div class="btn-box juykim-btnbox" style="text-align:center;">
+              <a href="/user/edit">
+              <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block; margin-top: 3rem; width: 20rem; padding:0;">
+                개인정보 변경</button>
+              </a>
+            </div>
+            <div class="btn-box juykim-btnbox" style="text-align:center;">
+              <a href="/logout">
+              <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block; margin-top: 3rem; width: 20rem;">
+                로그아웃</button>
+              </a>
+            </div>
 
 
 

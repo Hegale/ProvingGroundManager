@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
+import pg.provingground.dto.admin.TestDto;
+import pg.provingground.dto.admin.TestSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
@@ -59,6 +61,17 @@ public class TestService {
         // 테스트를 생성 및 영속성 컨텍스트에 저장
         Test test = Test.createTest(testForm.getTitle(), testForm.getContents(), testForm.getPartners(), dateTime, user, carRentals, groundRental);
         testRepository.save(test);
+    }
+
+    /** [관리자] 조건에 따른 시험내역 검색 */
+    public List<TestDto> searchTest(TestSearchForm testSearchForm) {
+        // TODO: 오류 핸들링
+        return testRepository.searchTests(testSearchForm);
+    }
+
+    /** [관리자] 전체 시험내역 검색 */
+    public List<TestDto> allTest() {
+        return testRepository.findAll();
     }
 
 

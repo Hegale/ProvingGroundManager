@@ -72,16 +72,16 @@ public class UserContoller {
     }
 
     /** 유저 마이페이지 */
-    @GetMapping("/info")
-    public String userInfo(Model model, Authentication auth) {
+    @GetMapping("/mypage")
+    public String myPage(Model model, Authentication auth) {
         User loginUser = userService.getLoginUserByUsername(auth.getName());
 
         if (loginUser == null) {
-            return "redirect:/security-login/login";
+            return "redirect:/login";
         }
 
         model.addAttribute("user", loginUser);
-        return "user/info";
+        return "user/mypage";
     }
 
 

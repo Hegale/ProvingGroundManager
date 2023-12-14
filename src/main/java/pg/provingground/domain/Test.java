@@ -16,7 +16,7 @@ public class Test {
 
     private LocalDateTime dateTime;
 
-    private String type;
+    private String type; // 시험종류
 
     //private String path;
 
