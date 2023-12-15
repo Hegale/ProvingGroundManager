@@ -48,7 +48,7 @@
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <input type="text" th:field="*{name}" class="inputset-input form-control" placeholder="주유구 이름을 입력해 주세요." aria-label="주유구명">
+                      <input type="text" th:field="*{name}" class="inputset-input form-control" placeholder="주유구 이름을 입력해 주세요." aria-label="주유구명" required>
                     </div>
                   </td>
                 </tr>
@@ -63,7 +63,7 @@
                       <button class="selectset-toggle btn" type="button">
                         <span id="selectedFuelType">연료 타입을 선택하세요</span>
                       </button>
-                      <input type="hidden" id="hiddenFuelType" th:field="*{fuelType}" />
+                      <input type="hidden" id="hiddenFuelType" th:field="*{fuelType}" required/>
                       <ul class="selectset-list">
                         <li class="selectset-item" th:each="fuelType : ${T(pg.provingground.domain.FuelType).values()}">
                           <button class="fuelType-select selectset-link time-select btn" type="button"
@@ -108,6 +108,14 @@
         document.getElementById('selectedFuelType').textContent = this.textContent;
       });
     });
+  });
+
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+    var hiddenFuelType = document.getElementById('hiddenFuelType').value;
+    if (!hiddenFuelType) {
+      alert('연료 타입을 선택하세요.');
+      event.preventDefault(); // 폼 제출 방지
+    }
   });
 </script>
 <script src="/js/weather.js"></script>

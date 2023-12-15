@@ -51,7 +51,7 @@
                       <input th:field="*{testDate}" class="datepicker inputset-input form-control"
                              id="selectedDate" name="testDate"
                              th:attr="placeholder=${testDate != null && !testDate.isEmpty() ? testDate : '날짜 선택'}"
-                             aria-label="내용">
+                             aria-label="내용" required>
                       <!--<input type="hidden" id="selectedDate" name="selectedDate" th:value="${testForm.testDate}">-->
                     </div>
 
@@ -60,7 +60,7 @@
                       <button class="selectset-toggle btn" type="button">
                         <span>시간을 선택하세요</span>
                       </button>
-                      <input type="hidden" id="hiddenTime" th:field="*{testTime}" />
+                      <input type="hidden" id="hiddenTime" th:field="*{testTime}" required/>
                       <ul class="selectset-list">
                         <li class="selectset-item">
                           <button class="time-select selectset-link time-select btn" type="button">
@@ -103,7 +103,7 @@
                   </th>
                   <td>
                     <div class="selectset selectset-lg">
-                      <input type="hidden" id="hiddenGround" th:field="*{groundRentalId}" />
+                      <input type="hidden" id="hiddenGround" th:field="*{groundRentalId}" required/>
                       <button class="selectset-toggle btn" type="button">
                         <span>시험장을 선택하세요</span>
                       </button>
@@ -131,7 +131,7 @@
                           </button>
                         </li>
                       </ul>
-                      <input type="hidden" id="carRentalIds" name="carRentalIds" value="" />
+                      <input type="hidden" id="carRentalIds" name="carRentalIds" value="" required />
                     </div>
                   </td>
                 </tr>
@@ -169,7 +169,7 @@
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <input type="text" th:field="*{title}" class="inputset-input form-control" id="Title" aria-label="제목">
+                      <input type="text" th:field="*{title}" class="inputset-input form-control" id="Title" aria-label="제목" required>
                     </div>
                   </td>
                 </tr>
