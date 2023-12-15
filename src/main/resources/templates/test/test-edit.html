@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<head th:replace="fragments/header :: header">
+  <title>페이지</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+  <div th:replace="fragments/body_header :: body_header" />
+
+  <div style="height:20rem;"></div>
+
+  <main class="th-layout-main ">
+    <!-- [S]personal-fILPV8V8Xp -->
+    <div class="opilsol-N27" id="" data-bid="vllPv8WPQi">
+      <div class="content-container">
+        <div class="contents-form container-md">
+          <div class="contents-form-top d-flex justify-content-between">
+            <h3 class="inputset-tit">시험 내역 수정</h3>
+            <span class="req">필수 선택입니다.</span>
+          </div>
+          <div class="contents-form tableset">
+            <div class="tableset-inner">
+
+              <!--  enctype="multipart/form-data" 옵션 삭제 -->
+              <form id="myForm" th:object="${testForm}" action="/test/new" method="post">
+
+
+              <table class="tableset-table table">
+                <colgroup>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                  <th>
+                    <span class="req label">시험 진행일</span>
+                  </th>
+                  <td colspan="3" style="display: flex; justify-content: space-between;">
+
+                    <!-- 날짜 선택 -->
+                    <div class="inputset inputset-lg" style="width: 22rem;">
+                      <input th:field="*{testDate}" class="datepicker inputset-input form-control"
+                             id="selectedDate" name="testDate"
+                             th:attr="placeholder=${testDate != null && !testDate.isEmpty() ? testDate : '날짜 선택'}"
+                             aria-label="내용">
+                      <!--<input type="hidden" id="selectedDate" name="selectedDate" th:value="${testForm.testDate}">-->
+                    </div>
+
+                    <!-- 시간 선택 -->
+                    <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
+                      <button class="selectset-toggle btn" type="button">
+                        <span>시간을 선택하세요</span>
+                      </button>
+                      <input type="hidden" id="hiddenTime" th:field="*{testTime}" />
+                      <ul class="selectset-list">
+                        <li class="selectset-item">
+                          <button class="time-select selectset-link time-select btn" type="button">
+                            <span>10:00</span>
+                          </button>
+                        </li>
+                        <li class="selectset-item">
+                          <button class="time-select selectset-link btn" type="button">
+                            <span>12:00</span>
+                          </button>
+                        </li>
+                        <li class="selectset-item">
+                          <button class="time-select selectset-link btn" type="button">
+                            <span>14:00</span>
+                          </button>
+                        </li>
+                        <li class="selectset-item">
+                          <button class="time-select selectset-link btn" type="button">
+                            <span>16:00</span>
+                          </button>
+                        </li>
+                        <li class="selectset-item">
+                          <button class="time-select selectset-link btn" type="button">
+                            <span>18:00</span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <!-- name="dateSearch" 삭제함 -->
+                    <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
+
+                  </td>
+                  <td></td>
+
+                </tr>
+                <tr>
+                  <th>
+                    <label class="req label">주행시험장</label>
+                  </th>
+                  <td>
+                    <div class="selectset selectset-lg">
+                      <input type="hidden" id="hiddenGround" th:field="*{groundRentalId}" />
+                      <button class="selectset-toggle btn" type="button">
+                        <span>시험장을 선택하세요</span>
+                      </button>
+                      <ul class="selectset-list">
+                        <li class="selectset-item" th:each="ground : ${grounds}">
+                          <button class="ground-select selectset-link btn" type="button" th:ground-value="${ground.groundName}" th:ground-rental-id="${ground.groundRentalId}">
+                            <span th:text="${ground.groundName}">시험장 이름</span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                  <th>
+                    <label class="req label" for="Company">대여차량<br></label>
+                  </th>
+                  <td>
+                    <div class="selectset selectset-lg">
+                      <button class="juykim-car-select selectset-toggle btn" type="button">
+                        <span>템플릿을 선택하세요</span>
+                      </button>
+                      <ul class="selectset-list">
+                        <li class="selectset-item" th:each="car : ${cars}">
+                          <button class="car-select selectset-link btn" type="button" th:data-value="${car.carName}" th:data-rental-id="${car.carRentalId}">
+                            <span th:text="${car.carName}">차량 이름</span>
+                          </button>
+                        </li>
+                      </ul>
+                      <input type="hidden" id="carRentalIds" name="carRentalIds" value="" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label class="label" for="Email">협력사</label>
+                  </th>
+                  <td class="d-flex justify-content-start align-items-center" colspan="3">
+                    <div class="inputset col-4">
+                      <input type="text" th:field="*{partners}" class="inputset-input form-control" id="Email" aria-label="이메일">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label class="label" for="Tel">결과물</label>
+                  </th>
+                  <td>
+                    <div class="inputset">
+                      <input type="text" class="inputset-input form-control" id="Tel" placeholder="- 없이 번호만 입력해주세요." aria-label="연락처">
+                    </div>
+                  </td>
+                  <th>
+                    <label class="label" for="subTel">결과 경로</label>
+                  </th>
+                  <td>
+                    <div class="inputset">
+                      <input type="text" class="inputset-input form-control" id="subTel" placeholder="- 없이 번호만 입력해주세요" aria-label="추가연락처">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label class="req label" for="Title">제목</label>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <input type="text" th:field="*{title}" class="inputset-input form-control" id="Title" aria-label="제목">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label class="req label" for="Inquiry">시험 내용</label>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <textarea th:field="*{contents}" class="inputset-input form-control textarea" id="Inquiry" aria-label="문의내용"></textarea>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <span class="label">파일첨부</span>
+                  </th>
+                  <td colspan="3">
+                    <div class="fileset fileset-lg fileset-label">
+                      <label>
+                        <div class="fileset-body">
+                          <div class="fileset-group">
+                            <input type="file" class="fileset-input" name="file" multiple>
+                            <button class="fileset-cancel"></button>
+                          </div>
+                          <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">파일첨부</span>
+                        </div>
+                      </label>
+                    </div>
+                    <p class="p1 co-text3">이미지 형식의 jpg(jpeg), png나 문서형식의 doc(docx), ppt(pptx), hwp, pdf만 첨부 가능합니다.</p>
+                    <p class="p1 co-text3">첨부파일은 20MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border:none; display: flex; justify-content: right; align-items: right;">
+                    <a href="/">
+                      <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">작성 취소</button>
+                    </a>
+                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 작성</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [E]personal-fILPV8V8Xp -->
+  </main>
+
+  <div th:replace="fragments/footer :: footer" />
+  <script th:inline="javascript">
+
+    document.getElementById('postButton').addEventListener('click', function (event) {
+      event.preventDefault();
+      var form = document.getElementById('myForm');
+      form.method = 'post';
+      form.action = '/test/new';  // POST 요청의 목적지
+      form.submit();
+    });
+
+    document.getElementById('getButton').addEventListener('click', function (event) {
+      event.preventDefault();
+      var form = document.getElementById('myForm');
+      form.method = 'get';
+      form.action = '/test/new';  // GET 요청의 목적지
+      form.submit();
+    });
+
+    $(function(){
+
+      $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+
+      $('.datepicker').datepicker(
+              {
+
+                onSelect: function(dateText, inst) {
+                  // 모든 날짜 셀의 배경색을 초기화
+                  $('.ui-state-active').css('backgroundColor', '');
+
+                  // 선택한 날짜 셀의 배경색을 변경
+                  setTimeout(function() {
+                    $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                  }, 0);
+
+
+                  // 선택한 날짜를 페이지에 출력
+                  $('#selectedDateDisplay').text(dateText);
+
+                  $("#selectedDate").val(dateText);
+                }
+              });
+
+      $(document).ready(function () {
+        $('.time-select').click(function() {
+          // 선택한 시간을 텍스트로 가져옴
+          var testTime = $(this).text().trim();
+          // 선택한 시간을 숨겨진 입력 필드에 설정
+          $('#hiddenTime').val(testTime);
+        })
+
+        $('.ground-select').click(function() {
+              // 선택한 시간을 텍스트로 가져옴
+              var groundRentalId = $(this).attr("ground-rental-id");
+              // 선택한 시간을 숨겨진 입력 필드에 설정
+              $('#hiddenGround').val(groundRentalId);
+        })
+
+        // 차량 선택
+        var selectedItems = [];
+        $(".car-select").click(function () {
+          var carName = $(this).attr("data-value");
+          var carRentalId = $(this).attr("data-rental-id");  // 'data-rental-id'는 carRentalId 값을 가진 data-* 속성이어야 합니다.
+          var selectedItemsForThisCar = selectedItems.filter(item => item.carRentalId === carRentalId);
+
+          if (selectedItemsForThisCar.length > 0) {
+            // 이미 선택된 항목이면 배열에서 제거
+            selectedItems = selectedItems.filter(item => item.carRentalId !== carRentalId);
+            $(this).removeClass('selected');
+            console.log("선택 취소 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
+          } else {
+            // 새로 선택된 항목이면 배열에 추가
+            selectedItems.push({ carName, carRentalId });
+            $(this).addClass('selected');
+            console.log("선택 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
+          }
+
+          $("#carRentalIds").val(selectedItems.map(item => item.carRentalId).join(","));  // <input> 태그의 값 업데이트
+          var selectedCarNames = selectedItems.map(item => item.carName).join(", ");
+          $(".juykim-car-select span").text(selectedItems.length > 0 ? selectedItems.map(item => item.carName).join(", ") : "템플릿을 선택하세요");
+        });
+      });
+
+    })
+  </script>
+  <script src="/js/weather.js"></script>
+  <script src="/js/setting.js"></script>
+  <script src="/js/plugin.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
+</body>

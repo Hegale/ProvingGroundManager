@@ -39,9 +39,10 @@ public class CarRentalService {
 
     /** 차량 대여 */
     @Transactional
-    public Long rental(Long userId, Long carId, LocalDateTime time) {
+    public Long rental(Long userId, Long carTypeId, LocalDateTime time) {
 
         User user = userService.getLoginUserById(userId);
+        Long carId = getSchedulableCar(carTypeId, time);
         Car car = carRepository.findOne(carId);
 
         CarRental carRental = CarRental.createCarRental(user, car, time);

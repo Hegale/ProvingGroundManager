@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.User;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.form.DateSearchForm;
+import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.service.CarRentalService;
 import pg.provingground.service.UserService;
 
@@ -36,8 +37,7 @@ public class CarRentalController {
 
         model.addAttribute("rentals", rentals);
         model.addAttribute("dateSearchForm", dateSearchForm);
-
-        System.out.println("시작일 : " + dateSearchForm.getStartDate() + " | 종료일 : " + dateSearchForm.getEndDate());
+        //model.addAttribute("errorMessage", "");
 
         return "car/car-rent-history";
     }
@@ -59,29 +59,31 @@ public class CarRentalController {
     public String selectDate(@PathVariable Long carTypeId, Model model, Authentication auth) {
         Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
         CarRentalForm form = new CarRentalForm(userId, carTypeId);
-        //List<AvailableTimeForm> times = carRentalService.getAvailableTimeForms(carTypeId);
 
         // 차량의 타입 전달
         model.addAttribute("type", carRentalService.findType(carTypeId));
         // 선택한 날짜와 시간을 입력받아 올 폼 전달
         model.addAttribute("form", form);
-        // TODO: 불가능한 '날짜'만 우선적으로 보내기! 선택한 날짜에 대한 시간정보는 아래에서 할거임
-        // TODO: 불가능한 날짜 및 시간 비활성화 -> ajax 힘드니까 '날짜 선택' 뭐 이정도로 바꾸기...
-        //model.addAttribute("availableTimes", times);
 
         return "car/car-date-selection";
     }
 
     @PostMapping("/car-rental/select/{carTypeId}")
     /** 대여에 필요한 정보들 확정 후 대여 시행 */
-    public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form, Authentication auth) {
+    public String rentCar(@PathVariable Long carTypeId, @ModelAttribute CarRentalForm form,
+                          Authentication auth, RedirectAttributes redirectAttributes) {
         // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
         String dateTimeString = form.getSelectedDate() + "T" + form.getSelectedTime() + ":00:00";
         LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        Long carId = carRentalService.getSchedulableCar(carTypeId, time);
+
         Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
 
-        carRentalService.rental(userId, carId, time);
+        try {
+            carRentalService.rental(userId, carTypeId, time);
+        } catch(NoAvailableCarException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e);
+            return "redirect:/car-rental";
+        }
 
         return "redirect:/car-rental"; // 대여 내역으로 이동
     }
