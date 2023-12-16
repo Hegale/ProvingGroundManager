@@ -70,7 +70,7 @@ public class TestDataBuilder {
                 "수소와 산소의 결합으로 어떠한 오염물질 없이 오직 에너지와 물만을 발생시키고 달리면서 PM2.5 이하의 초미세먼지까지 걸러내는 궁극의 친환경차 NEXO. '미래 자동차 기술의 현재화'라는 개발 철학 아래, 가장 진보된 기술로 완성된 미래 모빌리티를 가장 먼저 경험하십시오."
         );
 
-        List<Integer> fuelCapacitys = List.of(47000, 60000, 50000, 67000, 45000, 47000, 52000, 71000, 697, 156000);
+        List<Long> fuelCapacitys = List.of(47000L, 60000L, 50000L, 67000L, 45000L, 47000L, 52000L, 71000L, 697L, 156000L);
 
         for (int i = 0; i < 10; ++i) {
             CarType carType = new CarType();

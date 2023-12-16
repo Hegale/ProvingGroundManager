@@ -27,7 +27,7 @@ public class CarType {
     @Column (name = "fuel_efficiency")
     private Double fuelEfficiency; // km/l 단위
 
-    private Integer fuelCapacity;
+    private Long fuelCapacity;
 
     private String engine;
 

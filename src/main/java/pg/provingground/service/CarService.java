@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
+import pg.provingground.domain.Station;
 import pg.provingground.dto.admin.CarDto;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.CarTypeRepository;
+import pg.provingground.repository.StationRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final CarTypeRepository carTypeRepository;
+    private final StationRepository stationRepository;
 
     /** 차량번호를 통한 차량 검색. 입력이 아예 들어오지 않을 경우 모든 차량을 반환. */
     public List<CarDto> findByCarNumber(String number) {
@@ -56,6 +59,10 @@ public class CarService {
     /** 선택 차량에 적합한 주유구인지 확인 */
     public boolean isValidStation(Long carId, Long stationId) {
         // TODO: station에 연료 타입 추가하여 car의 연료 타입과 일치하는지 확인
+        Car car = carRepository.findOne(carId);
+        Station station = stationRepository.findOne(stationId);
+
+
         return true;
     }
 

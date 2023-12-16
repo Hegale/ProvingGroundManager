@@ -5,11 +5,13 @@ spring:
     password: Likepotato13^^
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
+    #database-platform: org.hibernate.spatial.dialect.mysql.MySQL11SpatialDialect
     hibernate:
       ddl-auto: create # 애플리케이션 시작할 때마다 스키마 새로 생성
     show-sql: true #추가함.
     properties:
       hibernate:
+        #dialect: org.hibernate.spatial.dialect.mysql.MySQL11SpatialDialect
         format_sql: true
   mvc: # post를 delete로 변경하기 위함
     hiddenmethod:
