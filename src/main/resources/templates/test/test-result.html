@@ -114,7 +114,7 @@
                 <th scope="col">시험장</th>
                 <th scope="col">차량 대수</th>
                 <th scope="col">시험 제목</th>
-                <th scope="col">내역 확인 및 수정/삭제</th>
+                <th scope="col">확인 및 수정/삭제</th>
               </tr>
               </thead>
               <tbody>
@@ -130,19 +130,15 @@
                 <td class="last-child">
 
                   <div style="display: flex; justify-content: space-between;">
-                    <a th:href="@{'/test/' + ${test.testId} + '/result'}">
-                      <button type="button"
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        자세히 보기
-                      </button>
-                    </a>
-                    <a th:href="@{'/test/' + ${test.testId} + '/edit'}">
-                      <!--th:onclick="'javascript:deleteTest('+${test.testId}+');'"-->
-                      <button
-                              class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        수정/삭제
-                      </button>
-                    </a>
+                    <button type="button"
+                            class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                      확인
+                    </button>
+                    <button
+                            th:onclick="'javascript:deleteTest('+${test.testId}+');'"
+                            class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                      수정/삭제
+                    </button>
                   </div>
 
                 </td>

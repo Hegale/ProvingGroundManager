@@ -72,35 +72,24 @@ public class TestController {
     }
 
     @PostMapping("/test/new")
-    // TODO: 시험장 등록 시행, 유효값 판별
-    public String newTestResult(@ModelAttribute TestForm testForm, @RequestParam(value = "files", required = false) MultipartFile[] files, Authentication auth) {
+    public String newTestResult(@ModelAttribute TestForm testForm, Authentication auth,
+                                @RequestParam(value = "files", required = false) MultipartFile[] files) {
 
-        String userName = auth.getName();
-        // 여러 개 받아온 차량대여 목록을 변환
+        // 여러 개 받아온 차량대여 목록을 set
         testForm.setCarRentalIdsList(Arrays.stream(testForm.getCarRentalIds().split(","))
                 .map(Long::valueOf)
                 .toList());
 
-        testService.addTest(testForm, userService.getLoginUserByUsername(userName));
+        String userName = auth.getName();
+        Long testId = testService.addTest(testForm, userService.getLoginUserByUsername(userName));
 
-        /* 파일 등록
-        for (MultipartFile file : files) {
-            if (file.isEmpty()) {
-                continue; // 비어 있으면 다음 파일로 넘어감
-            }
-            try {
-                // TODO: 검증로직?
-                File dest = new File("/Users/juyeon/autoever/userFiles/" + file.getOriginalFilename());
-                file.transferTo(dest);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // 적절한 오류 처리를 추가한다.
+        if (files != null && files.length > 0) {
+            for (MultipartFile file : files) {
+                testService.processFile(file, testId);
             }
         }
 
-         */
-
-        return "redirect:/";
+        return "redirect:/test";
     }
 
 }

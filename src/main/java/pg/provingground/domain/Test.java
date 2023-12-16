@@ -1,6 +1,7 @@
 package pg.provingground.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
+@Getter
 public class Test {
     @Id
     @GeneratedValue
@@ -27,6 +29,8 @@ public class Test {
     private String title;
 
     private String contents;
+
+    private FileMetaData fileMetaData;
 
     // TODO: 기타 NULL 가능한 속성 추가
     //private LineSt path;
@@ -59,6 +63,10 @@ public class Test {
         test.carCount = carRentals.size();
         test.groundRental = groundRental;
         return test;
+    }
+
+    public void setFileMetaData(FileMetaData metaData) {
+        this.fileMetaData = metaData;
     }
 
 }

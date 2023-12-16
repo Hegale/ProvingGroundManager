@@ -26,6 +26,10 @@ public class TestRepository {
         em.persist(test);
     }
 
+    public Test findOne(Long testId) {
+        return em.find(Test.class, testId);
+    }
+
     public List<TestDto> findAll() {
         return em.createQuery(
                 "SELECT new pg.provingground.dto.admin.TestDto(" +
