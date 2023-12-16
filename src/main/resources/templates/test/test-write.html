@@ -29,7 +29,7 @@
             <div class="tableset-inner">
 
               <!--  enctype="multipart/form-data" 옵션 삭제 -->
-              <form id="myForm" th:object="${testForm}" action="/test/new" method="post">
+              <form id="myForm" th:object="${testForm}" action="/test/new" method="post" enctype="multipart/form-data">
 
 
               <table class="tableset-table table">
@@ -192,7 +192,7 @@
                       <label>
                         <div class="fileset-body">
                           <div class="fileset-group">
-                            <input type="file" class="fileset-input" name="file" multiple>
+                            <input type="file" class="fileset-input" name="files" multiple>
                             <button class="fileset-cancel"></button>
                           </div>
                           <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">파일첨부</span>

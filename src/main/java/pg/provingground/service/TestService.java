@@ -81,6 +81,7 @@ public class TestService {
         return testRepository.findAll();
     }
 
+    @Transactional
     public void processFile(MultipartFile file, Long testId) {
         String fileName = file.getOriginalFilename();
         String fileType = file.getContentType();
@@ -92,6 +93,7 @@ public class TestService {
         try {
             filePath = saveFileToSystem(file, testId);
         } catch (IOException e) {
+            System.out.println(e + "오류가 발생했습니다.");
             return;
         }
 
@@ -101,8 +103,9 @@ public class TestService {
     }
 
     private String saveFileToSystem(MultipartFile file, Long testId) throws IOException {
-        String uploadDir = "/test-files/" + testId; // 서버의 특정 디렉토리
+        String uploadDir = "/Users/juyeon/code/ProvingGround/userfiles/test-results/" + testId; // 서버의 특정 디렉토리
         Path uploadPath = Paths.get(uploadDir);
+        System.out.println("uploadDir = " + uploadDir);
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);

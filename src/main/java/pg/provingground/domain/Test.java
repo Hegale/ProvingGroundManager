@@ -30,6 +30,8 @@ public class Test {
 
     private String contents;
 
+    // TODO: 여러개를 저장하기 위해 엔티티로 분리하고, 이름을 File로 변경하기
+    @JoinColumn(name="file_meta_data")
     private FileMetaData fileMetaData;
 
     // TODO: 기타 NULL 가능한 속성 추가

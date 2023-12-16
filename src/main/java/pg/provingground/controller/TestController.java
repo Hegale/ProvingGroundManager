@@ -85,6 +85,7 @@ public class TestController {
 
         if (files != null && files.length > 0) {
             for (MultipartFile file : files) {
+                System.out.println("파일 입력!ㅎ");
                 testService.processFile(file, testId);
             }
         }
