@@ -32,20 +32,26 @@
                 <col>
               </colgroup>
               <thead class="thead-border-top">
-              <tr>
-                <th scope="col" style="display: flex;">
-                  <p class="p1">시험 번호 : </p>
-                  <p class="p1" th:text="${testId}">번호</p>
-                </th>
-                <th scope="col" style="display: flex;">
-                  <p class="p1">시험 진행일 : </p>
-                  <p class="p1" th:text="${test.dateTime}">진행일</p>
-                </th>
-                <th scope="col" style="display: flex;">
-                  <p class="p1">주행시험장 : </p>
-                  <p class="p1" th:text="${test.getGroundRental().ground.name}">진행일</p>
-                </th>
-              </tr>
+                <tr>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">시험 번호 : </p>
+                      <p class="p1" th:text="${testId}" style="margin-left: 1rem;">번호</p>
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">시험 진행일 : </p>
+                      <p class="p1" th:text="${test.dateTime}" style="margin-left: 1rem;">진행일</p>
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">주행시험장 : </p>
+                      <p class="p1" th:text="${test.getGroundRental().ground.name}" style="margin-left: 1rem;">진행일</p>
+                    </div>
+                  </th>
+                </tr>
               </thead>
             </table>
             <!-- 위의 검색란 끝-->
