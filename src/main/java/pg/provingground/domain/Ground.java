@@ -3,6 +3,9 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.geo.Point;
+
+import java.awt.*;
 
 @Entity
 @Getter @Setter
@@ -21,7 +24,8 @@ public class Ground {
 
     private int distance;
 
-    // private Double Coordinate; ; 일단 보류. JTS 사용할수도 있음
+    // private Point location;
+
     //private int fuel_consumption;
 
     public static Ground createGround(String name, String description, int car_maximum, int distance) {
