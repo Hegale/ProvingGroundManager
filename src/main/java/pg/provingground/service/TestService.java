@@ -86,8 +86,6 @@ public class TestService {
         Test test = Test.createTest(testForm.getTitle(), testForm.getContents(), testForm.getPartners(), dateTime, user, carRentals, groundRental);
         testRepository.save(test);
 
-        System.out.println("왜안돼? : " + test.getCarRentals().get(0).getCarRentalId());
-
         // 각 테스트를 carRental에 적용
         for (CarRental carRental : carRentals) {
             carRental.setTest(test);
@@ -108,37 +106,50 @@ public class TestService {
     }
 
     @Transactional
+    public void addCarPath(MultipartFile file, Long carRentalId, Long testId) {
+        FileMetaData metaData = getFileMetaData(file, testId);
+        CarRental carRental = carRentalRepository.findOne(carRentalId);
+        carRental.setFileMetaData(metaData); // 테스트에 파일 메타데이터를 저장
+    }
+
+    @Transactional
     public void processFile(MultipartFile file, Long testId) {
+        FileMetaData fileMetaData = getFileMetaData(file, testId);
+        Test test = testRepository.findOne(testId);
+        test.setFileMetaData(fileMetaData); // 테스트에 파일 메타데이터를 저장
+    }
+
+    private FileMetaData getFileMetaData(MultipartFile file, Long testId) {
         String fileName = file.getOriginalFilename();
         String fileType = file.getContentType();
         Long fileSize = file.getSize();
         LocalDateTime uploadTime = LocalDateTime.now();
         String filePath;
 
-        // 파일 저장 로직 구현
         try {
             filePath = saveFileToSystem(file, testId);
         } catch (IOException e) {
-            System.out.println(e + "오류가 발생했습니다.");
-            return;
+            System.out.println("오류 발생 : " + e);
+            return null;
         }
 
-        FileMetaData metaData = new FileMetaData(fileName, fileType, fileSize, filePath, uploadTime);
-        Test test = testRepository.findOne(testId);
-        test.setFileMetaData(metaData); // 테스트에 파일 메타데이터를 저장
+        return new FileMetaData(fileName, fileType, fileSize, filePath, uploadTime);
     }
 
+    /** 유저 입력 파일을 서버의 시스템에 저장 */
     private String saveFileToSystem(MultipartFile file, Long testId) throws IOException {
         String uploadDir = "/Users/juyeon/code/ProvingGround/userfiles/test-results/" + testId; // 서버의 특정 디렉토리
         Path uploadPath = Paths.get(uploadDir);
-        System.out.println("uploadDir = " + uploadDir);
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
+
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        System.out.println("파일 이름: " + fileName);
         Path filePath = uploadPath.resolve(fileName);
+        System.out.println("파일 경로: " + filePath);
         file.transferTo(filePath.toFile());
 
         return filePath.toString();

@@ -75,4 +75,9 @@ public class CarRental {
         this.test = test;
     }
 
+    public void setFileMetaData(FileMetaData fileMetaData) {
+        System.out.println("메타데이터 세팅!");
+        this.fileMetaData = fileMetaData;
+    }
+
 }

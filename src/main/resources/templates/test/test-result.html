@@ -75,10 +75,25 @@
                 <td class="last-child"><p th:text="${carRental.carName}"></p></td>
                 <td class="last-child" th:text="${carRental.fileName}">파일명</td>
                 <td class="last-child">
-                  <button type="button"
-                          class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                    경로 파일 추가
-                  </button>
+                    <form method="post" class="fileUpload" enctype="multipart/form-data">
+                      <!--
+                      <input type="hidden" name="carRentalId" th:value="${carRental.carRentalId}" />
+                      <input type="file" class="fileset-input" name="file" onchange="this.form.submit();">
+                      <button class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">파일첨부</button>
+                      --->
+
+                      <input type="hidden" name="carRentalId" th:value="${carRental.carRentalId}" />
+                      <label>
+                        <div class="fileset-body">
+                          <div class="fileset-group">
+                            <input type="file" class="fileset-input" style="display: none;" name="file" onchange="this.form.submit();">
+                          </div>
+                          <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload juykim-cancel-btn">
+                            파일 추가</span>
+                        </div>
+                      </label>
+
+                    </form>
                 </td>
                 <td class="last-child">
                   <button type="button"

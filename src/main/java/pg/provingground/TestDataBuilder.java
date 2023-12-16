@@ -231,6 +231,10 @@ public class TestDataBuilder {
             Test test = Test.createTest(titles.get((int)i), contents, partners.get((int)i), date,
                     user, carRentals, groundRental);
             testRepository.save(test);
+            // 각 테스트를 carRental에 적용
+            for (CarRental carRental : carRentals) {
+                carRental.setTest(test);
+            }
         }
 
     }

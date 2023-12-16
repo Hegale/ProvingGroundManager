@@ -55,6 +55,20 @@ public class TestController {
         return "test/test-result";
     }
 
+    @PostMapping("/test/{testId}/result")
+    public String testResult(@PathVariable Long testId, @RequestParam("carRentalId") Long carRentalId,
+                             @RequestParam(value = "file") MultipartFile file) {
+
+        System.out.println("테스트 아이디 : " + testId);
+        System.out.println("차량 대여 아이디 : " + carRentalId);
+        System.out.println("파일명 : " + file.getOriginalFilename());
+        System.out.println("파일크기 : " + file.getSize());
+        if (file != null) {
+            testService.addCarPath(file, carRentalId, testId);
+        }
+        return "redirect:/test/{testId}/result";
+    }
+
     @GetMapping("/test/{testId}/edit")
     /** 특정 시험 내역을 수정 혹은 삭제, 해당 페이지로 이동 */
     public String fixHistory(@PathVariable Long testId) {
@@ -103,7 +117,6 @@ public class TestController {
 
         if (files != null && files.length > 0) {
             for (MultipartFile file : files) {
-                System.out.println("파일 입력!ㅎ");
                 testService.processFile(file, testId);
             }
         }
