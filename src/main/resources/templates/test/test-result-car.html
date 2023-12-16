@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d6fa52243bbcc13f1174410be691ea0"></script>
+
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -22,15 +24,11 @@
           <div class="tableset-inner">
             <!-- 테이블 위에 작성 -->
             <div>
-              <h3 class="h3 juykim-history-h3">시험 결과 확인</h3>
+              <h3 class="h3 juykim-history-h3">차량 주행 결과 확인</h3>
             </div>
 
-
-
-
-
-
             <!-- 위의 검색란 시작-->
+            <!--
             <table class="tableset-table table">
               <colgroup>
                 <col>
@@ -59,7 +57,11 @@
                   </th>
                 </tr>
               </thead>
-            </table>
+            </table>-->
+            <div style="width: 100%; display:flex; justify-content: center; margin-bottom: 3rem;">
+              <div id="map" style="width:70%; height:50rem;"></div>
+            </div>
+
             <table class="tableset-table table">
               <colgroup>
                 <col>
@@ -134,6 +136,16 @@
 
 <div th:replace="fragments/footer :: footer" />
 
+<!-- 카카오 맵 관련-->
+<script th:inline="javascript">
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+          mapOption = {
+            center: new kakao.maps.LatLng(36.643125821, 126.339071895), // 지도의 중심좌표
+            level: 4 // 지도의 확대 레벨
+          };
+
+  var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+</script>
 <script>
   function deleteTest(testId) {
     var form = document.createElement("form");
@@ -149,7 +161,6 @@
     alert(errorMessage);
   }
   /*]]>*/
-
 </script>
 
 <!-- [E]opilsol-N3 -->
