@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="fragments/header :: header">
+  <title>페이지</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div th:replace="fragments/body_header :: body_header" />
+
+<!-- [E]thwhole-enlPbA0Maj -->
+<main class="th-layout-main ">
+  <!-- [S]opilsol-N24 -->
+  <div class="opilsol-N24" data-bid="aRlPLAH5af">
+    <div class="content-container">
+      <div class="container-md">
+        <div class="tableset">
+
+
+          <div class="tableset-inner">
+            <!-- 테이블 위에 작성 -->
+            <div>
+              <h3 class="h3 juykim-history-h3">시험 결과 확인</h3>
+            </div>
+
+
+
+
+
+
+            <!-- 위의 검색란 시작-->
+            <table class="tableset-table table">
+              <colgroup>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <thead class="thead-border-top">
+                <tr>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">시험 번호 : </p>
+                      <p class="p1" th:text="${testId}" style="margin-left: 1rem;">번호</p>
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">시험 진행일 : </p>
+                      <p class="p1" th:text="${test.dateTime}" style="margin-left: 1rem;">진행일</p>
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <div  style="display: flex;">
+                      <p class="p1">주행시험장 : </p>
+                      <p class="p1" th:text="${test.groundName}" style="margin-left: 1rem;">진행일</p>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+            <table class="tableset-table table">
+              <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <tbody>
+              <tr>
+                <th><label class="label">차량 대여 번호</label></th>
+                <td th:text="${carRentalId}"></td>
+              </tr>
+              <tr>
+                <th>
+                  <label class="label">시험 번호</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${testId}" style="margin-left: 1rem;">번호</p>
+                </td>
+
+                <th>
+                  <label class="label">시험 진행일</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${test.dateTime}" style="margin-left: 1rem;">진행일</p>
+                </td>
+
+                <th>
+                  <label class="label">주행시험장</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${test.groundName}" style="margin-left: 1rem;">진행일</p>
+                </td>
+              </tr>
+
+              <tr>
+                <th>
+                  <label class="label">시험 제목</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${test.title}" style="margin-left: 1rem;">제목</p>
+                </td>
+
+                <th>
+                  <label class="label">협력사</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${test.partners}" style="margin-left: 1rem;">협력사</p>
+                </td>
+
+                <th>
+                  <label class="label">시험 종류</label>
+                </th>
+                <td>
+                  <p class="p1" th:text="${test.type}" style="margin-left: 1rem;">타입</p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- [E]opilsol-N24 -->
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+
+<script>
+  function deleteTest(testId) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "get");
+    form.setAttribute("action", "/test/" + testId + "/fix");
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  /*<![CDATA[*/
+  var errorMessage = /*[[${errorMessage}]]*/ 'default';
+  if (errorMessage !== 'default') {
+    alert(errorMessage);
+  }
+  /*]]>*/
+
+</script>
+
+<!-- [E]opilsol-N3 -->
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+</body>

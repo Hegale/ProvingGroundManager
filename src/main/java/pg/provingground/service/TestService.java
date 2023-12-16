@@ -34,9 +34,10 @@ public class TestService {
     private final CarRentalRepository carRentalRepository;
     private final TestRepository testRepository;
 
-    public Test getTest(Long testId) {
+    public TestDto getTest(Long testId) {
         // TODO: 해당 유저가 아닐 시 접근 권한 없다는 Exception 발령
-        return testRepository.findOne(testId);
+        Test test = testRepository.findOne(testId);
+        return new TestDto(testId, test.getDateTime(), test.getType(), test.getPartners(), test.getTitle(), test.getGroundRental().getGround().getName(), test.getUser().getUsername());
     }
 
     @Transactional

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Test;
 import pg.provingground.domain.User;
+import pg.provingground.dto.admin.TestDto;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
@@ -43,11 +44,8 @@ public class TestController {
     @GetMapping("/test/{testId}/result")
     public String testResult(@PathVariable Long testId, Model model){
 
-        Test test = testService.getTest(testId);
+        TestDto test = testService.getTest(testId);
         List<CarRentalHistory> carRentalHistories = testService.getTestCarRental(testId);
-        for (CarRentalHistory car : carRentalHistories) {
-            System.out.println("차량 이름 : " + car.getCarName());
-        }
 
         model.addAttribute("test", test);
         model.addAttribute("carRentals", carRentalHistories);
@@ -58,15 +56,19 @@ public class TestController {
     @PostMapping("/test/{testId}/result")
     public String testResult(@PathVariable Long testId, @RequestParam("carRentalId") Long carRentalId,
                              @RequestParam(value = "file") MultipartFile file) {
-
-        System.out.println("테스트 아이디 : " + testId);
-        System.out.println("차량 대여 아이디 : " + carRentalId);
-        System.out.println("파일명 : " + file.getOriginalFilename());
-        System.out.println("파일크기 : " + file.getSize());
         if (file != null) {
             testService.addCarPath(file, carRentalId, testId);
         }
         return "redirect:/test/{testId}/result";
+    }
+
+    @GetMapping("/test/{testId}/{carRentalId}/result")
+    public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
+        TestDto testDto = testService.getTest(testId);
+
+        model.addAttribute("test", testDto);
+
+        return "test/test-result-car";
     }
 
     @GetMapping("/test/{testId}/edit")

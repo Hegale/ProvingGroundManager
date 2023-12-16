@@ -48,7 +48,7 @@
                   <th scope="col">
                     <div  style="display: flex;">
                       <p class="p1">주행시험장 : </p>
-                      <p class="p1" th:text="${test.getGroundRental().ground.name}" style="margin-left: 1rem;">진행일</p>
+                      <p class="p1" th:text="${test.groundName}" style="margin-left: 1rem;">진행일</p>
                     </div>
                   </th>
                 </tr>
@@ -102,10 +102,12 @@
                     </form>
                 </td>
                 <td class="last-child">
-                  <button type="button"
-                          class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                    결과 분석
-                  </button>
+                  <a th:href="@{'/test/' + ${testId} + '/' + ${carRental.carRentalId} + '/result'}">
+                    <button type="button"
+                            class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
+                      결과 분석
+                    </button>
+                  </a>
                 </td>
               </tr>
               <!-- 목록 하나 끝-->
