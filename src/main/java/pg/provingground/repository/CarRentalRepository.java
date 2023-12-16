@@ -6,10 +6,7 @@ import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-import pg.provingground.domain.Car;
-import pg.provingground.domain.CarRental;
-import pg.provingground.domain.CarType;
-import pg.provingground.domain.User;
+import pg.provingground.domain.*;
 import pg.provingground.dto.admin.CarRentalDto;
 import pg.provingground.dto.admin.CarRentalSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
@@ -40,6 +37,12 @@ public class CarRentalRepository {
     public List<CarRental> findByIds(List<Long> ids) {
         return em.createQuery("select c from CarRental c where c.id in :ids", CarRental.class)
                 .setParameter("ids", ids)
+                .getResultList();
+    }
+
+    public List<CarRental> findByTest(Test test) {
+        return em.createQuery("SELECT c FROM CarRental c WHERE c.test = :test", CarRental.class)
+                .setParameter("test", test)
                 .getResultList();
     }
 

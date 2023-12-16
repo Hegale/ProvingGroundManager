@@ -27,6 +27,8 @@ public class CarRental {
 
     private String returned;
 
+    private FileMetaData fileMetaData;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -67,6 +69,10 @@ public class CarRental {
         // 취소 로직을 아예 이력을 없애버리는 걸로 할지, 혹은 이르게 반납 완료된 걸로 할지는 고민해보기..
         this.returned = "Y";
         // 반납 이후 대기열에서 없애는 쪽으로 갈지 고민....
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
 }

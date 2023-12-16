@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarRental;
+import pg.provingground.domain.FileMetaData;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +23,10 @@ public class CarRentalHistory {
     private String carName;
 
     private String userName;
+
+    private String fileName;
+
+    private String filePath;
 
     private Long userId;
 
@@ -50,6 +55,16 @@ public class CarRentalHistory {
         this.carRentalId = carRentalId;
         this.carName = carName;
         this.startTime = startTime;
+    }
+
+    public CarRentalHistory(Long carRentalId, String carName, LocalDateTime startTime, FileMetaData fileMetaData) {
+        this.carRentalId = carRentalId;
+        this.carName = carName;
+        this.startTime = startTime;
+        if (fileMetaData != null) {
+            this.fileName = fileMetaData.getFileName();
+            this.filePath = fileMetaData.getFilePath();
+        }
     }
 
 }

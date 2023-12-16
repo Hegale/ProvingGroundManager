@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pg.provingground.domain.CarRental;
+import pg.provingground.domain.Test;
 import pg.provingground.domain.User;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
 import pg.provingground.dto.history.TestHistory;
+import pg.provingground.service.CarRentalService;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
@@ -37,10 +40,25 @@ public class TestController {
         return "test/test-history";
     }
 
-    @GetMapping("/test/{testId}/fix")
+    @GetMapping("/test/{testId}/result")
+    public String testResult(@PathVariable Long testId, Model model){
+
+        Test test = testService.getTest(testId);
+        List<CarRentalHistory> carRentalHistories = testService.getTestCarRental(testId);
+        for (CarRentalHistory car : carRentalHistories) {
+            System.out.println("차량 이름 : " + car.getCarName());
+        }
+
+        model.addAttribute("test", test);
+        model.addAttribute("carRentals", carRentalHistories);
+
+        return "test/test-result";
+    }
+
+    @GetMapping("/test/{testId}/edit")
     /** 특정 시험 내역을 수정 혹은 삭제, 해당 페이지로 이동 */
-    public String fixHistory(@PathVariable String testId) {
-        return "test/test-write"; // 수정 및 삭제 전용 페이지로 이동.
+    public String fixHistory(@PathVariable Long testId) {
+        return "test/test-edit"; // 수정 및 삭제 전용 페이지로 이동.
     }
 
     @GetMapping("/test/new")

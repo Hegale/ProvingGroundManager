@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +33,23 @@ public class TestService {
     private final GroundRentalRepository groundRentalRepository;
     private final CarRentalRepository carRentalRepository;
     private final TestRepository testRepository;
+
+    public Test getTest(Long testId) {
+        // TODO: 해당 유저가 아닐 시 접근 권한 없다는 Exception 발령
+        return testRepository.findOne(testId);
+    }
+
+    @Transactional
+    /** 특정 테스트의 CarRental들을 리턴 */
+    public List<CarRentalHistory> getTestCarRental(Long testId) {
+        Test test = testRepository.findOne(testId);
+        List<CarRental> carRentals = carRentalRepository.findByTest(test);
+
+        return carRentals.stream()
+                .map(carRental -> new CarRentalHistory(carRental.getCarRentalId(), carRental.getCar().getType().getName(), carRental.getStartTime(), carRental.getFileMetaData()))
+                .collect(Collectors.toList());
+
+    }
 
     /** user가 time에 대여했던 시험장 기록들을 불러오기 */
     public List<GroundRentalHistory> getUsersGroundList(User user, LocalDateTime dateTime) {
@@ -67,6 +85,14 @@ public class TestService {
         // 테스트를 생성 및 영속성 컨텍스트에 저장
         Test test = Test.createTest(testForm.getTitle(), testForm.getContents(), testForm.getPartners(), dateTime, user, carRentals, groundRental);
         testRepository.save(test);
+
+        System.out.println("왜안돼? : " + test.getCarRentals().get(0).getCarRentalId());
+
+        // 각 테스트를 carRental에 적용
+        for (CarRental carRental : carRentals) {
+            carRental.setTest(test);
+        }
+
         return test.getTestId();
     }
 
