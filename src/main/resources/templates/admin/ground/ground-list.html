@@ -55,7 +55,7 @@
                                 <td class="last-child juykim-cars" th:text="${ground.distance}"></td>
                                 <td class="last-child juykim-cars">
                                     <div style="display: flex; justify-content: center">
-                                        <a th:href="@{'/admin/ground/list/edit/' + ${ground.groundId}}">
+                                        <a th:href="@{'/admin/ground/' + ${ground.groundId} + '/edit'}">
                                             <button type="button"
                                                     class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                                                 수정
@@ -87,6 +87,14 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
+
+<script th:inline="javascript">
+    var errorMessage = /*[[${errorMessage}]]*/ null;
+    if (errorMessage && errorMessage !== 'default') {
+        alert(errorMessage);
+        window.location.href = '/originalPage';
+    }
+</script>
 
 <script src="../resources/js/setting.js"></script>
 <script src="../resources/js/plugin.js"></script>

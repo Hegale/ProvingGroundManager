@@ -51,6 +51,12 @@ public class GroundService {
         groundRepository.delete(ground);
     }
 
+    @Transactional
+    public void editGround(Long groundId, GroundForm groundForm) {
+        Ground ground = groundRepository.findOne(groundId);
+        ground.edit(groundForm);
+    }
+
     /** [관리자] 조건에 따라 시험장 예약 검색 */
     public List<GroundRentalDto> searchGroundRentalsByConditions(GroundRentalSearchForm searchForm) {
         List<GroundRental> groundRentals = groundRentalRepository.findByCriteria(searchForm);

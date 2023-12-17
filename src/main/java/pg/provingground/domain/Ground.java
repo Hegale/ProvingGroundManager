@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.geo.Point;
+import pg.provingground.dto.admin.GroundForm;
 
 import java.awt.*;
 
@@ -35,6 +36,27 @@ public class Ground {
         ground.car_maximum = car_maximum;
         ground.distance = distance;
         return ground;
+    }
+
+    public void edit(GroundForm groundForm) {
+        if (groundForm.getName() != null) {
+            this.name = groundForm.getName();
+        }
+        if (groundForm.getDescription() != null) {
+            this.description = groundForm.getDescription();
+        }
+        if (groundForm.getCar_maximum() != null) {
+            this.car_maximum = Integer.parseInt(groundForm.getCar_maximum());
+            if (car_maximum <= 0) {
+                throw new NumberFormatException("유효하지 않은 최대 차량 대수입니다.");
+            }
+        }
+        if (groundForm.getDistance() != null) {
+            this.distance = Integer.parseInt(groundForm.getDistance());
+            if (distance <= 0) {
+                throw new NumberFormatException("유효하지 않은 주행거리입니다.");
+            }
+        }
     }
 
 }

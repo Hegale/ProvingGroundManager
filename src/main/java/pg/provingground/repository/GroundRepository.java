@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Ground;
+import pg.provingground.dto.admin.GroundForm;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ public class GroundRepository {
         return em.createQuery("select g from Ground g", Ground.class).getResultList();
     }
 
-    @Transactional
     public void delete(Ground ground) {
         if (ground != null) {
             em.remove(ground);

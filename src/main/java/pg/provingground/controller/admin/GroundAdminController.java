@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.Ground;
 import pg.provingground.dto.admin.CarForm;
 import pg.provingground.dto.admin.GroundForm;
@@ -43,6 +44,29 @@ public class GroundAdminController {
     @PostMapping("/admin/ground/new")
     public String addGround(@ModelAttribute GroundForm groundForm) {
         groundService.addGround(groundForm);
+        return "redirect:/admin/ground/list";
+    }
+
+    @GetMapping("/admin/ground/{groundId}/edit")
+    public String editGroundPage(@PathVariable Long groundId, Model model) {
+        Ground ground = groundService.findOne(groundId);
+        GroundForm groundForm = new GroundForm(ground);
+
+        model.addAttribute("groundForm", groundForm);
+
+        return "admin/ground/ground-edit";
+    }
+
+    @PostMapping("/admin/ground/{groundId}/edit")
+    public String editGround(@ModelAttribute GroundForm groundForm, @PathVariable Long groundId,
+                             RedirectAttributes redirectAttributes, Model model) {
+
+        try {
+            groundService.editGround(groundId, groundForm);
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e);
+        }
+
         return "redirect:/admin/ground/list";
     }
 
