@@ -181,13 +181,11 @@ public class CarRentalRepository {
         if (StringUtils.hasText(searchForm.getUsername())) {
             predicates.add(cb.like(user.get("username"), "%" + searchForm.getUsername() + "%"));
         }
-        if (StringUtils.hasText(searchForm.getStartDate())) {
-            LocalDateTime startDate = LocalDateTime.parse(searchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            predicates.add(cb.greaterThanOrEqualTo(carRental.get("startTime"), startDate));
+        if (searchForm.getStartDate() != null) {
+            predicates.add(cb.greaterThanOrEqualTo(carRental.get("startTime"), searchForm.getStartDateTime()));
         }
-        if (StringUtils.hasText(searchForm.getEndDate())) {
-            LocalDateTime endDate = LocalDateTime.parse(searchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            predicates.add(cb.lessThanOrEqualTo(carRental.get("startTime"), endDate));
+        if (searchForm.getEndDate() != null) {
+            predicates.add(cb.lessThanOrEqualTo(carRental.get("startTime"), searchForm.getEndDateTime()));
         }
 
         return predicates;

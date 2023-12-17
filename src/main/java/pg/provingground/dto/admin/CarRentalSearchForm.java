@@ -22,6 +22,9 @@ public class CarRentalSearchForm {
     private String startDate;
     private String endDate;
 
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+
     private String returned;
 
     // === 유저로 검색 === //

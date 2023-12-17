@@ -61,6 +61,14 @@ public class CarRentalService {
 
     /** [관리자] 검색 조건에 따른 차량 대여 내역 반환 */
     public List<CarRentalDto> getRentalsByConditions(CarRentalSearchForm carRentalSearchForm) {
+
+        if (carRentalSearchForm.getStartDate() != null && carRentalSearchForm.getEndDate() != null) {
+            LocalDate start = LocalDate.parse(carRentalSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate end = LocalDate.parse(carRentalSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            carRentalSearchForm.setStartDateTime(LocalDateTime.of(start, LocalTime.MIN));
+            carRentalSearchForm.setEndDateTime(LocalDateTime.of(end, LocalTime.MAX));
+        }
+
         return carRentalRepository.searchCarRentals(carRentalSearchForm);
     }
 

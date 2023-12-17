@@ -38,7 +38,10 @@
                                     <input th:field="*{carNumber}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="차량번호로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
-                                    <input th:field="*{startDate}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="대여일로 검색" aria-label="내용">
+                                    <input type="hidden" th:field="*{startDate}" id="startDate">
+                                    <input type="hidden" th:field="*{endDate}" id="endDate">
+                                        <input name="dateRange" class="inputset-input form-control"
+                                               id="dateRange">
                                 </div>
                                 <div class="inputset"><!-- TODO: Y/N 토글로 수정 필요 -->
                                     <input th:field="*{returned}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="반납여부로 검색" aria-label="내용">
@@ -96,17 +99,17 @@
             </div>
         </div>
     </div>
-    <!-- [E]personal-seLPF6Qg10 -->
 </main>
 
 <div th:replace="fragments/footer :: footer" />
 
-<script src="../resources/js/setting.js"></script>
-<script src="../resources/js/plugin.js"></script>
-<script src="../resources/js/template.js"></script>
-<script src="../resources/js/common.js"></script>
-<script src="../resources/js/script.js"></script>
-<script src="../resources/js/jquery-ui.min.js"></script>
+<script src="/js/dateRangePicker.js"></script>
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
 
 </body>
 </html>
