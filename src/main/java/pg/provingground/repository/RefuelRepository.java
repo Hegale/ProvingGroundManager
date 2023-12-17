@@ -32,6 +32,24 @@ public class RefuelRepository {
         return em.createQuery("SELECT r FROM Refuel r", Refuel.class).getResultList();
     }
 
+    public List<Refuel> findAllByUser(User user) {
+        return em.createQuery("SELECT r FROM Refuel r WHERE r.user = :user", Refuel.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<Refuel> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate) {
+        return em.createQuery("SELECT r " +
+                                "FROM Refuel r " +
+                                "WHERE r.user = :user AND r.time BETWEEN :startDate AND :endDate " +
+                                "ORDER BY r.time DESC",
+                        Refuel.class)
+                .setParameter("user", user)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
     /** 특정 유저의 주유기록 검색 */
     public List<Refuel> findUserRefuel(Long userId) {
         return em.createQuery(

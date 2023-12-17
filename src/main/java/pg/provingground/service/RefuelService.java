@@ -3,20 +3,24 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pg.provingground.domain.Car;
-import pg.provingground.domain.Refuel;
-import pg.provingground.domain.Station;
-import pg.provingground.domain.User;
+import pg.provingground.domain.*;
 import pg.provingground.dto.admin.RefuelDto;
 import pg.provingground.dto.admin.RefuelSearchForm;
 import pg.provingground.dto.admin.StationForm;
+import pg.provingground.dto.form.DateSearchForm;
+import pg.provingground.dto.history.RefuelHistory;
+import pg.provingground.dto.history.TestHistory;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.RefuelRepository;
 import pg.provingground.repository.StationRepository;
 import pg.provingground.repository.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,8 +55,20 @@ public class RefuelService {
         return refuelRepository.findUserRefuel(userId);
     }
 
-    public List<Refuel> findAllRefuel() {
-        return refuelRepository.findAll();
+    public List<RefuelHistory> findRefuelHistory(User user, DateSearchForm dateSearchForm) {
+        List<Refuel> refuels;
+
+        if (dateSearchForm.getStartDate() == null || dateSearchForm.getEndDate() == null) {
+            refuels = refuelRepository.findAllByUser(user);
+        } else { // 날짜를 선택했을 경우
+            LocalDate start = LocalDate.parse(dateSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate end = LocalDate.parse(dateSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            refuels = refuelRepository.findAllByUserAndTimeInterval(user, LocalDateTime.of(start, LocalTime.MIN), LocalDateTime.of(end, LocalTime.MAX));
+        }
+
+        return refuels.stream()
+                .map(RefuelHistory::new)
+                .collect(Collectors.toList());
     }
 
     /** [관리자] 조건에 따른 주유 내역 검색 */

@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.Refuel;
 import pg.provingground.domain.Station;
+import pg.provingground.domain.User;
 import pg.provingground.dto.admin.CarDto;
+import pg.provingground.dto.form.DateSearchForm;
+import pg.provingground.dto.history.RefuelHistory;
 import pg.provingground.repository.StationRepository;
 import pg.provingground.service.CarService;
 import pg.provingground.service.CarTypeService;
 import pg.provingground.service.RefuelService;
+import pg.provingground.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +30,7 @@ public class RefuelController {
     private final CarService carService;
     private final StationRepository stationRepository;
     private final RefuelService refuelService;
+    private final UserService userService;
 
     @GetMapping("/refuel/new")
     /** 차종으로 차량 검색 */
@@ -88,14 +93,14 @@ public class RefuelController {
 
     @GetMapping("/refuel")
     /** 주유 내역 확인 */
-    public String fuelHistory(Model model) {
+    public String fuelHistory(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
         // 해당 유저의 주유기록 받아오기
         // TODO: Dto로 변환!
-        //List<Refuel> refuels = refuelService.findUserRefuel(1L); 이거 못읽어옴..왜??
-
-        List<Refuel> refuels = refuelService.findAllRefuel();
+        User user = userService.getLoginUserByUsername(auth.getName());
+        List<RefuelHistory> refuels = refuelService.findRefuelHistory(user, dateSearchForm);
 
         model.addAttribute("refuels", refuels);
+        model.addAttribute("dateSearchForm", dateSearchForm);
 
         return "refuel/fueling-history";
     }

@@ -22,9 +22,10 @@
             <div class="tableset-inner">
               <!-- 테이블 위에 작성 -->
               <div>
-                <h3 class="h3 juykim-history-h3">차량 대여 내역</h3>
+                <h3 class="h3 juykim-history-h3">주유 내역</h3>
               </div>
               <!-- 위의 검색란 시작-->
+              <form th:object="${dateSearchForm}" method="get">
               <table class="tableset-table table">
                 <colgroup>
                   <col>
@@ -37,52 +38,15 @@
                       <p class="p1">날짜 검색</p>
                     </th>
                     <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>날짜 선택</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
+                      <input type="hidden" th:field="*{startDate}" id="startDate">
+                      <input type="hidden" th:field="*{endDate}" id="endDate">
+                      <div class="inputset inputset-lg" style="width: 22rem;">
+                        <input name="dateRange" class="inputset-input form-control"
+                               id="dateRange">
                       </div>
                     </th>
                     <th scope="col">
-                      <div class="selectset selectset-lg">
-                        <button class="selectset-toggle btn" type="button">
-                          <span>날짜 선택</span>
-                        </button>
-                        <ul class="selectset-list">
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿1">
-                              <span>템플릿1</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿2">
-                              <span>템플릿2</span>
-                            </button>
-                          </li>
-                          <li class="selectset-item">
-                            <button class="selectset-link btn" type="button" data-value="템플릿3">
-                              <span>템플릿3</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
+                      <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
                     </th>
                     <th scope="col">
                     </th>
@@ -95,6 +59,7 @@
                   </tr>
                 </thead>
               </table>
+              </form>
               <!-- 위의 검색란 끝-->
               <table class="tableset-table table">
                 <!-- 아래 있을 col의 속성 미리지정하는부분?-->
@@ -120,10 +85,9 @@
                   <tr th:each="refuel : ${refuels}">
                     <td class="number" th:text="${refuel.refuelingId}">7</td>
                     <td>
-                      <!-- TODO: 성능 ?? DTO 고민! -->
-                      <p th:text="${refuel.car.type.name}">차량</p>
+                      <p th:text="${refuel.carName}">차량</p>
                     </td>
-                    <td class="last-child" th:text="${refuel.station.name}">주유구</td>
+                    <td class="last-child" th:text="${refuel.stationName}">주유구</td>
                     <td class="last-child" th:text="${refuel.time.toString()}">주유일시</td>
                     <td class="last-child" th:text="${#numbers.formatDecimal(refuel.amount / 1000, 1, 'COMMA', 0, 'POINT')}">주유량</td>
 
@@ -181,6 +145,7 @@
 
   <div th:replace="fragments/footer :: footer" />
   <!-- [E]opilsol-N3 -->
+  <script src="/js/dateRangePicker.js"></script>
   <script src="/js/setting.js"></script>
   <script src="/js/plugin.js"></script>
   <script src="/js/template.js"></script>
