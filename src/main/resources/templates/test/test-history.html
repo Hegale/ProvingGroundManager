@@ -25,6 +25,7 @@
               <h3 class="h3 juykim-history-h3">시험 내역</h3>
             </div>
             <!-- 위의 검색란 시작-->
+            <form th:object="${dateSearchForm}" method="get">
             <table class="tableset-table table">
               <colgroup>
                 <col>
@@ -37,54 +38,15 @@
                   <p class="p1">날짜 검색</p>
                 </th>
                 <th scope="col">
-                  <div class="selectset selectset-lg">
-                    <button class="selectset-toggle btn" type="button">
-                      <span>날짜 선택</span>
-                    </button>
-                    <ul class="selectset-list">
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿1">
-                          <span>템플릿1</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿2">
-                          <span>템플릿2</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿3">
-                          <span>템플릿3</span>
-                        </button>
-                      </li>
-                    </ul>
+                  <input type="hidden" th:field="*{startDate}" id="startDate">
+                  <input type="hidden" th:field="*{endDate}" id="endDate">
+                  <div class="inputset inputset-lg" style="width: 22rem;">
+                    <input name="dateRange" class="inputset-input form-control"
+                           id="dateRange">
                   </div>
                 </th>
                 <th scope="col">
-                  <div class="selectset selectset-lg">
-                    <button class="selectset-toggle btn" type="button">
-                      <span>날짜 선택</span>
-                    </button>
-                    <ul class="selectset-list">
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿1">
-                          <span>템플릿1</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿2">
-                          <span>템플릿2</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿3">
-                          <span>템플릿3</span>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </th>
-                <th scope="col">
+                  <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
                 </th>
                 <th scope="col">
                   <div class="inputset inputset-line inputset-lg">
@@ -150,6 +112,7 @@
               <!-- 목록 하나 끝-->
               </tbody>
             </table>
+            </form>
           </div>
         </div>
 
@@ -209,6 +172,7 @@
 </script>
 
 <!-- [E]opilsol-N3 -->
+<script src="/js/dateRangePicker.js"></script>
 <script src="/js/setting.js"></script>
 <script src="/js/plugin.js"></script>
 <script src="/js/template.js"></script>

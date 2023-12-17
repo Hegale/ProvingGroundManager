@@ -13,6 +13,7 @@ import pg.provingground.dto.admin.TestDto;
 import pg.provingground.dto.admin.TestSearchForm;
 import pg.provingground.dto.history.TestHistory;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +50,24 @@ public class TestRepository {
                 .getResultList();
     }
 
-    public List<TestHistory> findAllByUser(User user) {
+    public List<Test> findAllByUser(User user) {
         return em.createQuery(
-                "SELECT new pg.provingground.dto.history.TestHistory(" +
-                        "t.testId, t.dateTime, t.groundRental.ground.name, t.carCount, t.partners, t.title) " +
+                "SELECT t " +
                         "FROM Test t " +
-                        "WHERE t.user = :user", TestHistory.class)
+                        "WHERE t.user = :user", Test.class)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    public List<Test> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate) {
+        return em.createQuery("SELECT t " +
+                                "FROM Test t " +
+                                "WHERE t.user = :user AND t.dateTime BETWEEN :startDate AND :endDate " +
+                                "ORDER BY t.dateTime DESC",
+                        Test.class)
+                .setParameter("user", user)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .getResultList();
     }
 

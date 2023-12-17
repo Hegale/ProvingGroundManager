@@ -11,6 +11,7 @@ import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Test;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.TestDto;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
@@ -32,11 +33,11 @@ public class TestController {
     private final UserService userService;
 
     @GetMapping("/test")
-    // TODO: 시험일 등으로 검색하는 기능 추가. 관리자 기능 + 자기가 등록한 것만 볼 수 있게끔
-    public String testHistory(Model model, Authentication auth) {
+    public String testHistory(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
         User user = userService.getLoginUserByUsername(auth.getName());
-        List<TestHistory> tests = testService.getTestHistory(user);
+        List<TestHistory> tests = testService.getTestHistory(user, dateSearchForm);
 
+        model.addAttribute("dateSearchForm", dateSearchForm);
         model.addAttribute("tests", tests);
 
         return "test/test-history";

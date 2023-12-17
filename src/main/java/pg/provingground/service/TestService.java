@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pg.provingground.domain.*;
 import pg.provingground.dto.admin.TestDto;
 import pg.provingground.dto.admin.TestSearchForm;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
@@ -20,7 +21,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,8 +78,21 @@ public class TestService {
         return groundRentalRepository.findAllByUserAndTime(user, dateTime);
     }
 
-    public List<TestHistory> getTestHistory(User user) {
-        return testRepository.findAllByUser(user);
+    public List<TestHistory> getTestHistory(User user, DateSearchForm dateSearchForm) {
+        List<Test> tests;
+
+        if (dateSearchForm.getStartDate() == null || dateSearchForm.getEndDate() == null) {
+            tests = testRepository.findAllByUser(user);
+        } else { // 날짜를 선택했을 경우
+            LocalDate start = LocalDate.parse(dateSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate end = LocalDate.parse(dateSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            tests = testRepository.findAllByUserAndTimeInterval(user, LocalDateTime.of(start, LocalTime.MIN), LocalDateTime.of(end, LocalTime.MAX));
+        }
+
+        List<TestHistory> testHistories = tests.stream()
+                .map(TestHistory::new)
+                .collect(Collectors.toList());
+        return testHistories;
     }
 
     /** user가 time에 대여했던 차량 기록들을 볼러오기 */
