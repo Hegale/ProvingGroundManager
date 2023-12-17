@@ -44,7 +44,7 @@ public class TestRepository {
     public List<TestDto> findAll() {
         return em.createQuery(
                 "SELECT new pg.provingground.dto.admin.TestDto(" +
-                        "t.testId, t.dateTime, t.type, t.partners, t.title, t.groundRental.ground.name, t.user.username) " +
+                        "t.testId, t.dateTime, t.type, t.partners, t.title, t.contents, t.groundRental.ground.name, t.user.username) " +
                         "FROM Test t " +
                         "ORDER BY t.dateTime", TestDto.class)
                 .getResultList();

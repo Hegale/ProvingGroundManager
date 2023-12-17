@@ -39,9 +39,11 @@
                                            id="dateRange">
                                 </div>
 
+                                <!--
                                 <div class="inputset">
                                     <input th:field="${testSearchForm.type}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="시험 종류로 검색" aria-label="내용">
                                 </div>
+                                -->
                                 <div class="inputset">
                                     <input th:field="${testSearchForm.partners}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="협력사 이름으로 검색" aria-label="내용">
                                 </div>
@@ -66,7 +68,7 @@
                             <colgroup>
                                 <col>
                                 <col>
-                                <col>
+                                <!--<col>-->
                                 <col>
                                 <col>
                                 <col>
@@ -75,9 +77,8 @@
                             <thead class="thead-border-top" style="text-align:center;">
                             <tr>
                                 <th class="number" scope="col">시험 번호</th>
-                                <!-- 가로구분  -->
                                 <th scope="col">진행일시</th>
-                                <th scope="col">시험 종류</th>
+                                <!--<th scope="col">시험 종류</th>-->
                                 <th scope="col">협력사</th>
                                 <th scope="col">시험 제목</th>
                                 <th scope="col">주행시험장</th>
@@ -89,7 +90,7 @@
                             <tr th:each="test : ${tests}">
                                 <td class="admin-list number" th:text="${test.testId}">7</td>
                                 <td class="admin-list"><p th:text="${test.dateTime.toString()}">진행일시</p></td>
-                                <td class="admin-list"><p th:text="${test.type}">시험종류</p></td>
+                                <!--<td class="admin-list"><p th:text="${test.type}">시험종류</p></td>-->
                                 <td class="admin-list last-child" th:text="${test.partners}">협력사</td>
                                 <td class="admin-list last-child"><p th:text="${test.title}">시험제목</p></td>
                                 <td class="admin-list last-child" th:text="${test.groundName}">주행시험장</td>
