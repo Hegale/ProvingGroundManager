@@ -51,7 +51,7 @@
                                 <td class="last-child juykim-cars" th:text="${station.fuelType}"></td>
                                 <td class="last-child juykim-cars">
                                     <div style="display: flex; justify-content: center">
-                                        <a th:href="@{'/admin/station/list/edit/' + ${station.stationId}}">
+                                        <a th:href="@{'/admin/station/' + ${station.stationId} + '/edit'}">
                                             <button type="button"
                                                     class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                                                 수정

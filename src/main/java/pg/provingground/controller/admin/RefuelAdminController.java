@@ -2,6 +2,7 @@ package pg.provingground.controller.admin;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -65,6 +66,25 @@ public class RefuelAdminController {
     public String addStation(@ModelAttribute StationForm stationForm) {
         System.out.println("주유구이름 : " + stationForm.getName() + "타입 : " + stationForm.getFuelType());
         refuelService.addStation(stationForm);
+        return "redirect:/admin/station/list";
+    }
+
+    @GetMapping("/admin/station/{stationId}/edit")
+    public String editStationPage(@PathVariable Long stationId, Model model) {
+        Station station = stationRepository.findOne(stationId);
+        StationForm stationForm = new StationForm(station);
+
+        model.addAttribute("stationForm", stationForm);
+
+        return "admin/refuel/station-edit";
+    }
+
+    @PostMapping("/admin/station/{stationId}/edit")
+    @Transactional
+    public String editStation(@PathVariable Long stationId, @ModelAttribute StationForm stationForm) {
+        Station station = stationRepository.findOne(stationId);
+        station.edit(stationForm);
+
         return "redirect:/admin/station/list";
     }
 

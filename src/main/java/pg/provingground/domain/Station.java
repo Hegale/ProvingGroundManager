@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import pg.provingground.dto.admin.StationForm;
 
 @Entity
 @Getter @Setter
@@ -25,6 +26,15 @@ public class Station {
         station.name = name;
         station.fuelType = fuelType;
         return station;
+    }
+
+    public void edit(StationForm stationForm) {
+        if (stationForm.getName() != null) {
+            this.name = stationForm.getName();
+        }
+        if (stationForm.getFuelType() != null) {
+            this.fuelType = stationForm.getFuelType();
+        }
     }
 
 }
