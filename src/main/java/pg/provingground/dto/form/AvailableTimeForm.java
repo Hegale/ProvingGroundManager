@@ -1,4 +1,4 @@
-package pg.provingground.service;
+package pg.provingground.dto.form;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+// TODO: 삭제
 public class AvailableTimeForm {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

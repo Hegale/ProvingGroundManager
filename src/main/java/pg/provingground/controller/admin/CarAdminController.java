@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pg.provingground.controller.CarSearchForm;
+import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.domain.CarType;
 import pg.provingground.dto.admin.CarDto;
 import pg.provingground.dto.admin.CarForm;

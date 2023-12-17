@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.CarType;
-import pg.provingground.domain.Refuel;
 import pg.provingground.domain.Station;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.CarDto;
+import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.RefuelHistory;
 import pg.provingground.repository.StationRepository;
@@ -38,7 +38,6 @@ public class RefuelController {
         // 조건에 맞는 차종 가져오기
         List<CarType> types = carTypeService.findCarTypesByCondition(typeSearchForm);
         List<CarDto> cars = carService.findByCarType(types);
-        System.out.println("form result: " + typeSearchForm.type + " | " + typeSearchForm.engine + " | " + typeSearchForm.name);
 
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);
@@ -52,10 +51,6 @@ public class RefuelController {
         // 차량 번호로 검색
         List<CarDto> cars = carService.findByCarNumber(carNumber);
         CarSearchForm typeSearchForm = new CarSearchForm();
-        System.out.println("차량번호 : " + carNumber);
-        for (CarDto car : cars) {
-            System.out.println("차량 id : " + car.getCarId() + " | 차 : " + car.getName() + " | 차종 : " + car.getType());
-        }
 
         model.addAttribute("cars", cars);
         model.addAttribute("typeSearchForm", typeSearchForm);

@@ -3,7 +3,7 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pg.provingground.controller.CarSearchForm;
+import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.domain.CarType;
 import pg.provingground.repository.CarTypeRepository;
 

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.User;
+import pg.provingground.dto.form.CarRentalForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.exception.NoAvailableCarException;

@@ -1,4 +1,4 @@
-package pg.provingground.controller;
+package pg.provingground.dto.form;
 
 import lombok.Getter;
 import lombok.Setter;

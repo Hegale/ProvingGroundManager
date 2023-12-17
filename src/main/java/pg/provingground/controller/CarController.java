@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.CarType;
+import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.service.CarTypeService;
 
 import java.util.List;
@@ -33,7 +34,6 @@ public class CarController {
     @PostMapping("/car-rental/new")
     /** 차종으로 검색 */
     public String searchCarType(@ModelAttribute CarSearchForm searchForm, RedirectAttributes redirectAttributes) {
-        System.out.println("form result: " + searchForm.type + " | " + searchForm.engine + " | " + searchForm.name);
 
         // redirectAttributes.addAttribute(searchForm); redirect에 객체 자체를 넘기려 해서 문제 발생한듯함
         redirectAttributes.addAttribute("type", searchForm.getType());
