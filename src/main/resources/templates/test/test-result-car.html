@@ -30,40 +30,13 @@
               <h3 class="h3 juykim-history-h3">차량 주행 결과 확인</h3>
             </div>
 
-            <!-- 위의 검색란 시작-->
-            <!--
-            <table class="tableset-table table">
-              <colgroup>
-                <col>
-                <col>
-                <col>
-              </colgroup>
-              <thead class="thead-border-top">
-                <tr>
-                  <th scope="col">
-                    <div  style="display: flex;">
-                      <p class="p1">시험 번호 : </p>
-                      <p class="p1" th:text="${testId}" style="margin-left: 1rem;">번호</p>
-                    </div>
-                  </th>
-                  <th scope="col">
-                    <div  style="display: flex;">
-                      <p class="p1">시험 진행일 : </p>
-                      <p class="p1" th:text="${test.dateTime}" style="margin-left: 1rem;">진행일</p>
-                    </div>
-                  </th>
-                  <th scope="col">
-                    <div  style="display: flex;">
-                      <p class="p1">주행시험장 : </p>
-                      <p class="p1" th:text="${test.groundName}" style="margin-left: 1rem;">진행일</p>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-            </table>-->
-            <div style="width: 100%; display:flex; justify-content: center; margin-bottom: 3rem;">
-              <div id="map" style="width:70%; height:50rem;"></div>
+
+            <div style="width: 100%; display:flex; justify-content: space-between; margin-bottom: 3rem;">
+              <div id="map" style="width:85%; height:60rem;"></div>
+
+              <div id="carPathButtons" style="width:10%; display: flex; flex-direction: column; align-items: center;"></div>
             </div>
+
 
             <table class="tableset-table table">
               <colgroup>
@@ -147,29 +120,48 @@
             level: 4 // 지도의 확대 레벨
           };
 
-  /** 지도 유형에 맞는 폴리곤 데이터 */
   var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+  var colors = ["#0000FF"];// 다른 LineString에 대한 색상 배열
+  var polylines = []; // 폴리라인 저장을 위한 배열
+  var buttonContainer = document.getElementById('carPathButtons');// 생성된 버튼을 담을 컨테이너
   /** 해당 대여 차량의 경로 */
   $.getJSON("http://localhost:8080/geofiles/test.geojson", function(data) {
     var features = data.features;
     for (var i = 0, len = features.length; i < len; i++) {
       var geometry = features[i].geometry;
-      var properties = features[i].properties;
       if (geometry.type === 'MultiLineString') {
-        geometry.coordinates.forEach(function(line) {
+        geometry.coordinates.forEach(function(line, lineIndex) {
           var path = line.map(function(coords) {
             return new kakao.maps.LatLng(coords[1], coords[0]);
           });
-          //console.log(path);
           var polyline = new kakao.maps.Polyline({
-            path: path
+            path: path,
+            strokeWeight: 1,
+            strokeColor: colors[i % colors.length],
+            strokeOpacity: 0.7
           });
           polyline.setMap(map);
+          polylines.push(polyline);
+
+          // Create and append the button
+          var button = document.createElement("button");
+          button.textContent = "Line " + (i + 1);
+          button.className = "btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn juykim-car-path-button";
+          (function(index) {
+            button.addEventListener("click", function() {
+              polylines.forEach((pl, idx) => {
+                pl.setOptions(idx === index ? { strokeColor: '#FF0040', strokeWeight: 3 } : { strokeColor: '#0000FF', strokeWeight: 1 });
+              });
+            });
+          })(i);
+          buttonContainer.appendChild(button);
         });
       }
     }
   });
+
+
 
   /** 주행시험장 폴리곤 */
   $.getJSON("http://localhost:8080/geofiles/grounds/3_multi.geojson", function(data) {
