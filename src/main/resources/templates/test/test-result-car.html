@@ -149,28 +149,8 @@
 
   /** 지도 유형에 맞는 폴리곤 데이터 */
   var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-  $.getJSON("http://localhost:8080/geofiles/grounds/마른 노면 서킷.geojson", function(data) {
-    var features = data.features;
-    for (var i = 0; i < features.length; i++) {
-      var geometry = features[i].geometry;
-      if (geometry.type === 'MultiPolygon') {
-        geometry.coordinates.forEach(function(polygon) {
-          var paths = polygon.map(function(ring) {
-            return ring.map(function(coords) {
-              return new kakao.maps.LatLng(coords[1], coords[0]);
-            });
-          });
-          var polygon = new kakao.maps.Polygon({
-            paths: paths
-          });
-          polygon.setMap(map);
-        });
-      }
-    }
-  });
 
   /** 해당 대여 차량의 경로 */
-
   $.getJSON("http://localhost:8080/geofiles/test.geojson", function(data) {
     var features = data.features;
     for (var i = 0, len = features.length; i < len; i++) {
@@ -181,6 +161,7 @@
           var path = line.map(function(coords) {
             return new kakao.maps.LatLng(coords[1], coords[0]);
           });
+          //console.log(path);
           var polyline = new kakao.maps.Polyline({
             path: path
           });
@@ -188,6 +169,47 @@
         });
       }
     }
+  });
+
+  /** 주행시험장 폴리곤 */
+  $.getJSON("http://localhost:8080/geofiles/grounds/3_multi.geojson", function(data) {
+    var features = data.features;
+
+    var mainPolygonPath, holePaths = [];
+
+    for (var i = 0, len = features.length; i < len; i++) {
+      var geometry = features[i].geometry;
+
+      if (geometry.type === 'MultiPolygon') {
+        geometry.coordinates.forEach(function(polygon) {
+          var path = polygon[0].map(function(coords) {
+            return new kakao.maps.LatLng(coords[1], coords[0]);
+          });
+
+          if (i === 0) { // 첫 번째 feature는 메인 폴리곤
+            mainPolygonPath = path;
+          } else { // 나머지 feature들은 구멍
+            holePaths.push(path);
+          }
+        });
+      }
+    }
+
+    console.log("========main========")
+    console.log(mainPolygonPath);
+    console.log("========hole========")
+    console.log(holePaths);
+    // 폴리곤 생성 및 지도에 추가
+    var polygon = new kakao.maps.Polygon({
+      map: map,
+      path: [mainPolygonPath, ...holePaths],
+      // 스타일 속성 설정
+      strokeWeight: 2,
+      strokeColor: '#b26bb2',
+      strokeOpacity: 0,
+      fillColor: '#f9f',
+      fillOpacity: 0.4
+    });
   });
 
 
