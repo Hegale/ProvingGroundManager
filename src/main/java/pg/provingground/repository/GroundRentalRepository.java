@@ -42,6 +42,19 @@ public class GroundRentalRepository {
                 .getResultList();
     }
 
+    public List<GroundRental> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate) {
+        return em.createQuery(
+                        "SELECT g " +
+                                "FROM GroundRental g " +
+                                "WHERE g.user = :user AND g.startTime BETWEEN :startDate AND :endDate " +
+                                "ORDER BY g.startTime DESC",
+                        GroundRental.class)
+                .setParameter("user", user)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
     public List<GroundRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime) {
         return em.createQuery(
                         "select new pg.provingground.dto.history.GroundRentalHistory(g.groundRentalId, g.ground.name, g.startTime) " +

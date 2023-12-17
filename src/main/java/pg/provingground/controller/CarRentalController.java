@@ -37,9 +37,8 @@ public class CarRentalController {
 
         model.addAttribute("rentals", rentals);
         model.addAttribute("dateSearchForm", dateSearchForm);
-        //model.addAttribute("errorMessage", "");
 
-        return "car/car-rent-history";
+        return "car/car-rental-history";
     }
 
     @PostMapping("/car-rental/{carRentalId}/return")

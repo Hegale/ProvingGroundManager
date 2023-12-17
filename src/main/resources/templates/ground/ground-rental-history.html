@@ -23,6 +23,7 @@
               <h3 class="h3 juykim-history-h3">시험장 예약 내역</h3>
             </div>
             <!-- 위의 검색란 시작-->
+            <form th:object="${dateSearchForm}" method="get">
             <table class="tableset-table table">
               <colgroup>
                 <col>
@@ -35,52 +36,15 @@
                   <p class="p1">날짜 검색</p>
                 </th>
                 <th scope="col">
-                  <div class="selectset selectset-lg">
-                    <button class="selectset-toggle btn" type="button">
-                      <span>날짜 선택</span>
-                    </button>
-                    <ul class="selectset-list">
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿1">
-                          <span>템플릿1</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿2">
-                          <span>템플릿2</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿3">
-                          <span>템플릿3</span>
-                        </button>
-                      </li>
-                    </ul>
+                  <input type="hidden" th:field="*{startDate}" id="startDate">
+                  <input type="hidden" th:field="*{endDate}" id="endDate">
+                  <div class="inputset inputset-lg" style="width: 22rem;">
+                    <input name="dateRange" class="inputset-input form-control"
+                           id="dateRange">
                   </div>
                 </th>
                 <th scope="col">
-                  <div class="selectset selectset-lg">
-                    <button class="selectset-toggle btn" type="button">
-                      <span>날짜 선택</span>
-                    </button>
-                    <ul class="selectset-list">
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿1">
-                          <span>템플릿1</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿2">
-                          <span>템플릿2</span>
-                        </button>
-                      </li>
-                      <li class="selectset-item">
-                        <button class="selectset-link btn" type="button" data-value="템플릿3">
-                          <span>템플릿3</span>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
                 </th>
                 <th scope="col">
                 </th>
@@ -93,6 +57,7 @@
               </tr>
               </thead>
             </table>
+            </form>
             <!-- 위의 검색란 끝-->
             <table class="tableset-table table">
               <!-- 아래 있을 col의 속성 미리지정하는부분?-->
@@ -195,6 +160,42 @@
     document.body.appendChild(form);
     form.submit();
   }
+
+  /*<![CDATA[*/
+  var errorMessage = /*[[${errorMessage}]]*/ 'default';
+  if (errorMessage && errorMessage !== 'default') {
+    alert(errorMessage);
+  }
+  /*]]>*/
+
+  // 현재 날짜와 다음 달의 날짜를 계산
+  var start = moment().subtract(1, 'month').startOf('month'); // 지난 달의 첫째 날
+  var end = moment().endOf('month'); // 이번 달의 마지막 날
+
+  $(function(){
+    // 폼에서 날짜 값 읽기
+    var storedStartDate = $('#startDate').val();
+    var storedEndDate = $('#endDate').val();
+
+    // 저장된 값이 있으면 사용하고, 없으면 기본값 설정
+    var start = storedStartDate ? moment(storedStartDate) : moment().subtract(1, 'month').startOf('month');
+    var end = storedEndDate ? moment(storedEndDate) : moment().endOf('month');
+
+    // Date Range Picker 초기화
+    $('#dateRange').daterangepicker({
+      locale: { format: 'YYYY-MM-DD' },
+      startDate: start,
+      endDate: end
+    }, function(start, end, label) {
+      $('#startDate').val(start.format('YYYY-MM-DD'));
+      $('#endDate').val(end.format('YYYY-MM-DD'));
+    });
+
+    // 폼 필드에 초기 날짜 설정
+    if (!storedStartDate) $('#startDate').val(start.format('YYYY-MM-DD'));
+    if (!storedEndDate) $('#endDate').val(end.format('YYYY-MM-DD'));
+  });
+
 </script>
 
 <!-- [E]opilsol-N3 -->

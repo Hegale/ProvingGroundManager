@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.User;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.GroundRentalService;
@@ -30,10 +31,12 @@ public class GroundRentalController {
 
     @GetMapping("/ground-rental")
     /** 시험장 대여 내역 */
-    public String list(Model model, Authentication auth) {
+    public String list(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
         User user = userService.getLoginUserByUsername(auth.getName());
-        List<GroundRentalHistory> rentals = groundRentalService.findRentalHistory(user);
+        List<GroundRentalHistory> rentals = groundRentalService.findRentalHistory(user, dateSearchForm);
+
         model.addAttribute("rentals", rentals);
+        model.addAttribute("dateSearchForm", dateSearchForm);
         return "ground/ground-rental-history";
     }
 
@@ -82,6 +85,8 @@ public class GroundRentalController {
 
         return "redirect:/ground-rental";
     }
+
+
 
 
 

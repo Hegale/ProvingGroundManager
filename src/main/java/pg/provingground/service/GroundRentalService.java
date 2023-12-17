@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
+import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.repository.GroundRentalRepository;
 import pg.provingground.repository.GroundRepository;
@@ -14,6 +15,7 @@ import pg.provingground.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -52,8 +54,17 @@ public class GroundRentalService {
     }
 
     /** 한 유저의 시험장 예약 내역을 dto로 변환하여 반환 */
-    public List<GroundRentalHistory> findRentalHistory(User user) {
-        List<GroundRental> rentals = groundRentalRepository.findAllByUser(user);
+    public List<GroundRentalHistory> findRentalHistory(User user, DateSearchForm dateSearchForm) {
+        List<GroundRental> rentals;
+
+        if (dateSearchForm.getStartDate() == null || dateSearchForm.getEndDate() == null) {
+            rentals = groundRentalRepository.findAllByUser(user);
+        } else { // 날짜를 선택했을 경우
+            LocalDate start = LocalDate.parse(dateSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate end = LocalDate.parse(dateSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            rentals = groundRentalRepository.findAllByUserAndTimeInterval(user, LocalDateTime.of(start, LocalTime.MIN), LocalDateTime.of(end, LocalTime.MAX));
+        }
+
         List<GroundRentalHistory> history = rentals.stream()
                 .map(GroundRentalHistory::new)
                 .collect(Collectors.toList());
