@@ -37,64 +37,7 @@
                     <div>
                       <div class="datepicker rental-datepicker"></div>
                     </div>
-                    <script th:inline="javascript">
-                      $(function(){
 
-                        var availableTimes = [[${availableTimes}]];
-                        var pathArray = window.location.pathname.split('/');
-                        var groundId = pathArray[pathArray.length - 1];  // URL의 마지막 부분이 carTypeId
-
-
-                        $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
-
-                        $('.datepicker').datepicker(
-                                {
-                                  dateFormat: 'yy-mm-dd',
-                                  maxDate: '30',
-                                  minDate: '1',
-                                  onSelect: function(dateText, inst) {
-                                    // 모든 날짜 셀의 배경색을 초기화
-                                    $('.ui-state-active').css('backgroundColor', '');
-
-                                    // 선택한 날짜 셀의 배경색을 변경
-                                    setTimeout(function() {
-                                      $('.ui-state-active').css('backgroundColor', '#D8D8D8');
-                                    }, 0);
-
-                                    $.ajax({
-                                      url: '/ground-rental/select/' + groundId + '/date', // 서버에 요청할 URL
-                                      type: 'get',
-                                      data: { date: dateText }, // 선택된 날짜를 서버에 전달
-                                      success: function(data) {
-                                        // 서버로부터 받은 정보를 html에 표시
-                                        var timesHtml = data.availableTimes.map(function(time) {
-                                          return '<label class="time-btn">' +
-                                                  '<input type="radio" name="selectedTime" value="' + time + '">' +
-                                                  '<span>' + time + ':00</span>' +
-                                                  '</label>';
-                                        }).join('');
-
-                                        $('.juykim-timebtnbox').html(timesHtml);
-                                        // ...
-                                      },
-
-                                      error: function(error) {
-                                        console.error(error);
-                                      }
-                                    });
-
-                                    // 선택한 날짜를 페이지에 출력
-                                    $('#selectedDateDisplay').text(dateText);
-
-                                    $("#selectedDate").val(dateText);
-
-                                    $("#userDate").val(dateText);
-
-                                  }
-                                });
-
-                      })
-                    </script>
                   </div>
                 </div>
               </div>
@@ -108,48 +51,48 @@
                   <input type="hidden" id="selectedDate" name="selectedDate" th:value="${form.selectedDate}">
 
                   <div class="juykim-timebtnbox">
-                    <!-- 테스트 코드 시작-->
-                    <!--
-
-                    <div th:each="availableTime : ${availableTimes}" th:if="${availableTime.date eq form.userDate}">
-                      해당 객체의 시간 출력
-                      <p th:each="time : ${availableTime.times}" th:text="${time}"></p>
-                    </div>
-                  -->
-
-
-                    <label class="time-btn">
-                      <input type="radio" th:field="*{selectedTime}" value="10">
-                      <span>10:00</span>
-                    </label>
-                    <label class="time-btn">
-                      <input type="radio" th:field="*{selectedTime}" value="12">
-                      <span>12:00</span>
-                    </label>
-                    <label class="time-btn">
-                      <input type="radio" th:field="*{selectedTime}" value="14">
-                      <span>14:00</span>
-                    </label>
-                    <label class="time-btn">
-                      <input type="radio" th:field="*{selectedTime}" value="16">
-                      <span>16:00</span>
-                    </label>
-                    <label class="time-btn">
-                      <input type="radio" th:field="*{selectedTime}" value="18">
-                      <span>18:00</span>
-                    </label>
 
                   </div>
                 </div>
+
+
                 <div class="juykim-weatherbox">
+                  <div class="juykim-weather-day">
+                    <div class="juykim-weather-inner">
+                      <img class="morningIcon" />
+                    </div>
+                    <div class="juykim-weather-inner">
+                      <div class="morningTemp">
+                      </div>
+                      <div class="morningDesc">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="juykim-weather-day">
+                    <div class="juykim-weather-icon">
+                      <img class="afternoonIcon" />
+                    </div>
+                    <div class="juykim-weather-icon">
+                      <div class="afternoonTemp">
+                      </div>
+                      <div class="afternoonDesc">
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
+
                 <div class="juykim-date-confirm">
                   <div class="juykim-rental-in-wrapper">
-                    <p class="p1" style="text-align: right;">선택 차량<br></p>
-                    <p class="p1">더 뉴 아반떼 N<br></p>
+                    <!--
+                    <p class="p1" style="text-align: right;">선택 시험장<br></p>
+                    <p class="p1" th:text="${}">더 뉴 아반떼 N<br></p>
+                    -->
                   </div>
                   <!--  아래 버튼 원래 button이었던걸 submit으로 바꿈 -->
-                  <button type="submit" class="btnset btnset-lg btnset-mono btnset-line">대여하기</button>
+                  <button type="submit" class="btnset btnset-lg btnset-mono btnset-line">예약하기</button>
                 </div>
               </div>
               <!--end-->
@@ -165,6 +108,67 @@
 
   <div th:replace="fragments/footer :: footer" />
 
+<script th:inline="javascript">
+  $(function(){
+
+    var availableTimes = [[${availableTimes}]];
+    var pathArray = window.location.pathname.split('/');
+    var groundId = pathArray[pathArray.length - 1];  // URL의 마지막 부분이 carTypeId
+
+
+    $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+
+    $('.datepicker').datepicker(
+            {
+              dateFormat: 'yy-mm-dd',
+              maxDate: '30',
+              minDate: '1',
+              onSelect: function(dateText, inst) {
+                // 모든 날짜 셀의 배경색을 초기화
+                $('.ui-state-active').css('backgroundColor', '');
+
+                // 선택한 날짜 셀의 배경색을 변경
+                setTimeout(function() {
+                  $('.ui-state-active').css('backgroundColor', '#D8D8D8');
+                }, 0);
+
+                // 날씨 받아오기
+                getWeather(36.64814165006173, 126.34361596924717, dateText);
+
+                $.ajax({
+                  url: '/ground-rental/select/' + groundId + '/date', // 서버에 요청할 URL
+                  type: 'get',
+                  data: { date: dateText }, // 선택된 날짜를 서버에 전달
+                  success: function(data) {
+                    // 서버로부터 받은 정보를 html에 표시
+                    var timesHtml = data.availableTimes.map(function(time) {
+                      return '<label class="time-btn">' +
+                              '<input type="radio" name="selectedTime" value="' + time + '">' +
+                              '<span>' + time + ':00</span>' +
+                              '</label>';
+                    }).join('');
+
+                    $('.juykim-timebtnbox').html(timesHtml);
+                    // ...
+                  },
+
+                  error: function(error) {
+                    console.error(error);
+                  }
+                });
+
+                // 선택한 날짜를 페이지에 출력
+                $('#selectedDateDisplay').text(dateText);
+
+                $("#selectedDate").val(dateText);
+
+              }
+            });
+
+  })
+</script>
+
+  <script src="/js/weather.js"></script>
   <script src="/js/setting.js"></script>
   <script src="/js/plugin.js"></script>
   <script src="/js/template.js"></script>
