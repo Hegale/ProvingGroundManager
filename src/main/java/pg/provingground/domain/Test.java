@@ -3,6 +3,7 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import pg.provingground.dto.admin.TestDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,6 +66,18 @@ public class Test {
         test.carCount = carRentals.size();
         test.groundRental = groundRental;
         return test;
+    }
+
+    public void edit(TestDto testDto) {
+        if (testDto.getPartners() != null) {
+            this.partners = testDto.getPartners();
+        }
+        if (testDto.getTitle() != null) {
+            this.title = testDto.getTitle();
+        }
+        if (testDto.getContents() != null) {
+            this.contents = testDto.getContents();
+        }
     }
 
     public void setFileMetaData(FileMetaData metaData) {

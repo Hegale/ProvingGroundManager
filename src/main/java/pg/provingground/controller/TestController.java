@@ -82,12 +82,34 @@ public class TestController {
 
     @GetMapping("/test/{testId}/edit")
     /** 특정 시험 내역을 수정 혹은 삭제, 해당 페이지로 이동 */
-    public String fixHistory(@PathVariable Long testId) {
+    public String editTest(@PathVariable Long testId, Model model) {
+        TestDto test = testService.getTest(testId);
+
+        model.addAttribute("test", test);
+
         return "test/test-edit"; // 수정 및 삭제 전용 페이지로 이동.
     }
 
+    @PostMapping("/test/{testId}/edit")
+    public String editTest(@PathVariable Long testId, @ModelAttribute TestDto testDto,
+                           @RequestParam(value = "files", required = false) MultipartFile file) {
+        testService.edit(testDto);
+        if (file != null) {
+            testService.processFile(file, testId);
+        }
+
+        return "redirect:/test";
+    }
+
+    @DeleteMapping("/test/{testId}/edit")
+    /** 시험 내역 삭제 삭제 */
+    public String groundDelete(@PathVariable Long testId) {
+        testService.delete(testId); // 예외 캐치
+        return "redirect:/test";
+    }
+
     @GetMapping("/test/new")
-    // 시도
+    /** 새로운 시험 내역 작성 */
     public String newTest(@ModelAttribute TestForm testForm, Model model, Authentication auth) {
 
         User user = userService.getLoginUserByUsername(auth.getName());

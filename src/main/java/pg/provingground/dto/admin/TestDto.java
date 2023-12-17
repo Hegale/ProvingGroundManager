@@ -16,22 +16,25 @@ public class TestDto {
 
     private LocalDateTime dateTime;
 
-    private String type; // 시험종류
+    //private String type; // 시험종류
 
     private String partners; // 별도의 partner를 두어 여러 협력사를 관리하는 것 고려하기
 
     private String title;
 
+    private String contents;
+
     private String groundName;
 
     private String username;
 
-    public TestDto(Long testId, LocalDateTime dateTime, String type, String partners, String title, String groundName, String username) {
+    public TestDto(Long testId, LocalDateTime dateTime, String type, String partners, String title, String contents, String groundName, String username) {
         this.testId = testId;
         this.dateTime = dateTime;
-        this.type = type;
+        //this.type = type;
         this.partners = partners;
         this.title = title;
+        this.contents = contents;
         this.groundName = groundName;
         this.username = username;
     }

@@ -29,7 +29,7 @@
             <div class="tableset-inner">
 
               <!--  enctype="multipart/form-data" 옵션 삭제 -->
-              <form id="myForm" th:object="${testForm}" action="/test/new" method="post">
+              <form id="myForm" th:object="${test}" method="post">
 
 
               <table class="tableset-table table">
@@ -42,57 +42,10 @@
                 <tbody>
                 <tr>
                   <th>
-                    <span class="req label">시험 진행일</span>
+                    <span class="req label">시험 진행일시</span>
                   </th>
                   <td colspan="3" style="display: flex; justify-content: space-between;">
-
-                    <!-- 날짜 선택 -->
-                    <div class="inputset inputset-lg" style="width: 22rem;">
-                      <input th:field="*{testDate}" class="datepicker inputset-input form-control"
-                             id="selectedDate" name="testDate"
-                             th:attr="placeholder=${testDate != null && !testDate.isEmpty() ? testDate : '날짜 선택'}"
-                             aria-label="내용">
-                      <!--<input type="hidden" id="selectedDate" name="selectedDate" th:value="${testForm.testDate}">-->
-                    </div>
-
-                    <!-- 시간 선택 -->
-                    <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
-                      <button class="selectset-toggle btn" type="button">
-                        <span>시간을 선택하세요</span>
-                      </button>
-                      <input type="hidden" id="hiddenTime" th:field="*{testTime}" />
-                      <ul class="selectset-list">
-                        <li class="selectset-item">
-                          <button class="time-select selectset-link time-select btn" type="button">
-                            <span>10:00</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="time-select selectset-link btn" type="button">
-                            <span>12:00</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="time-select selectset-link btn" type="button">
-                            <span>14:00</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="time-select selectset-link btn" type="button">
-                            <span>16:00</span>
-                          </button>
-                        </li>
-                        <li class="selectset-item">
-                          <button class="time-select selectset-link btn" type="button">
-                            <span>18:00</span>
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <!-- name="dateSearch" 삭제함 -->
-                    <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
-
+                    <p th:text="*{dateTime.toString()}"></p>
                   </td>
                   <td></td>
 
@@ -102,37 +55,7 @@
                     <label class="req label">주행시험장</label>
                   </th>
                   <td>
-                    <div class="selectset selectset-lg">
-                      <input type="hidden" id="hiddenGround" th:field="*{groundRentalId}" />
-                      <button class="selectset-toggle btn" type="button">
-                        <span>시험장을 선택하세요</span>
-                      </button>
-                      <ul class="selectset-list">
-                        <li class="selectset-item" th:each="ground : ${grounds}">
-                          <button class="ground-select selectset-link btn" type="button" th:ground-value="${ground.groundName}" th:ground-rental-id="${ground.groundRentalId}">
-                            <span th:text="${ground.groundName}">시험장 이름</span>
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                  <th>
-                    <label class="req label" for="Company">대여차량<br></label>
-                  </th>
-                  <td>
-                    <div class="selectset selectset-lg">
-                      <button class="juykim-car-select selectset-toggle btn" type="button">
-                        <span>템플릿을 선택하세요</span>
-                      </button>
-                      <ul class="selectset-list">
-                        <li class="selectset-item" th:each="car : ${cars}">
-                          <button class="car-select selectset-link btn" type="button" th:data-value="${car.carName}" th:data-rental-id="${car.carRentalId}">
-                            <span th:text="${car.carName}">차량 이름</span>
-                          </button>
-                        </li>
-                      </ul>
-                      <input type="hidden" id="carRentalIds" name="carRentalIds" value="" />
-                    </div>
+                    <p th:text="*{groundName}"></p>
                   </td>
                 </tr>
                 <tr>
@@ -141,25 +64,7 @@
                   </th>
                   <td class="d-flex justify-content-start align-items-center" colspan="3">
                     <div class="inputset col-4">
-                      <input type="text" th:field="*{partners}" class="inputset-input form-control" id="Email" aria-label="이메일">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    <label class="label" for="Tel">결과물</label>
-                  </th>
-                  <td>
-                    <div class="inputset">
-                      <input type="text" class="inputset-input form-control" id="Tel" placeholder="- 없이 번호만 입력해주세요." aria-label="연락처">
-                    </div>
-                  </td>
-                  <th>
-                    <label class="label" for="subTel">결과 경로</label>
-                  </th>
-                  <td>
-                    <div class="inputset">
-                      <input type="text" class="inputset-input form-control" id="subTel" placeholder="- 없이 번호만 입력해주세요" aria-label="추가연락처">
+                      <input type="text" th:field="*{partners}" class="inputset-input form-control" th:placeholder="*{partners}">
                     </div>
                   </td>
                 </tr>
@@ -169,7 +74,7 @@
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <input type="text" th:field="*{title}" class="inputset-input form-control" id="Title" aria-label="제목">
+                      <input type="text" th:field="*{title}" class="inputset-input form-control" th:placeholder="*{title}">
                     </div>
                   </td>
                 </tr>
@@ -179,7 +84,7 @@
                   </th>
                   <td colspan="3">
                     <div class="inputset">
-                      <textarea th:field="*{contents}" class="inputset-input form-control textarea" id="Inquiry" aria-label="문의내용"></textarea>
+                      <textarea th:field="*{contents}" class="inputset-input form-control textarea" th:placeholder="*{contents}"></textarea>
                     </div>
                   </td>
                 </tr>
@@ -205,10 +110,8 @@
                 </tr>
                 <tr>
                   <td style="border:none; display: flex; justify-content: right; align-items: right;">
-                    <a href="/">
-                      <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">작성 취소</button>
-                    </a>
-                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 작성</button>
+                    <button type="button" id="deleteButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 삭제</button>
+                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">수정</button>
                   </td>
                 </tr>
                 </tbody>
@@ -227,84 +130,18 @@
   <div th:replace="fragments/footer :: footer" />
   <script th:inline="javascript">
 
-    document.getElementById('postButton').addEventListener('click', function (event) {
-      event.preventDefault();
-      var form = document.getElementById('myForm');
-      form.method = 'post';
-      form.action = '/test/new';  // POST 요청의 목적지
-      form.submit();
-    });
-
-    document.getElementById('getButton').addEventListener('click', function (event) {
-      event.preventDefault();
-      var form = document.getElementById('myForm');
-      form.method = 'get';
-      form.action = '/test/new';  // GET 요청의 목적지
-      form.submit();
-    });
-
     $(function(){
 
-      $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
 
-      $('.datepicker').datepicker(
-              {
+      /*<![CDATA[*/
+      var testId = /*[[${testId}]]*/ 'default';
+      /*]]>*/
 
-                onSelect: function(dateText, inst) {
-                  // 모든 날짜 셀의 배경색을 초기화
-                  $('.ui-state-active').css('backgroundColor', '');
-
-                  // 선택한 날짜 셀의 배경색을 변경
-                  setTimeout(function() {
-                    $('.ui-state-active').css('backgroundColor', '#D8D8D8');
-                  }, 0);
-
-
-                  // 선택한 날짜를 페이지에 출력
-                  $('#selectedDateDisplay').text(dateText);
-
-                  $("#selectedDate").val(dateText);
-                }
-              });
-
-      $(document).ready(function () {
-        $('.time-select').click(function() {
-          // 선택한 시간을 텍스트로 가져옴
-          var testTime = $(this).text().trim();
-          // 선택한 시간을 숨겨진 입력 필드에 설정
-          $('#hiddenTime').val(testTime);
-        })
-
-        $('.ground-select').click(function() {
-              // 선택한 시간을 텍스트로 가져옴
-              var groundRentalId = $(this).attr("ground-rental-id");
-              // 선택한 시간을 숨겨진 입력 필드에 설정
-              $('#hiddenGround').val(groundRentalId);
-        })
-
-        // 차량 선택
-        var selectedItems = [];
-        $(".car-select").click(function () {
-          var carName = $(this).attr("data-value");
-          var carRentalId = $(this).attr("data-rental-id");  // 'data-rental-id'는 carRentalId 값을 가진 data-* 속성이어야 합니다.
-          var selectedItemsForThisCar = selectedItems.filter(item => item.carRentalId === carRentalId);
-
-          if (selectedItemsForThisCar.length > 0) {
-            // 이미 선택된 항목이면 배열에서 제거
-            selectedItems = selectedItems.filter(item => item.carRentalId !== carRentalId);
-            $(this).removeClass('selected');
-            console.log("선택 취소 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
-          } else {
-            // 새로 선택된 항목이면 배열에 추가
-            selectedItems.push({ carName, carRentalId });
-            $(this).addClass('selected');
-            console.log("선택 : " + JSON.stringify(selectedItems)); // 확인 ㄱ
-          }
-
-          $("#carRentalIds").val(selectedItems.map(item => item.carRentalId).join(","));  // <input> 태그의 값 업데이트
-          var selectedCarNames = selectedItems.map(item => item.carName).join(", ");
-          $(".juykim-car-select span").text(selectedItems.length > 0 ? selectedItems.map(item => item.carName).join(", ") : "템플릿을 선택하세요");
-        });
+      document.getElementById('deleteButton').addEventListener('click', function() {
+        fetch("/test/" + testId + "/edit", {
+          method: 'DELETE'
+        }).then(response => response.json())
+                .then(data => console.log(data));
       });
 
     })

@@ -37,7 +37,22 @@ public class TestService {
     public TestDto getTest(Long testId) {
         // TODO: 해당 유저가 아닐 시 접근 권한 없다는 Exception 발령
         Test test = testRepository.findOne(testId);
-        return new TestDto(testId, test.getDateTime(), test.getType(), test.getPartners(), test.getTitle(), test.getGroundRental().getGround().getName(), test.getUser().getUsername());
+        return new TestDto(testId, test.getDateTime(), test.getType(), test.getPartners(), test.getTitle(),
+                test.getContents(), test.getGroundRental().getGround().getName(), test.getUser().getUsername());
+    }
+
+    @Transactional
+    /** 시험 삭제 */
+    public void delete(Long testId) {
+        Test test = testRepository.findOne(testId);
+        testRepository.delete(test);
+    }
+
+    @Transactional
+    /** 시험 수정 */
+    public void edit(TestDto testDto) {
+        Test test = testRepository.findOne(testDto.getTestId());
+        testRepository.edit(test, testDto);
     }
 
     @Transactional

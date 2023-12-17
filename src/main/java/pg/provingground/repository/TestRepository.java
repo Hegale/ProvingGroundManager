@@ -26,6 +26,16 @@ public class TestRepository {
         em.persist(test);
     }
 
+    public void delete(Test test) {
+        if (test != null) {
+            em.remove(test);
+        }
+    }
+
+    public void edit(Test test, TestDto testDto) {
+        test.edit(testDto);
+    }
+
     public Test findOne(Long testId) {
         return em.find(Test.class, testId);
     }
