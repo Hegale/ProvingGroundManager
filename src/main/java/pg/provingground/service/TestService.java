@@ -113,6 +113,13 @@ public class TestService {
         carRental.setFileMetaData(metaData); // 테스트에 파일 메타데이터를 저장
     }
 
+    /*
+    public void getCarPath(Long carRentalId){
+
+    }
+
+     */
+
     @Transactional
     public void processFile(MultipartFile file, Long testId) {
         FileMetaData fileMetaData = getFileMetaData(file, testId);

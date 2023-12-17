@@ -2,6 +2,7 @@ package pg.provingground.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +62,14 @@ public class TestController {
         }
         return "redirect:/test/{testId}/result";
     }
+
+    /*
+    @GetMapping("/{carRentalId}/path")
+    public String carRentalPathFile(@PathVariable Long carRentalId) {
+        testService.getCarPath(carRentalId);
+    }
+
+     */
 
     @GetMapping("/test/{testId}/{carRentalId}/result")
     public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
