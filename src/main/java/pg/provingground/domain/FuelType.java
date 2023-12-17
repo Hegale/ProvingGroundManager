@@ -1,5 +1,8 @@
 package pg.provingground.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum FuelType {
     GASOLINE("가솔린"),
     DIESEL("디젤"),
@@ -13,7 +16,4 @@ public enum FuelType {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

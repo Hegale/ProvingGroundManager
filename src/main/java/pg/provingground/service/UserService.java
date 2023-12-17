@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.UserDto;
+import pg.provingground.dto.admin.UserForm;
 import pg.provingground.dto.admin.UserSearchForm;
 import pg.provingground.dto.form.JoinForm;
 import pg.provingground.dto.form.LoginForm;
@@ -44,6 +45,15 @@ public class UserService {
             // 예외 처리: 유저가 존재하지 않는 경우
             throw new EntityNotFoundException("User not found with id " + userId);
         }
+    }
+
+    /**
+     * [관리자] 유저 정보 수정
+     */
+    @Transactional
+    public void edit(User user, UserForm userForm) {
+        userForm.setPassword(encoder.encode(userForm.getPassword()));
+        user.edit(userForm);
     }
 
     /**

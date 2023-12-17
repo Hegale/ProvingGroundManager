@@ -3,6 +3,7 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pg.provingground.dto.admin.UserForm;
 
 import java.util.List;
 
@@ -34,5 +35,20 @@ public class User {
         user.role = role;
         user.phoneNum = phoneNum;
         return user;
+    }
+
+    public void edit(UserForm userForm) {
+        if (userForm.getRole() != null) {
+            this.role = userForm.getRole();
+        }
+        if (userForm.getNickname() != null) {
+            this.nickname = userForm.getNickname();
+        }
+        if (userForm.getPassword() != null) {
+            this.password = userForm.getPassword(); // 암호화 잊지 말기
+        }
+        if (userForm.getPhoneNum() != null) {
+            this.phoneNum = userForm.getPhoneNum();
+        }
     }
 }

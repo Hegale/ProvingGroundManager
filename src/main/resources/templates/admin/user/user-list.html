@@ -81,13 +81,13 @@
                                 <td class="admin-list last-child" th:text="${user.phoneNum}">반납 여부</td>
                                 <td>
                                     <div style="display: flex; justify-content: center">
-                                        <a th:href="@{'/admin/user/list/edit/' + ${user.userId}}">
+                                        <a th:href="@{'/admin/user/' + ${user.userId} + '/edit'}">
                                             <button type="button"
                                                     class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                                                 수정
                                             </button>
                                         </a>
-                                        <form method="post" th:action="@{'/admin/user/list/' + ${user.userId}}">
+                                        <form method="post" th:action="@{'/admin/user/' + ${user.userId} + '/edit'}">
                                             <input type="hidden" name="_method" value="DELETE" />
 
                                             <button type="submit"
@@ -114,6 +114,15 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage && errorMessage !== 'default') {
+        alert(errorMessage);
+    }
+    /*]]>*/
+</script>
 
 <script src="../resources/js/setting.js"></script>
 <script src="../resources/js/plugin.js"></script>
