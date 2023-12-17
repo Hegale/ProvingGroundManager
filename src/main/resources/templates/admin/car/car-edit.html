@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<head th:replace="fragments/header :: header">
+  <title>페이지</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div th:replace="fragments/body_header :: body_header" />
+
+<div th:replace="fragments/admin-menu :: admin-menu" />
+
+<div style="height:20rem;"></div>
+
+<main class="th-layout-main ">
+  <!-- [S]personal-fILPV8V8Xp -->
+  <div class="opilsol-N27" id="" data-bid="vllPv8WPQi">
+    <div class="content-container">
+      <div class="contents-form container-md">
+        <div class="contents-form-top d-flex justify-content-between">
+          <h3 class="inputset-tit">차량 정보 수정</h3>
+          <span class="req">필수 선택입니다.</span>
+        </div>
+        <div class="contents-form tableset">
+          <div class="tableset-inner">
+
+            <!--  enctype="multipart/form-data" 옵션 삭제 -->
+            <form id="myForm" th:object="${carForm}" method="post">
+
+
+              <table class="tableset-table table">
+                <colgroup>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                  <th>
+                    <span class="label">차량 번호</span>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <input type="text" th:field="${carForm.number}" class="inputset-input form-control" th:placeholder="${carForm.number}" aria-label="차량번호" required>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <span class="label">잔여 연료량</span>
+                  </th>
+                  <td colspan="3">
+                    <div class="inputset">
+                      <input type="text" th:field="${carForm.fuelAmount}" class="inputset-input form-control" th:placeholder="${carForm.fuelAmount}" aria-label="차량번호" required>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border:none; display: flex; justify-content: right; align-items: right;">
+                    <a href="/admin/car/list">
+                      <button type="button" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">취소</button>
+                    </a>
+                    <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">차량 정보 수정</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [E]personal-fILPV8V8Xp -->
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+<script src="/js/weather.js"></script>
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+</body>

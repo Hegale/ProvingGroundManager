@@ -104,7 +104,7 @@
                                 <td class="last-child juykim-cars" th:text="${#numbers.formatDecimal(car.fuel / 1000, 1, 'COMMA', 0, 'POINT')}">잔여 연료</td>
                                 <td class="last-child juykim-cars">
                                     <div style="display: flex; justify-content: center">
-                                        <a th:href="@{'/admin/car/list/edit/' + ${car.carId}}">
+                                        <a th:href="@{'/admin/car/' + ${car.carId} + '/edit'}">
                                             <button type="button"
                                                     class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                                                 수정
@@ -137,12 +137,20 @@
 
 <div th:replace="fragments/footer :: footer" />
 
-<script src="../resources/js/setting.js"></script>
-<script src="../resources/js/plugin.js"></script>
-<script src="../resources/js/template.js"></script>
-<script src="../resources/js/common.js"></script>
-<script src="../resources/js/script.js"></script>
-<script src="../resources/js/jquery-ui.min.js"></script>
+<script th:inline="javascript">
+    var errorMessage = /*[[${errorMessage}]]*/ null;
+    if (errorMessage && errorMessage !== 'default') {
+        alert(errorMessage);
+        window.location.href = '/admin';
+    }
+</script>
+
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
 
 </body>
 </html>

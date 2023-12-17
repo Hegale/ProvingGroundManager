@@ -3,6 +3,7 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pg.provingground.dto.admin.CarForm;
 
 @Entity
 @Getter @Setter
@@ -31,6 +32,18 @@ public class Car {
         car.number = carNumber;
         car.fuel = 0L;
         return car;
+    }
+
+    public void edit(CarForm carForm) throws NumberFormatException {
+        if (carForm.getNumber() != null) {
+            this.number = carForm.getNumber();
+        }
+        if (carForm.getFuelAmount() != null) {
+            this.fuel = Long.parseLong(carForm.getFuelAmount());
+            if (fuel < 0 || fuel > this.type.getFuelCapacity()) {
+                throw new NumberFormatException("유효하지 않은 연료량입니다.");
+            }
+        }
     }
 
     public void fueling(Long amount) {

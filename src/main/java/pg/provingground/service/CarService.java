@@ -7,6 +7,7 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.Station;
 import pg.provingground.dto.admin.CarDto;
+import pg.provingground.dto.admin.CarForm;
 import pg.provingground.repository.CarRepository;
 import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.StationRepository;
@@ -22,6 +23,10 @@ public class CarService {
     private final CarRepository carRepository;
     private final CarTypeRepository carTypeRepository;
     private final StationRepository stationRepository;
+
+    public Car findCar(Long carId) {
+        return carRepository.findOne(carId);
+    }
 
     /** 차량번호를 통한 차량 검색. 입력이 아예 들어오지 않을 경우 모든 차량을 반환. */
     public List<CarDto> findByCarNumber(String number) {
@@ -96,5 +101,10 @@ public class CarService {
         carRepository.save(car);
     }
 
+    @Transactional
+    public void editCar(Long carId, CarForm carForm) {
+        Car car = carRepository.findOne(carId);
+        car.edit(carForm);
+    }
 
 }

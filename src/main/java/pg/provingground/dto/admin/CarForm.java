@@ -11,4 +11,13 @@ public class CarForm {
 
     private String number;
 
+    private String fuelAmount;
+
+    public CarForm() {}
+
+    public CarForm(String number, String fuelAmount) {
+        this.number = number;
+        this.fuelAmount = fuelAmount;
+    }
+
 }

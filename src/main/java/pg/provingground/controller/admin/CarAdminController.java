@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pg.provingground.domain.Car;
 import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.domain.CarType;
 import pg.provingground.dto.admin.CarDto;
@@ -39,7 +41,7 @@ public class CarAdminController {
     }
 
     @GetMapping("/admin/car/list/car-number")
-    /** 주유 전 차량 선택 */
+    /** 차량번호로 차량 검색 */
     public String carNumberListPage(@RequestParam String carNumber, Model model) {
         // 차량 번호로 검색
         List<CarDto> cars = carService.findByCarNumber(carNumber);
@@ -71,7 +73,8 @@ public class CarAdminController {
     }
 
     @GetMapping("/admin/car/select/{carTypeId}")
-    public String selectCarNumber(@PathVariable Long carTypeId, Model model) {
+    /** 차량 등록을 위한 차량번호 입력 */
+    public String addCarPage(@PathVariable Long carTypeId, Model model) {
         CarForm carForm = new CarForm();
 
         model.addAttribute("carForm", carForm);
@@ -83,6 +86,32 @@ public class CarAdminController {
     @PostMapping("/admin/car/select/{carTypeId}")
     public String createCar(@PathVariable Long carTypeId, @ModelAttribute CarForm carForm) {
         carService.createCar(carTypeId, carForm.getNumber());
+        return "redirect:/admin/car/list";
+    }
+
+    @GetMapping("/admin/car/{carId}/edit")
+    /** 차량 정보 수정 */
+    public String editCarPage(@PathVariable Long carId, Model model) {
+        Car car = carService.findCar(carId);
+        CarForm carForm = new CarForm(car.getNumber(), car.getFuel().toString());
+
+        model.addAttribute("carForm", carForm);
+
+        return "admin/car/car-edit";
+    }
+
+    @PostMapping("/admin/car/{carId}/edit")
+    public String editCar(@ModelAttribute CarForm carForm, @PathVariable Long carId,
+                          RedirectAttributes redirectAttributes, Model model) {
+        // TODO: 입력값 검증
+
+        model.addAttribute("carForm", carForm);
+        try {
+            carService.editCar(carId, carForm);
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "잘못된 형식의 입력입니다.");
+        }
+
         return "redirect:/admin/car/list";
     }
 
