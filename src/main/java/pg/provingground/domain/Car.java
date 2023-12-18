@@ -17,7 +17,7 @@ public class Car {
     @Column(name = "car_id")
     private Long carId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_type_id")
     private CarType type;
 

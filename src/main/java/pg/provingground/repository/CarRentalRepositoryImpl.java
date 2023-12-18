@@ -1,7 +1,6 @@
 package pg.provingground.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -24,6 +23,10 @@ import java.util.Map;
 public class CarRentalRepositoryImpl {
 
     private final EntityManager em;
+
+    public CarRental findOne(Long id) {
+        return em.find(CarRental.class, id);
+    }
 
     public List<CarRental> findByIds(List<Long> ids) {
         return em.createQuery("select c from CarRental c where c.id in :ids", CarRental.class)
@@ -70,28 +73,8 @@ public class CarRentalRepositoryImpl {
                 .getResultList();
     }
 
-    public CarRental findOne(Long id) {
-        return em.find(CarRental.class, id);
-    }
-
-    /** 차량 대여 내역의 대여자와 인자로 받은 유저가 일치하는지 확인 */
-    public boolean isUserMatched(Long carRentalId, Long userId) {
-        try {
-            em.createQuery(
-                            "SELECT r " +
-                                    "FROM CarRental r " +
-                                    "WHERE r.carRentalId = :carRentalId AND r.user.userId = :userId", CarRental.class)
-                    .setParameter("carRentalId", carRentalId)
-                    .setParameter("userId", userId)
-                    .getSingleResult();
-            return true;
-        } catch(NoResultException nre) {
-            return false;
-        }
-    }
-
     /** 해당 차종의 해당 날짜 예약건들을 <시간별, 예약건수> 로 반환 */
-    public Map<LocalTime, Long> findAvailableTimesCount(Long carTypeId, LocalDate date) {
+    public Map<LocalTime, Long> findRentalCountByTime(Long carTypeId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
 
@@ -117,7 +100,7 @@ public class CarRentalRepositoryImpl {
     }
 
     /** 해당 차종의 해당 시간대 예약 불가능 차량 반환 */
-    public List<Car> findUnavailableCars(Long carTypeId, LocalDateTime time) {
+    public List<Car> findNotReturned(Long carTypeId, LocalDateTime time) {
         return em.createQuery(
                 "SELECT c.car " +
                         "FROM CarRental c " +

@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
 public class CarRentalService {
 
     private final CarRentalRepository carRentalRepository;
-    private final CarTypeRepositoryImpl carTypeRepository;
+    private final CarTypeRepository carTypeRepository;
     private final UserRepository userRepository;
     private final UserService userService;
-    private final CarRepositoryImpl carRepository;
+    private final CarRepository carRepository;
 
     /** 차량 대여 */
     @Transactional
@@ -78,7 +78,7 @@ public class CarRentalService {
 
     /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
     public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
-        List<Car> unavailableCars = carRentalRepository.findUnavailableCars(carTypeId, time);
+        List<Car> unavailableCars = carRentalRepository.findNotReturned(carTypeId, time);
         List<Car> cars = carRepository.findByCarType(carTypeId);
         for (Car car : cars) {
             if (!unavailableCars.contains(car)) {
@@ -96,7 +96,7 @@ public class CarRentalService {
         // 해당 차종의 총 차량 대수
         long carCount = carRepository.countCarsPerCarType(carTypeId);
         // date 날짜의 carTypeId 차량들의 대여 현황
-        Map<LocalTime, Long> countByTime = carRentalRepository.findAvailableTimesCount(carTypeId, date);
+        Map<LocalTime, Long> countByTime = carRentalRepository.findRentalCountByTime(carTypeId, date);
 
         List<String> availableTimes = new ArrayList<>();
         LocalTime startTime = LocalTime.of(10, 0);
@@ -136,7 +136,8 @@ public class CarRentalService {
 
     /** 요청을 보낸 유저가 해당 차량 대여 기록의 주인인지 확인 */
     public boolean isOwnerMatched(Long carRentalId, User user) {
-        return carRentalRepository.isUserMatched(carRentalId, user.getUserId());
+        CarRental carRental = carRentalRepository.findOne(carRentalId);
+        return carRental.getUser().equals(user);
     }
 
     public CarType findType(Long carTypeId) {

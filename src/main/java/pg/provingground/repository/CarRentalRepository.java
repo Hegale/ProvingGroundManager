@@ -21,10 +21,10 @@ public interface CarRentalRepository extends JpaRepository<CarRental, Long> {
     public List<CarRental> findByTest(Test test);
     List<CarRental> findAllByUser(User user);
     List<CarRental> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate);
-    public List<CarRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime);
-    public boolean isUserMatched(Long carRentalId, Long userId);
-    public Map<LocalTime, Long> findAvailableTimesCount(Long carTypeId, LocalDate date);
-    public List<Car> findUnavailableCars(Long carTypeId, LocalDateTime time);
+    List<CarRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime);
+    //public boolean isUserMatched(Long carRentalId, Long userId);
+    public Map<LocalTime, Long> findRentalCountByTime(Long carTypeId, LocalDate date);
+    public List<Car> findNotReturned(Long carTypeId, LocalDateTime time);
     public List<CarRentalDto> searchCarRentals(CarRentalSearchForm searchForm);
 
 }
