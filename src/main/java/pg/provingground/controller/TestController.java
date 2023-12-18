@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Test;
 import pg.provingground.domain.User;
@@ -63,14 +64,6 @@ public class TestController {
         }
         return "redirect:/test/{testId}/result";
     }
-
-    /*
-    @GetMapping("/{carRentalId}/path")
-    public String carRentalPathFile(@PathVariable Long carRentalId) {
-        testService.getCarPath(carRentalId);
-    }
-
-     */
 
     @GetMapping("/test/{testId}/{carRentalId}/result")
     public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
@@ -138,8 +131,13 @@ public class TestController {
     }
 
     @PostMapping("/test/new")
-    public String newTestResult(@ModelAttribute TestForm testForm, Authentication auth,
+    public String newTestResult(@ModelAttribute TestForm testForm, Authentication auth, RedirectAttributes redirectAttributes,
                                 @RequestParam(value = "files", required = false) MultipartFile[] files) {
+        // 필수요소들이 선택되지 않은 경우, 오류 발생
+        if (testForm.getGroundRentalId() == null || testForm.getCarRentalIds() == null) {
+            redirectAttributes.addFlashAttribute("시험장과 차량은 필수 입력사항입니다.");
+            return "redirect:/test/new";
+        }
 
         // 여러 개 받아온 차량대여 목록을 set
         testForm.setCarRentalIdsList(Arrays.stream(testForm.getCarRentalIds().split(","))

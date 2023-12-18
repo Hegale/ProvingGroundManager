@@ -117,7 +117,7 @@
                     </div>
                   </td>
                   <th>
-                    <label class="req label" for="Company">대여차량<br></label>
+                    <label class="req label">대여차량<br></label>
                   </th>
                   <td>
                     <div class="selectset selectset-lg">
@@ -141,25 +141,7 @@
                   </th>
                   <td class="d-flex justify-content-start align-items-center" colspan="3">
                     <div class="inputset col-4">
-                      <input type="text" th:field="*{partners}" class="inputset-input form-control" id="Email" aria-label="이메일">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    <label class="label" for="Tel">결과물</label>
-                  </th>
-                  <td>
-                    <div class="inputset">
-                      <input type="text" class="inputset-input form-control" id="Tel" placeholder="- 없이 번호만 입력해주세요." aria-label="연락처">
-                    </div>
-                  </td>
-                  <th>
-                    <label class="label" for="subTel">결과 경로</label>
-                  </th>
-                  <td>
-                    <div class="inputset">
-                      <input type="text" class="inputset-input form-control" id="subTel" placeholder="- 없이 번호만 입력해주세요" aria-label="추가연락처">
+                      <input type="text" th:field="*{partners}" class="inputset-input form-control">
                     </div>
                   </td>
                 </tr>
@@ -232,6 +214,17 @@
 
     document.getElementById('postButton').addEventListener('click', function (event) {
       event.preventDefault();
+
+      var hiddenGround = document.getElementById('hiddenGround').value;
+      var carRentalIds = document.getElementById('carRentalIds').value;
+      var Title = document.getElementById('Title').value;
+
+      // GET 요청에 대한 유효성 검사
+      if (!hiddenGround || !carRentalIds || !Title) {
+        alert('필수 입력 사항을 체크해주세요.');
+        return; // 유효성 검사 실패시 함수 종료
+      }
+
       var form = document.getElementById('myForm');
       form.method = 'post';
       form.action = '/test/new';  // POST 요청의 목적지
@@ -240,6 +233,16 @@
 
     document.getElementById('getButton').addEventListener('click', function (event) {
       event.preventDefault();
+
+      var testDate = document.getElementById('selectedDate').value;
+      var testTime = document.getElementById('hiddenTime').value;
+
+      // GET 요청에 대한 유효성 검사
+      if (!testDate || !testTime) {
+        alert('날짜와 시간을 선택해주세요.');
+        return; // 유효성 검사 실패시 함수 종료
+      }
+
       var form = document.getElementById('myForm');
       form.method = 'get';
       form.action = '/test/new';  // GET 요청의 목적지
@@ -316,6 +319,15 @@
       document.getElementById('fileNameDisplay').innerText = fileNames; // 파일 이름들을 콤마로 구분하여 표시
 
     });
+
+
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage && errorMessage !== 'default') {
+      alert(errorMessage);
+    }
+    /*]]>*/
+
   </script>
   <script src="/js/weather.js"></script>
   <script src="/js/setting.js"></script>

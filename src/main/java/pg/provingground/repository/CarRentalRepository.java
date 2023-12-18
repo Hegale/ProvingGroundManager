@@ -17,6 +17,7 @@ import java.util.Map;
 
 public interface CarRentalRepository extends JpaRepository<CarRental, Long> {
     public CarRental findOne(Long id);
+    public List<CarRental> findByIds(List<Long> ids);
     public List<CarRental> findByTest(Test test);
     List<CarRental> findAllByUser(User user);
     List<CarRental> findAllByUserAndTimeInterval(User user, LocalDateTime startDate, LocalDateTime endDate);
