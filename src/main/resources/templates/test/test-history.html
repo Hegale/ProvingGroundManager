@@ -25,6 +25,7 @@
               <h3 class="h3 juykim-history-h3">시험 내역</h3>
             </div>
             <!-- 위의 검색란 시작-->
+
             <form th:object="${dateSearchForm}" method="get">
             <table class="tableset-table table">
               <colgroup>
@@ -34,20 +35,22 @@
               </colgroup>
               <thead class="thead-border-top">
               <tr>
-                <th class="number" scope="col">
-                  <p class="p1">날짜 검색</p>
-                </th>
-                <th scope="col">
-                  <input type="hidden" th:field="*{startDate}" id="startDate">
-                  <input type="hidden" th:field="*{endDate}" id="endDate">
-                  <div class="inputset inputset-lg" style="width: 22rem;">
-                    <input name="dateRange" class="inputset-input form-control"
-                           id="dateRange">
-                  </div>
-                </th>
-                <th scope="col">
-                  <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
-                </th>
+
+                  <th class="number" scope="col">
+                    <p class="p1">날짜 검색</p>
+                  </th>
+                  <th scope="col">
+                    <input type="hidden" th:field="*{startDate}" id="startDate">
+                    <input type="hidden" th:field="*{endDate}" id="endDate">
+                    <div class="inputset inputset-lg" style="width: 22rem;">
+                      <input name="dateRange" class="inputset-input form-control"
+                             id="dateRange">
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <button type="submit" value="Get" id="getButton" class="btnset btnset-lg btnset-mono btnset-line" style="width:10rem; margin-left:1.5rem; padding: 0 !important;">검색</button>
+                  </th>
+
                 <th scope="col">
 
                 </th>
@@ -60,6 +63,9 @@
               </tr>
               </thead>
             </table>
+
+            </form>
+
             <!-- 위의 검색란 끝-->
             <table class="tableset-table table">
               <!-- 아래 있을 col의 속성 미리지정하는부분?-->
@@ -102,7 +108,6 @@
                       </button>
                     </a>
                     <a th:href="@{'/test/' + ${test.testId} + '/edit'}">
-                      <!--th:onclick="'javascript:deleteTest('+${test.testId}+');'"-->
                       <button
                               class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
                         수정/삭제
@@ -115,7 +120,6 @@
               <!-- 목록 하나 끝-->
               </tbody>
             </table>
-            </form>
           </div>
         </div>
 
@@ -157,13 +161,6 @@
 <div th:replace="fragments/footer :: footer" />
 
 <script>
-  function deleteTest(testId) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "get");
-    form.setAttribute("action", "/test/" + testId + "/fix");
-    document.body.appendChild(form);
-    form.submit();
-  }
 
   /*<![CDATA[*/
   var errorMessage = /*[[${errorMessage}]]*/ 'default';

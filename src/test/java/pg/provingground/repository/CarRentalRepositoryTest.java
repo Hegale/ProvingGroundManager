@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CarRentalRepositoryTest {
 
-    @Autowired private CarRentalRepositoryImpl carRentalRepository;
+    @Autowired private CarRentalRepository carRentalRepository;
 
     private static CarRental carRental;
     private User user;

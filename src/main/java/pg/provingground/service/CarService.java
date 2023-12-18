@@ -9,6 +9,7 @@ import pg.provingground.domain.Station;
 import pg.provingground.dto.admin.CarDto;
 import pg.provingground.dto.admin.CarForm;
 import pg.provingground.repository.CarRepository;
+import pg.provingground.repository.CarRepositoryImpl;
 import pg.provingground.repository.CarTypeRepository;
 import pg.provingground.repository.StationRepository;
 

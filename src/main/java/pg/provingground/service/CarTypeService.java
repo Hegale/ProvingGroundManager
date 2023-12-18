@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.dto.form.CarSearchForm;
 import pg.provingground.domain.CarType;
-import pg.provingground.repository.CarTypeRepository;
+import pg.provingground.repository.CarTypeRepositoryImpl;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarTypeService {
 
-    private final CarTypeRepository carTypeRepository;
+    private final CarTypeRepositoryImpl carTypeRepository;
 
     //TODO: '차종' 추가, 변경 메소드...?
 

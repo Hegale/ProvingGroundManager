@@ -10,13 +10,12 @@ import pg.provingground.domain.CarType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Transactional
 class CarTypeRepositoryTest {
 
-    @Autowired CarTypeRepository carTypeRepository;
+    @Autowired
+    CarTypeRepositoryImpl carTypeRepository;
 
     @Test
     @Rollback(false)

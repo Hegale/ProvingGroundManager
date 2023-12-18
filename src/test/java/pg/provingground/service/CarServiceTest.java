@@ -3,9 +3,7 @@ package pg.provingground.service;
 import org.junit.jupiter.api.Test;
 import pg.provingground.domain.Car;
 import pg.provingground.domain.CarType;
-import pg.provingground.repository.CarRepository;
-import pg.provingground.repository.CarTypeRepository;
-import pg.provingground.repository.StationRepository;
+import pg.provingground.repository.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -14,7 +12,8 @@ import static org.mockito.Mockito.when;
 class CarServiceTest {
 
     @Test
-    void whenAmountIsInvalid_thenThrowException() {CarRepository carRepository = mock(CarRepository.class);
+    void whenAmountIsInvalid_thenThrowException() {
+        CarRepository carRepository = mock(CarRepository.class);
         CarTypeRepository carTypeRepository = mock(CarTypeRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 

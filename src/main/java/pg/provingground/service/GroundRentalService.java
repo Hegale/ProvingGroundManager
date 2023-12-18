@@ -8,8 +8,9 @@ import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
-import pg.provingground.repository.GroundRentalRepository;
+import pg.provingground.repository.GroundRentalRepositoryImpl;
 import pg.provingground.repository.GroundRepository;
+import pg.provingground.repository.GroundRepositoryImpl;
 import pg.provingground.repository.UserRepository;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GroundRentalService {
 
-    private final GroundRentalRepository groundRentalRepository;
+    private final GroundRentalRepositoryImpl groundRentalRepository;
     private final UserRepository userRepository;
     private final UserService userService;
     private final GroundRepository groundRepository;

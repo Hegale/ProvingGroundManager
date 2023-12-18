@@ -9,11 +9,7 @@ import pg.provingground.dto.admin.RefuelSearchForm;
 import pg.provingground.dto.admin.StationForm;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.RefuelHistory;
-import pg.provingground.dto.history.TestHistory;
-import pg.provingground.repository.CarRepository;
-import pg.provingground.repository.RefuelRepository;
-import pg.provingground.repository.StationRepository;
-import pg.provingground.repository.UserRepository;
+import pg.provingground.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,8 +26,8 @@ public class RefuelService {
     private final RefuelRepository refuelRepository;
     private final UserRepository userRepository;
     private final UserService userService;
-    private final CarRepository carRepository;
-    private final StationRepository stationRepository;
+    private final CarRepositoryImpl carRepository;
+    private final StationRepositoryImpl stationRepository;
 
     /** 주유 */
     @Transactional

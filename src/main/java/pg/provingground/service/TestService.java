@@ -14,7 +14,7 @@ import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
 import pg.provingground.dto.history.TestHistory;
 import pg.provingground.repository.CarRentalRepository;
-import pg.provingground.repository.GroundRentalRepository;
+import pg.provingground.repository.GroundRentalRepositoryImpl;
 import pg.provingground.repository.TestRepository;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TestService {
 
-    private final GroundRentalRepository groundRentalRepository;
+    private final GroundRentalRepositoryImpl groundRentalRepository;
     private final CarRentalRepository carRentalRepository;
     private final TestRepository testRepository;
 
@@ -134,7 +134,7 @@ public class TestService {
 
     /** [관리자] 전체 시험내역 검색 */
     public List<TestDto> allTest() {
-        return testRepository.findAll();
+        return testRepository.findAllDto();
     }
 
     @Transactional

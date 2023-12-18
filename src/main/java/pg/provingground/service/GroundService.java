@@ -3,14 +3,15 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pg.provingground.domain.Car;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.dto.admin.GroundForm;
 import pg.provingground.dto.admin.GroundRentalDto;
 import pg.provingground.dto.admin.GroundRentalSearchForm;
 import pg.provingground.repository.GroundRentalRepository;
+import pg.provingground.repository.GroundRentalRepositoryImpl;
 import pg.provingground.repository.GroundRepository;
+import pg.provingground.repository.GroundRepositoryImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;

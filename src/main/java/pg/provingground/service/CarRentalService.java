@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
 public class CarRentalService {
 
     private final CarRentalRepository carRentalRepository;
-    private final CarTypeRepository carTypeRepository;
+    private final CarTypeRepositoryImpl carTypeRepository;
     private final UserRepository userRepository;
     private final UserService userService;
-    private final CarRepository carRepository;
+    private final CarRepositoryImpl carRepository;
 
     /** 차량 대여 */
     @Transactional

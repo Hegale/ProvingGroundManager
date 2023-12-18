@@ -29,7 +29,7 @@ public class TestDataBuilder {
     private final GroundRepository groundRepository;
     private final CarRentalRepository carRentalRepository;
     private final GroundRentalRepository groundRentalRepository;
-    private final StationRepository stationRepository;
+    private final StationRepositoryImpl stationRepository;
     private final TestRepository testRepository;
     private final UserService userService;
     private final TestService testService;
