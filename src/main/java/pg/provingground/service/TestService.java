@@ -13,7 +13,7 @@ import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
 import pg.provingground.dto.history.TestHistory;
-import pg.provingground.repository.CarRentalRepository;
+import pg.provingground.repository.CarRentalRepositoryImpl;
 import pg.provingground.repository.GroundRentalRepository;
 import pg.provingground.repository.TestRepository;
 
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 public class TestService {
 
     private final GroundRentalRepository groundRentalRepository;
-    private final CarRentalRepository carRentalRepository;
+    private final CarRentalRepositoryImpl carRentalRepository;
     private final TestRepository testRepository;
 
     public TestDto getTest(Long testId) {

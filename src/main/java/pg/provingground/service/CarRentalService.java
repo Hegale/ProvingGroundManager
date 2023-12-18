@@ -12,10 +12,7 @@ import pg.provingground.dto.admin.CarRentalSearchForm;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
-import pg.provingground.repository.CarRentalRepository;
-import pg.provingground.repository.CarRepository;
-import pg.provingground.repository.CarTypeRepository;
-import pg.provingground.repository.UserRepository;
+import pg.provingground.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

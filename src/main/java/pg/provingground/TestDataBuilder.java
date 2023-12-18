@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
 import pg.provingground.repository.*;
-import pg.provingground.security.BCryptConfig;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
