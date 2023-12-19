@@ -21,7 +21,8 @@ public class CarRentalDto {
     private LocalDateTime startTime;
     private String returned;
 
-    // 이 생성자를 추가합니다
+    public CarRentalDto() {}
+
     public CarRentalDto(Long carRentalId, String carName, String carNumber, String username, LocalDateTime startTime, String returned) {
         this.carRentalId = carRentalId;
         this.carName = carName;

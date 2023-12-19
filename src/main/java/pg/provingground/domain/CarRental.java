@@ -83,4 +83,15 @@ public class CarRental {
     public void setCarRentalId(long l) {
         this.carRentalId = l;
     }
+
+    // 테스트 위함
+    public void setCar(Car car) {
+        this.car = car;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void setReturned(String returned) {
+        this.returned = returned;
+    }
 }

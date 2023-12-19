@@ -84,6 +84,27 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 폼 요소를 선택합니다.
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function(event) {
+      // 차량번호 입력 필드의 값을 가져옵니다.
+      const carNumber = document.querySelector('[aria-label="차량번호"]').value;
+
+      // 정규 표현식을 사용하여 형식을 확인합니다.
+      const regex = /^\d{2}[가-힣]{1} \d{4}$/;
+      if (!regex.test(carNumber)) {
+        // 형식이 맞지 않으면 경고를 띄우고 폼 제출을 방지합니다.
+        alert("'12가 3456' 형식으로 입력해 주세요.");
+        event.preventDefault(); // 폼 제출 방지
+      }
+    });
+  });
+</script>
+
 <script src="/js/weather.js"></script>
 <script src="/js/setting.js"></script>
 <script src="/js/plugin.js"></script>
