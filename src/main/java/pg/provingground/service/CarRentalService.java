@@ -62,7 +62,6 @@ public class CarRentalService {
     }
 
     /** 대여 취소 및 차량 반납 */
-    // TODO: 오늘 이후의 예약은 반납, 그 이전은 취소. 그 구분은 컨트롤러에서
     @Transactional
     public void cancelRental(Long carRentalId) {
         CarRental rental = carRentalRepository.findOne(carRentalId);
@@ -72,11 +71,12 @@ public class CarRentalService {
     /** [관리자] 검색 조건에 따른 차량 대여 내역 반환 */
     public List<CarRentalDto> getRentalsByConditions(CarRentalSearchForm carRentalSearchForm) {
 
+        // 날짜 조건이 입력된 경우, 해당 조건 추가
         if (carRentalSearchForm.getStartDate() != null && carRentalSearchForm.getEndDate() != null) {
-            LocalDate start = LocalDate.parse(carRentalSearchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate end = LocalDate.parse(carRentalSearchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE);
-            carRentalSearchForm.setStartDateTime(LocalDateTime.of(start, LocalTime.MIN));
-            carRentalSearchForm.setEndDateTime(LocalDateTime.of(end, LocalTime.MAX));
+            LocalDateTime start = DateTimeUtils.convertToStartOfDay(carRentalSearchForm.getStartDate());
+            LocalDateTime end = DateTimeUtils.convertToEndOfDay(carRentalSearchForm.getEndDate());
+            carRentalSearchForm.setStartDateTime(start);
+            carRentalSearchForm.setEndDateTime(end);
         }
 
         return carRentalRepository.searchCarRentals(carRentalSearchForm);

@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.cglib.core.Local;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pg.provingground.domain.*;
+import pg.provingground.exception.NoAvailableCarException;
 import pg.provingground.repository.CarRentalRepository;
 import pg.provingground.repository.CarRepository;
 
@@ -46,21 +47,27 @@ class CarRentalServiceTest {
     @InjectMocks
     private CarRentalService carRentalService;
 
+
+    /*
     @BeforeEach
     void setUp() {
-        when(userService.getLoginUserById(anyLong())).thenReturn(user);
-        when(car.getCarId()).thenReturn(1L);
-        when(carRepository.findByCarType(anyLong())).thenReturn(List.of(car));
-        when(carRepository.findOne(anyLong())).thenReturn(car);
-        when(carRentalRepository.findNotReturned(anyLong(), any())).thenReturn(List.of());
+        Long carRentalId = 1L;
+        when(carRentalRepository.findOne(carRentalId)).thenReturn(carRental);
     }
 
+     */
+
     @Test
-    public void rental_예약가능한차량이있을때_대여성공() {
+    public void 차량대여_성공() {
+        //given
         Long userId = 1L;
         Long carTypeId = 1L;
         LocalDateTime time = LocalDateTime.now();
 
+        when(carRepository.findByCarType(anyLong())).thenReturn(List.of(car));
+        when(carRepository.findOne(anyLong())).thenReturn(car);
+
+        // save의 매개변수가 되는 객체를 캡처
         ArgumentCaptor<CarRental> captor = ArgumentCaptor.forClass(CarRental.class);
         when(carRentalRepository.save(captor.capture())).thenAnswer(invocation -> {
             CarRental captured = captor.getValue();
@@ -68,10 +75,47 @@ class CarRentalServiceTest {
             return captured;
         });
 
+        //when
         Long carRentalId = carRentalService.rental(userId, carTypeId, time);
 
+        //then
         verify(carRentalRepository).save(any(CarRental.class));
         assertNotNull(carRentalId);
         assertEquals(1L, carRentalId);
     }
+
+    @Test
+    public void 차량대여_실패() throws Exception{
+        //given
+        Long userId = 1L;
+        Long carTypeId = 1L;
+        LocalDateTime time = LocalDateTime.now();
+
+        // 대여하고자 하는 차량이 반납되지 않은 차량이라고 가정
+        when(carRentalRepository.findNotReturned(anyLong(), any())).thenReturn(List.of(car));
+        when(carRepository.findByCarType(anyLong())).thenReturn(List.of(car));
+
+        //when
+        //then
+        assertThrows(NoAvailableCarException.class, () -> {
+            carRentalService.rental(userId, carTypeId, time);
+        });
+    }
+
+    @Test
+    public void 대여_취소() {
+        //given
+        Long carRentalId = 1L;
+        when(carRentalRepository.findOne(carRentalId)).thenReturn(carRental);
+
+        //when
+        carRentalService.cancelRental(carRentalId);
+
+        //then
+        verify(carRentalRepository).findOne(carRentalId);
+        verify(carRental).cancel();
+    }
+
+
+
 }
