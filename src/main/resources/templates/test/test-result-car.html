@@ -93,9 +93,11 @@
                 <th>
                   <label class="label">시험 종류</label>
                 </th>
+                <!--
                 <td>
                   <p class="p1" th:text="${test.type}" style="margin-left: 1rem;">타입</p>
                 </td>
+                -->
               </tr>
               </tbody>
             </table>
@@ -207,22 +209,6 @@
 
 </script>
 
-<script>
-  function deleteTest(testId) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "get");
-    form.setAttribute("action", "/test/" + testId + "/fix");
-    document.body.appendChild(form);
-    form.submit();
-  }
-
-  /*<![CDATA[*/
-  var errorMessage = /*[[${errorMessage}]]*/ 'default';
-  if (errorMessage !== 'default') {
-    alert(errorMessage);
-  }
-  /*]]>*/
-</script>
 
 <!-- [E]opilsol-N3 -->
 <script src="/js/setting.js"></script>
