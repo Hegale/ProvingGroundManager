@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.CarType;
 import pg.provingground.domain.Station;
 import pg.provingground.domain.User;
@@ -72,14 +73,19 @@ public class RefuelController {
 
     @PostMapping("/refuel/select/{carId}")
     /** 차 선택 후 주유 */
-    public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId, @RequestParam Long amount) {
+    public String refueling(@PathVariable("carId") Long carId, @RequestParam Long stationId,
+                            @RequestParam String amount, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        Long validAmount;
 
-        Long validAmount = carService.validFuelAmount(carId, amount);
-
+        try {
+            validAmount = carService.validFuelAmount(carId, amount);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e);
+            return "redirect:/refuel";
+        }
         // TODO: 유효한 주유구인지 확인하는 service method 호출
-        System.out.println("carId:" + carId + " | stationId:" + stationId + " | validAmount:" + validAmount);
         refuelService.refuel(username, carId, stationId, LocalDateTime.now(), validAmount);
 
         // 주유 후 주유 내역으로 이동

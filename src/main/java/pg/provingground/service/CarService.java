@@ -73,13 +73,14 @@ public class CarService {
     }
 
     /** 입력된 연료량을 유효한 값으로 변경하여 반환 */
-    public Long validFuelAmount(Long carId, Long amount) {
+    public Long validFuelAmount(Long carId, String amountString) {
+        Long amount = Long.parseLong(amountString);
         if (amount <= 0) {
             throw new IllegalArgumentException("유효하지 않은 주유량입니다.");
         }
         Car car = carRepository.findOne(carId);
         // 연료 탱크의 남은 공간
-        Long leftCapacity = car.getType().getFuelCapacity() - car.getFuel();
+        long leftCapacity = car.getType().getFuelCapacity() - car.getFuel();
         return Math.min(amount * 1000, leftCapacity) ;
     }
 

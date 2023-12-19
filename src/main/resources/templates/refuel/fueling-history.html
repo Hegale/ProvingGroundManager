@@ -144,7 +144,16 @@
   </script>
 
   <div th:replace="fragments/footer :: footer" />
-  <!-- [E]opilsol-N3 -->
+
+
+  <script>
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage && errorMessage !== 'default') {
+      alert(errorMessage);
+    }
+    /*]]>*/
+  </script>
   <script src="/js/dateRangePicker.js"></script>
   <script src="/js/setting.js"></script>
   <script src="/js/plugin.js"></script>

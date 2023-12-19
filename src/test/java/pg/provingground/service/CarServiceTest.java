@@ -20,7 +20,7 @@ class CarServiceTest {
         CarService carService = new CarService(carRepository, carTypeRepository, stationRepository);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            carService.validFuelAmount(1L, -1L);
+            carService.validFuelAmount(1L, "-1");
         });
     }
 
@@ -44,7 +44,7 @@ class CarServiceTest {
 
         // 예상 결과는 10L (연료 탱크 용량 15L - 현재 연료량 5L)
         Long expected = 10L;
-        Long actual = carService.validFuelAmount(1L, 2L);
+        Long actual = carService.validFuelAmount(1L, "2");
 
         assertEquals(expected, actual);
     }
