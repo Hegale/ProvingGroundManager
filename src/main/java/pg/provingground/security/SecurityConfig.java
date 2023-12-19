@@ -32,8 +32,13 @@ public class SecurityConfig {
                 .requestMatchers("/css/**","/js/**","/icons/**","/images/**").permitAll()
                 .requestMatchers("/", "/car-rental/new**", "/ground-rental/new**").permitAll()
                 .requestMatchers("/login", "/join", "/logout").permitAll()
+                .requestMatchers("/admin**").hasRole("ADMIN") // 관리자 기능은 관리자에게만 허용
                 // 특정 URI를 제외한 나머지 URI 인가
                 .anyRequest().authenticated()
+                .and()
+                // 권한이 없을 때
+                .exceptionHandling()
+                .accessDeniedHandler(new AccessDeniedHandlerImpl())
                 .and()
                 .formLogin()
                 .usernameParameter("username")
@@ -42,12 +47,6 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .failureUrl("/login")
                 .and()
-                /*
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
-                 */
                 .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")) //and()

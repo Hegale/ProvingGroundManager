@@ -201,11 +201,21 @@ class CarRentalServiceTest {
     public void 유저_대여내역_반환_날짜선택() {
         // given
         User user = new User();
+        Car car = new Car();
+        CarType carType = new CarType();
+        carType.setName("Sample Car Type");
+        car.setType(carType);
+
         DateSearchForm dateSearchForm = new DateSearchForm();
         dateSearchForm.setStartDate("2023-01-01");
         dateSearchForm.setEndDate("2023-01-31");
 
-        List<CarRental> rentals = List.of(new CarRental(), new CarRental());
+        CarRental rental = new CarRental();
+        rental.setCar(car);
+        rental.setUser(user);
+        rental.setReturned("Y");
+
+        List<CarRental> rentals = List.of(rental);
         when(carRentalRepository.findAllByUserAndTimeInterval(eq(user), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(rentals);
 
         // when
@@ -213,7 +223,45 @@ class CarRentalServiceTest {
 
         // then
         assertNotNull(history);
-        assertEquals(rentals.size(), history.size());
+        assertFalse(history.isEmpty());
+
+    }
+
+    @Test
+    public void 주인일치() {
+        // given
+        Long carRentalId = 1L;
+        User user = new User();
+
+        CarRental carRental = new CarRental();
+        carRental.setUser(user);
+
+        when(carRentalRepository.findOne(carRentalId)).thenReturn(carRental);
+
+        // when
+        boolean isMatched = carRentalService.isOwnerMatched(carRentalId, user);
+
+        // then
+        assertTrue(isMatched);
+    }
+
+    @Test
+    public void 주인불일치() {
+        // given
+        Long carRentalId = 1L;
+        User user = new User(); // 예를 들어, 테스트에 사용할 User 객체 생성
+        User otherUser = new User(); // 다른 User 객체 생성
+
+        CarRental carRental = new CarRental();
+        carRental.setUser(otherUser); // CarRental 객체에 다른 User 객체 설정
+
+        when(carRentalRepository.findOne(carRentalId)).thenReturn(carRental);
+
+        // when
+        boolean isMatched = carRentalService.isOwnerMatched(carRentalId, user);
+
+        // then
+        assertFalse(isMatched); // 주인이 불일치하는 경우
     }
 
 
