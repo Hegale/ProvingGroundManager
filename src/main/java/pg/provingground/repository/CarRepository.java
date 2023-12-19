@@ -13,7 +13,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     public List<Car> findByNumber(String number);
     public boolean isDuplicateCarNumber(String carNumber);
     public List<Car> findByCarTypes(List<CarType> types);
-    public void delete(Car car);
+    //public void delete(Car car);
     public long countCarsPerCarType(Long carTypeId);
     public List<Car> findByCarType(Long typeId);
 }

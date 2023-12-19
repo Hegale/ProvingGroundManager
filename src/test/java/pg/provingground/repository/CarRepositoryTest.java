@@ -55,6 +55,30 @@ class CarRepositoryTest {
         assertTrue(result.isEmpty());
     }
 
+    @Test
+    public void 차종으로_검색() throws Exception {
+        //given
+        carRepository.save(car);
+        List<CarType> carTypes = List.of(carType);
+
+        //when
+        List<Car> result = carRepository.findByCarTypes(carTypes);
+
+        //then
+        assertFalse(result.isEmpty());
+
+    }
+    
+    @Test
+    public void () throws Exception {
+        //given
+        
+        //when
+        
+        //then
+        
+    }
+
 
 
 
