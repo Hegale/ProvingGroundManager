@@ -80,4 +80,7 @@ public class CarRental {
         this.fileMetaData = fileMetaData;
     }
 
+    public void setCarRentalId(long l) {
+        this.carRentalId = l;
+    }
 }

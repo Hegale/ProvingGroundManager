@@ -48,6 +48,19 @@ public class CarRentalService {
         return carRental.getCarRentalId();
     }
 
+    /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
+    public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
+        List<Car> unavailableCars = carRentalRepository.findNotReturned(carTypeId, time);
+        List<Car> cars = carRepository.findByCarType(carTypeId);
+        for (Car car : cars) {
+            if (!unavailableCars.contains(car)) {
+                return car.getCarId();
+            }
+        }
+        // 모든 차량이 예약 불가능하면
+        throw new NoAvailableCarException("해당 시간대에 예약 가능한 차량이 없습니다!");
+    }
+
     /** 대여 취소 및 차량 반납 */
     // TODO: 오늘 이후의 예약은 반납, 그 이전은 취소. 그 구분은 컨트롤러에서
     @Transactional
@@ -74,19 +87,6 @@ public class CarRentalService {
         return carRentalRepository.findAll().stream()
                 .map(carRental -> new CarRentalHistory(carRental))  // CarRental 객체를 CarRentalHistory 객체로 변환
                 .collect(Collectors.toList());
-    }
-
-    /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
-    public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
-        List<Car> unavailableCars = carRentalRepository.findNotReturned(carTypeId, time);
-        List<Car> cars = carRepository.findByCarType(carTypeId);
-        for (Car car : cars) {
-            if (!unavailableCars.contains(car)) {
-                return car.getCarId();
-            }
-        }
-        // 모든 차량이 예약 불가능하면
-        throw new NoAvailableCarException("해당 시간대에 예약 가능한 차량이 없습니다!");
     }
 
     /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
