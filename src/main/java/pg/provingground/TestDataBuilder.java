@@ -102,7 +102,7 @@ public class TestDataBuilder {
                     ids.get(i), encoder.encode(passwds.get(i)), names.get(i), UserRole.USER, phoneNums.get(i));
             em.persist(user);
         }
-        User user = User.createUser("a", encoder.encode("a"), "tester", UserRole.USER, "000");
+        User user = User.createUser("a", encoder.encode("a"), "tester", UserRole.ADMIN, "000");
         em.persist(user);
     }
 

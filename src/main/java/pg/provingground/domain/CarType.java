@@ -30,5 +30,6 @@ public class CarType {
     private Long fuelCapacity;
 
     private String engine;
+    
 
 }
