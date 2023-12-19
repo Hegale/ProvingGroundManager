@@ -84,8 +84,12 @@ public class CarAdminController {
     }
 
     @PostMapping("/admin/car/select/{carTypeId}")
-    public String createCar(@PathVariable Long carTypeId, @ModelAttribute CarForm carForm) {
-        carService.createCar(carTypeId, carForm.getNumber());
+    public String createCar(@PathVariable Long carTypeId, @ModelAttribute CarForm carForm, RedirectAttributes redirectAttributes) {
+        try {
+            carService.createCar(carTypeId, carForm.getNumber());
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/admin/car/list";
     }
 

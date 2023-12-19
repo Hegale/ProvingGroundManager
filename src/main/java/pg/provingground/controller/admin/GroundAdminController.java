@@ -64,7 +64,7 @@ public class GroundAdminController {
         try {
             groundService.editGround(groundId, groundForm);
         } catch (NumberFormatException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
         return "redirect:/admin/ground/list";

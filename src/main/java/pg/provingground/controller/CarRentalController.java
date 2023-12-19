@@ -81,7 +81,7 @@ public class CarRentalController {
         try {
             carRentalService.rental(userId, carTypeId, time);
         } catch(NoAvailableCarException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/car-rental";
         }
 

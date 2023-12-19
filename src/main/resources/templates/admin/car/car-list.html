@@ -138,11 +138,14 @@
 <div th:replace="fragments/footer :: footer" />
 
 <script th:inline="javascript">
-    var errorMessage = /*[[${errorMessage}]]*/ null;
+
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
     if (errorMessage && errorMessage !== 'default') {
         alert(errorMessage);
-        window.location.href = '/admin';
     }
+    /*]]>*/
+
 </script>
 
 <script src="/js/setting.js"></script>
