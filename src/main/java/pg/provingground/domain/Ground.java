@@ -17,6 +17,7 @@ public class Ground {
     @Column(name = "ground_id")
     private Long groundId;
 
+    @Column(unique = true) // 아이디는 유일해야 한다.
     private String name;
 
     private String description;
@@ -24,10 +25,6 @@ public class Ground {
     private int car_maximum; // 최대 이용 가능 차량
 
     private int distance;
-
-    // private Point location;
-
-    //private int fuel_consumption;
 
     public static Ground createGround(String name, String description, int car_maximum, int distance) {
         Ground ground = new Ground();

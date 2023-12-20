@@ -59,6 +59,7 @@ public class UserAdminController {
             return "redirect:/admin/user/list";
         }
         userService.delete(userId); // 예외 캐치
+
         return "redirect:/admin/user/list";
     }
 

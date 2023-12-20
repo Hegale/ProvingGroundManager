@@ -33,10 +33,10 @@
                 </ul>
               </div>
               <div class="inputset inputset-line inputset-lg">
-                <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="아이디" aria-label="ID">
+                <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="아이디" aria-label="ID" required>
               </div>
               <div class="inputset inputset-line inputset-lg">
-                <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="비밀번호" aria-label="Password">
+                <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="비밀번호" aria-label="Password" required>
               </div>
 
               <div th:if="${#fields.hasGlobalErrors()}">

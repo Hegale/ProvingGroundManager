@@ -21,6 +21,7 @@ public class Car {
     @JoinColumn(name = "car_type_id")
     private CarType type;
 
+    @Column(unique = true)
     private String number;
 
     private Long fuel; // 잔여 연료, cc단위

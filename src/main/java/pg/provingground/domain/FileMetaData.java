@@ -12,7 +12,7 @@ public class FileMetaData {
     private String fileType;
     private Long fileSize;
     private String filePath;
-    private LocalDateTime uploacTime;
+    private LocalDateTime uploadTime;
 
     protected FileMetaData() {}
 
@@ -21,6 +21,6 @@ public class FileMetaData {
         this.fileType = type;
         this.fileSize = size;
         this.filePath = path;
-        this.uploacTime = time;
+        this.uploadTime = time;
     }
 }

@@ -34,7 +34,7 @@
                   <legend class="legend">NAME *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="text" th:field="*{nickname}" class="inputset-input form-control" placeholder="이름을 입력해주세요." aria-label="이름">
+                      <input type="text" th:field="*{nickname}" class="inputset-input form-control" placeholder="이름을 입력해주세요." aria-label="이름" required>
                     </div>
                   </div>
                 </fieldset>
@@ -42,7 +42,7 @@
                   <legend class="legend">ID *</legend>
                   <div class="input-group">
                     <div class="inputset inputset-line">
-                      <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="영문/숫자 조합의 5-12자로 입력해 주세요." aria-label="영문/숫자 조합의 5-12자로 입력해 주세요.">
+                      <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="영문/숫자 조합의 5-12자로 입력해 주세요." aria-label="영문/숫자 조합의 5-12자로 입력해 주세요." required>
                     </div>
                     <button class="btnset btnset-rect btnset-mono btnset-lg" type="button">ID 중복확인</button>
                   </div>
@@ -51,7 +51,7 @@
                   <legend class="legend">PASSWORD *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="영문/숫자 조합의 8-15자로 입력해 주세요." aria-label="영문/숫자 조합의 8-15자로 입력해 주세요.">
+                      <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="영문/숫자 조합의 8-15자로 입력해 주세요." aria-label="영문/숫자 조합의 8-15자로 입력해 주세요." required>
                     </div>
                   </div>
                 </fieldset>
@@ -59,7 +59,7 @@
                   <legend class="legend">CONFIRM PASSWORD *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="password" th:field="*{passwordCheck}" class="inputset-input form-control" placeholder="영문/숫자 조합의 8-15자로 입력해 주세요." aria-label="영문/숫자 조합의 8-15자로 입력해 주세요.">
+                      <input type="password" th:field="*{passwordCheck}" class="inputset-input form-control" placeholder="영문/숫자 조합의 8-15자로 입력해 주세요." aria-label="영문/숫자 조합의 8-15자로 입력해 주세요." required>
                     </div>
                   </div>
                   <p class="description"> 비밀번호 내 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다.</p>
@@ -69,7 +69,7 @@
                   <legend class="legend">PHONE NUMBER</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="text" th:field="*{phoneNum}" class="inputset-input form-control" placeholder="휴대전화 번호를 입력해 주세요. ex) 010-1234-5678" aria-label="휴대전화 번호">
+                      <input type="text" th:field="*{phoneNum}" class="inputset-input form-control" placeholder="휴대전화 번호를 입력해 주세요. ex) 010-1234-5678" aria-label="휴대전화 번호" required>
                     </div>
                   </div>
                 </fieldset>

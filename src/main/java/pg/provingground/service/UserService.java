@@ -37,13 +37,10 @@ public class UserService {
      * [관리자] 유저 삭제
      */
     @Transactional
-    // TODO: 자기자신은 삭제하지 못하게 하는 메소드 추가
     public void delete(Long userId) {
+        // 유저가 존재하는 경우에만 삭제
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
-        } else {
-            // 예외 처리: 유저가 존재하지 않는 경우
-            throw new EntityNotFoundException("User not found with id " + userId);
         }
     }
 
