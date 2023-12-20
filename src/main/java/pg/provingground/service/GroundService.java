@@ -55,22 +55,6 @@ public class GroundService {
         ground.edit(groundForm);
     }
 
-    /** [관리자] 조건에 따라 시험장 예약 검색 */
-    public List<GroundRentalDto> searchGroundRentalsByConditions(GroundRentalSearchForm searchForm) {
-        // 날짜 조건이 입력된 경우, 해당 조건 추가
-        if (searchForm.getStartDate() != null && searchForm.getEndDate() != null) {
-            LocalDateTime start = DateTimeUtils.convertToStartOfDay(searchForm.getStartDate());
-            LocalDateTime end = DateTimeUtils.convertToEndOfDay(searchForm.getEndDate());
-            searchForm.setStartDateTime(start);
-            searchForm.setEndDateTime(end);
-        }
-
-        List<GroundRental> groundRentals = groundRentalRepository.searchGroundRentals(searchForm);
-        return groundRentals.stream()
-                .map(GroundRentalDto::new)
-                .collect(Collectors.toList());
-    }
-
     public List<Ground> findItems() {
         return groundRepository.findAll();
     }

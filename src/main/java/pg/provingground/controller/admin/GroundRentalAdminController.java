@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import pg.provingground.dto.admin.CarRentalDto;
 import pg.provingground.dto.admin.GroundRentalDto;
 import pg.provingground.dto.admin.GroundRentalSearchForm;
+import pg.provingground.service.GroundRentalService;
 import pg.provingground.service.GroundService;
 
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroundRentalAdminController {
 
-    private final GroundService groundService;
+    private final GroundRentalService groundRentalService;
 
     @GetMapping("/admin/ground-rental/list")
     public String list(@ModelAttribute GroundRentalSearchForm groundRentalSearchForm, Model model) {
-        List<GroundRentalDto> groundRentalDtos = groundService.searchGroundRentalsByConditions(groundRentalSearchForm);
+        List<GroundRentalDto> groundRentalDtos = groundRentalService.searchGroundRentalsByConditions(groundRentalSearchForm);
 
         model.addAttribute("groundRentalSearchForm", groundRentalSearchForm);
         model.addAttribute("groundRentalDtos", groundRentalDtos);

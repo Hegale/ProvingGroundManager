@@ -7,6 +7,8 @@ import pg.provingground.domain.Car;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
+import pg.provingground.dto.admin.GroundRentalDto;
+import pg.provingground.dto.admin.GroundRentalSearchForm;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.exception.NoAvailableCarException;
@@ -97,6 +99,22 @@ public class GroundRentalService {
         }
 
         return availableTimes;
+    }
+
+    /** [관리자] 조건에 따라 시험장 예약 검색 */
+    public List<GroundRentalDto> searchGroundRentalsByConditions(GroundRentalSearchForm searchForm) {
+        // 날짜 조건이 입력된 경우, 해당 조건 추가
+        if (searchForm.getStartDate() != null && searchForm.getEndDate() != null) {
+            LocalDateTime start = DateTimeUtils.convertToStartOfDay(searchForm.getStartDate());
+            LocalDateTime end = DateTimeUtils.convertToEndOfDay(searchForm.getEndDate());
+            searchForm.setStartDateTime(start);
+            searchForm.setEndDateTime(end);
+        }
+
+        List<GroundRental> groundRentals = groundRentalRepository.searchGroundRentals(searchForm);
+        return groundRentals.stream()
+                .map(GroundRentalDto::new)
+                .collect(Collectors.toList());
     }
 
     /** [관리자 기능] 전체 대여 내역 검색 */
