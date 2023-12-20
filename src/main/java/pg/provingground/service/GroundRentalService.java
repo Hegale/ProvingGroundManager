@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class GroundRentalService {
 
     private final GroundRentalRepositoryImpl groundRentalRepository;
-    private final UserRepository userRepository;
     private final UserService userService;
     private final GroundRepository groundRepository;
 

@@ -29,20 +29,16 @@ public class GroundService {
     public void addGround(GroundForm groundForm) {
         int car_maximum;
         int distance;
-        System.out.println("groundForm = |" + groundForm.getCar_maximum() + "|" + groundForm.getDistance());
 
-        try {
-            car_maximum = Integer.parseInt(groundForm.getCar_maximum());
-            distance = Integer.parseInt(groundForm.getDistance());
-            System.out.println("parse끝");
-            if (car_maximum <= 0 || distance <= 0) {
-                return ; // TODO: 적절한 예외처리 필요, 두 요소는 입력되지 않을 수 있다
-            }
-        } catch (NumberFormatException e) {
-            return ;
+        car_maximum = Integer.parseInt(groundForm.getCar_maximum());
+        distance = Integer.parseInt(groundForm.getDistance());
+        if (car_maximum <= 0 || distance <= 0) {
+            throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+        }
+        if (groundRepository.isDuplicateGroundName(groundForm.getName())) {
+            throw new IllegalArgumentException("중복된 시험장 이름입니다.");
         }
 
-        System.out.println("뭐가문제가?");
         Ground ground = Ground.createGround(groundForm.getName(), groundForm.getDescription(), car_maximum, distance);
         groundRepository.save(ground);
     }

@@ -42,8 +42,12 @@ public class GroundAdminController {
     }
 
     @PostMapping("/admin/ground/new")
-    public String addGround(@ModelAttribute GroundForm groundForm) {
-        groundService.addGround(groundForm);
+    public String addGround(@ModelAttribute GroundForm groundForm, RedirectAttributes redirectAttributes) {
+        try {
+            groundService.addGround(groundForm);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/admin/ground/list";
     }
 

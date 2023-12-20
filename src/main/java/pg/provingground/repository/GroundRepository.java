@@ -10,4 +10,5 @@ public interface GroundRepository extends JpaRepository<Ground, Long> {
 
     public Ground findOne(Long id);
 
+    public boolean isDuplicateGroundName(String groundName);
 }
