@@ -3,15 +3,15 @@ package pg.provingground.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pg.provingground.domain.Car;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
 import pg.provingground.domain.User;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.history.GroundRentalHistory;
-import pg.provingground.repository.GroundRentalRepositoryImpl;
-import pg.provingground.repository.GroundRepository;
-import pg.provingground.repository.GroundRepositoryImpl;
-import pg.provingground.repository.UserRepository;
+import pg.provingground.exception.NoAvailableCarException;
+import pg.provingground.exception.NoAvailableGroundException;
+import pg.provingground.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GroundRentalService {
 
-    private final GroundRentalRepositoryImpl groundRentalRepository;
+    private final GroundRentalRepository groundRentalRepository;
     private final UserService userService;
     private final GroundRepository groundRepository;
 
@@ -38,12 +38,18 @@ public class GroundRentalService {
         User user = userService.getLoginUserById(userId);
         Ground ground = groundRepository.findOne(groundId);
 
-        // TODO: 실제 생성하기 직전, 그 사이에 추가로 예약이 진행된 것은 없는지 확인해야 함.
-        // 사용자가 페이지를 띄워놓고 오랜 시간이 지났는데, 그 사이 누군가 예약을 채갔을 수도 있으므로
+        isSchedulableGround(ground, time);
         GroundRental groundRental = GroundRental.createGroundRental(user, ground, time);
 
         groundRentalRepository.save(groundRental);
         return groundRental.getGroundRentalId();
+    }
+
+    /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
+    public void isSchedulableGround(Ground ground, LocalDateTime time) {
+        if (!groundRentalRepository.isRentalAble(ground, time)) {
+            throw new NoAvailableGroundException("해당 시간대에 예약 가능한 시험장이 없습니다!");
+        }
     }
 
     /** 대여 취소 및 차량 반납 */

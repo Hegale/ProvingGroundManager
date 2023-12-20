@@ -7,10 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.User;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.dto.form.GroundRentalForm;
 import pg.provingground.dto.history.GroundRentalHistory;
+import pg.provingground.exception.NoAvailableGroundException;
 import pg.provingground.repository.UserRepository;
 import pg.provingground.service.GroundRentalService;
 import pg.provingground.service.UserService;
@@ -67,13 +69,18 @@ public class GroundRentalController {
 
     @PostMapping("/ground-rental/select/{groundId}")
     /** 예약에 필요한 정보들 확정 후 예약 실행 */
-    public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form, Authentication auth) {
+    public String rentGround(@PathVariable Long groundId, @ModelAttribute GroundRentalForm form,
+                             RedirectAttributes redirectAttributes, Authentication auth) {
         // 폼에서 입력받은 날짜 및 시간을 dateTime으로 변환
         String dateTimeString = form.getSelectedDate() + "T" + form.getSelectedTime() + ":00:00";
         LocalDateTime time = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         Long userId = userService.getLoginUserByUsername(auth.getName()).getUserId();
 
-        groundRentalService.rental(userId, groundId, time);
+        try {
+            groundRentalService.rental(userId, groundId, time);
+        } catch (NoAvailableGroundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
 
         return "redirect:/ground-rental"; // 대여 내역으로 이동
     }

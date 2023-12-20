@@ -66,6 +66,17 @@ public class GroundRentalRepositoryImpl {
                 .getResultList();
     }
 
+    /** 특정 시간대의 시험장에 대해 취소되지 않은 예약건이 있는지 확인 */
+    public boolean isRentalAble(Ground ground, LocalDateTime time) {
+        return em.createQuery(
+                "SELECT g " +
+                        "FROM GroundRental g " +
+                        "WHERE g.ground = :ground and g.startTime = :time and g.canceled = 'N'", GroundRentalRepository.class)
+                .setParameter("ground", ground)
+                .setParameter("time", time)
+                .getResultList().isEmpty();
+    }
+
     /** 해당 날짜 예약건들을 <시간별, 예약건수> 로 반환 */
     public Map<LocalTime, Long> findAvailableTimesCount(Long groundId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();

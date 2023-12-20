@@ -152,7 +152,7 @@
 
 <div th:replace="fragments/footer :: footer" />
 
-<script>
+<script th:inline="javascript">
   function cancel(groundRentalId) {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
