@@ -79,7 +79,7 @@ public class GroundRentalService {
         return history;
     }
 
-    /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
+    /** 특정 시험장과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
     public List<String> getAvailableTimes(Long groundId, String selectedDate) {
 
         LocalDate date = LocalDate.parse(selectedDate);

@@ -45,9 +45,10 @@ public class User {
             this.nickname = userForm.getNickname();
         }
         if (userForm.getPassword() != null) {
-            this.password = userForm.getPassword(); // 암호화 잊지 말기
+            this.password = userForm.getPassword();
         }
         if (userForm.getPhoneNum() != null) {
+            //TODO: 중복 검증로직 추가?
             this.phoneNum = userForm.getPhoneNum();
         }
     }
