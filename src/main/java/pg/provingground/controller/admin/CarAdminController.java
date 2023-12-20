@@ -107,8 +107,6 @@ public class CarAdminController {
     @PostMapping("/admin/car/{carId}/edit")
     public String editCar(@ModelAttribute CarForm carForm, @PathVariable Long carId,
                           RedirectAttributes redirectAttributes, Model model) {
-        // TODO: 입력값 검증
-
         model.addAttribute("carForm", carForm);
         try {
             carService.editCar(carId, carForm);

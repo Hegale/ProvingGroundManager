@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class CarRentalSearchForm {
 
     // === CarRentalId로 검색 === //
+    private String carRentalIdString;
     private Long carRentalId;
 
     // === 차종으로 검색 === //

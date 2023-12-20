@@ -161,6 +161,9 @@ public class CarRentalRepositoryImpl {
         if (searchForm.getEndDate() != null) {
             predicates.add(cb.lessThanOrEqualTo(carRental.get("startTime"), searchForm.getEndDateTime()));
         }
+        if (StringUtils.hasText(searchForm.getReturned())) {
+            predicates.add(cb.like(carRental.get("returned"), "%" + searchForm.getReturned() + "%"));
+        }
 
         return predicates;
     }

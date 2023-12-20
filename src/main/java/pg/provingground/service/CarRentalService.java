@@ -69,17 +69,22 @@ public class CarRentalService implements OwnershipService {
     }
 
     /** [관리자] 검색 조건에 따른 차량 대여 내역 반환 */
-    public List<CarRentalDto> getRentalsByConditions(CarRentalSearchForm carRentalSearchForm) {
+    public List<CarRentalDto> getRentalsByConditions(CarRentalSearchForm searchForm) {
 
         // 날짜 조건이 입력된 경우, 해당 조건 추가
-        if (carRentalSearchForm.getStartDate() != null && carRentalSearchForm.getEndDate() != null) {
-            LocalDateTime start = DateTimeUtils.convertToStartOfDay(carRentalSearchForm.getStartDate());
-            LocalDateTime end = DateTimeUtils.convertToEndOfDay(carRentalSearchForm.getEndDate());
-            carRentalSearchForm.setStartDateTime(start);
-            carRentalSearchForm.setEndDateTime(end);
+        if (searchForm.getStartDate() != null && searchForm.getEndDate() != null) {
+            LocalDateTime start = DateTimeUtils.convertToStartOfDay(searchForm.getStartDate());
+            LocalDateTime end = DateTimeUtils.convertToEndOfDay(searchForm.getEndDate());
+            searchForm.setStartDateTime(start);
+            searchForm.setEndDateTime(end);
         }
 
-        return carRentalRepository.searchCarRentals(carRentalSearchForm);
+        // 대여번호 조건이 입력된 경우, 이를 숫자로 변환
+        if (searchForm.getCarRentalIdString() != null && !searchForm.getCarRentalIdString().isEmpty()) {
+            searchForm.setCarRentalId(Long.parseLong(searchForm.getCarRentalIdString()));
+        }
+
+        return carRentalRepository.searchCarRentals(searchForm);
     }
 
     /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
