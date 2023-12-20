@@ -80,7 +80,7 @@ public class TestRepositoryImpl {
         Join<Test, GroundRental> groundRentalJoin = testRoot.join("groundRental", JoinType.LEFT);
         Join<GroundRental, Ground> groundJoin = groundRentalJoin.join("ground", JoinType.LEFT);
 
-        // SELECT 절 구성 (TestDto 생성자 필요)
+        // SELECT 절 구성
         cq.select(cb.construct(
                 TestDto.class,
                 testRoot.get("testId"),
@@ -88,6 +88,7 @@ public class TestRepositoryImpl {
                 testRoot.get("type"),
                 testRoot.get("partners"),
                 testRoot.get("title"),
+                testRoot.get("contents"),
                 groundJoin.get("name"),
                 userJoin.get("username")
         ));
@@ -113,18 +114,11 @@ public class TestRepositoryImpl {
             predicates.add(cb.like(userJoin.get("username"), "%" + searchForm.getUsername() + "%"));
         }
 
-        if (searchForm.getStartTime() != null && searchForm.getEndTime() != null) {
-            predicates.add(cb.between(testRoot.get("dateTime"),
-                    searchForm.getStartTime(),
-                    searchForm.getEndTime()));
-        } else if (searchForm.getStartTime() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(testRoot.get("dateTime"),
-                    searchForm.getStartTime()));
-        } else if (searchForm.getEndTime() != null) {
-            predicates.add(cb.lessThanOrEqualTo(testRoot.get("dateTime"),
-                    searchForm.getEndTime()));
+        // 검색 조건: startDate와 endDate
+        if (searchForm.getStartDate() != null && !searchForm.getStartDate().isEmpty() &&
+                searchForm.getEndDate() != null && !searchForm.getEndDate().isEmpty()) {
+            predicates.add(cb.between(testRoot.get("dateTime"), searchForm.getStartDateTime(), searchForm.getEndDateTime()));
         }
-
 
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
 

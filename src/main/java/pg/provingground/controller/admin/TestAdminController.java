@@ -20,22 +20,11 @@ public class TestAdminController {
     private final TestService testService;
 
     @GetMapping("/admin/test/list")
-    public String testList(@ModelAttribute DateSearchForm dateSearchForm, @ModelAttribute TestSearchForm testSearchForm, Model model) {
+    public String testList(@ModelAttribute TestSearchForm testSearchForm, Model model) {
 
-        List<TestDto> tests;
-
-        if (dateSearchForm.getStartDate() == null || dateSearchForm.getEndDate() == null) {
-            tests = testService.allTest();
-        } else {
-            // 받아온 날짜를 LocalDateTime으로 변환
-            testSearchForm.setStartTime(DateTimeUtils.convertToStartOfDay(dateSearchForm.getStartDate()));
-            testSearchForm.setEndTime(DateTimeUtils.convertToEndOfDay(dateSearchForm.getEndDate()));
-
-            tests = testService.searchTest(testSearchForm);
-        }
+        List<TestDto> tests = testService.searchTest(testSearchForm);
 
         model.addAttribute("testSearchForm", testSearchForm);
-        model.addAttribute("dateSearchForm", dateSearchForm);
         model.addAttribute("tests", tests);
 
         return "admin/test/test-list";

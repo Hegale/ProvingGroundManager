@@ -107,12 +107,10 @@ public class RefuelRepositoryImpl {
             predicates.add(cb.like(station.get("name"), "%" + searchForm.getStationName() + "%"));
         }
         if (StringUtils.hasText(searchForm.getStartDate())) {
-            LocalDateTime startDate = LocalDateTime.parse(searchForm.getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            predicates.add(cb.greaterThanOrEqualTo(refuel.get("time"), startDate));
+            predicates.add(cb.greaterThanOrEqualTo(refuel.get("time"), searchForm.getStartDateTime()));
         }
         if (StringUtils.hasText(searchForm.getEndDate())) {
-            LocalDateTime endDate = LocalDateTime.parse(searchForm.getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            predicates.add(cb.lessThanOrEqualTo(refuel.get("time"), endDate));
+            predicates.add(cb.lessThanOrEqualTo(refuel.get("time"), searchForm.getEndDateTime()));
         }
         if (StringUtils.hasText(searchForm.getAmount())) {
             predicates.add(cb.equal(refuel.get("amount"), Long.parseLong(searchForm.getAmount())));

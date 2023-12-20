@@ -127,9 +127,15 @@ public class TestService {
     }
 
     /** [관리자] 조건에 따른 시험내역 검색 */
-    public List<TestDto> searchTest(TestSearchForm testSearchForm) {
-        // TODO: 오류 핸들링
-        return testRepository.searchTests(testSearchForm);
+    public List<TestDto> searchTest(TestSearchForm searchForm) {
+        // 날짜 조건이 입력된 경우, 해당 조건 추가
+        if (searchForm.getStartDate() != null && searchForm.getEndDate() != null) {
+            LocalDateTime start = DateTimeUtils.convertToStartOfDay(searchForm.getStartDate());
+            LocalDateTime end = DateTimeUtils.convertToEndOfDay(searchForm.getEndDate());
+            searchForm.setStartDateTime(start);
+            searchForm.setEndDateTime(end);
+        }
+        return testRepository.searchTests(searchForm);
     }
 
     /** [관리자] 전체 시험내역 검색 */
