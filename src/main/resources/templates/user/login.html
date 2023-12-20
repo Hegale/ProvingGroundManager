@@ -39,7 +39,7 @@
                 <input type="password" th:field="*{password}" class="inputset-input form-control" placeholder="비밀번호" aria-label="Password" required>
               </div>
 
-              <div th:if="${#fields.hasGlobalErrors()}">
+              <div th:if="${#fields.errors()}">
                 <br/>
                 <div th:each="error : ${#fields.globalDetailedErrors()}" th:text="${error}"></div>
               </div>
@@ -85,6 +85,15 @@
   <!-- [S]opilsol-N3 -->
 
   <div th:replace="fragments/footer :: footer" />
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage && errorMessage !== 'default') {
+      alert(errorMessage);
+    }
+    /*]]>*/
+  </script>
 
   <!-- [E]opilsol-N3 -->
   <script src="/js/setting.js"></script>

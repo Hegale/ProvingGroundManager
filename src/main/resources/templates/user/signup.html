@@ -42,7 +42,8 @@
                   <legend class="legend">ID *</legend>
                   <div class="input-group">
                     <div class="inputset inputset-line">
-                      <input type="text" th:field="*{username}" class="inputset-input form-control" placeholder="영문/숫자 조합의 5-12자로 입력해 주세요." aria-label="영문/숫자 조합의 5-12자로 입력해 주세요." required>
+                      <input type="text" th:field="*{username}" class="inputset-input form-control"
+                             placeholder="영문/숫자 조합의 5-12자로 입력해 주세요." aria-label="영문/숫자 조합의 5-12자로 입력해 주세요." required>
                     </div>
                     <button class="btnset btnset-rect btnset-mono btnset-lg" type="button">ID 중복확인</button>
                   </div>
@@ -97,6 +98,14 @@
 
 <div th:replace="fragments/footer :: footer" />
 
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var errorMessage = /*[[${errorMessage}]]*/ 'default';
+  if (errorMessage && errorMessage !== 'default') {
+    alert(errorMessage);
+  }
+  /*]]>*/
+</script>
 
 <!-- [E]opilsol-N3 -->
   <script src="/js/setting.js"></script>

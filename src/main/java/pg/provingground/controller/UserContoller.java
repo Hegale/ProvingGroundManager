@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.User;
 import pg.provingground.dto.form.JoinForm;
 import pg.provingground.dto.form.LoginForm;
@@ -41,24 +42,17 @@ public class UserContoller {
     }
 
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute JoinForm joinForm, BindingResult bindingResult, Model model) {
+    public String join(@Validated @ModelAttribute JoinForm joinForm, RedirectAttributes redirectAttributes) {
         // username 중복체크
         if (userService.checkLogInDuplicate(joinForm.getUsername())) {
-            bindingResult.addError(new FieldError("joinForm", "username", "중복된 아이디입니다."));
-        }
-
-        // nickname 중복체크
-        if (userService.checkNicknameDuplicate(joinForm.getNickname())) {
-            bindingResult.addError(new FieldError("joinForm", "nickname", "중복된 비밀번호입니다."));
+            redirectAttributes.addFlashAttribute("errorMessage", "중복된 아이디입니다!");
+            return "redirect:/join";
         }
 
         // password와 passwordCheck가 같은지 체크
         if (!joinForm.getPassword().equals(joinForm.getPasswordCheck())) {
-            bindingResult.addError(new FieldError("joinForm", "passwordCheck", "비밀번호가 일치하지 않습니다."));
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "user/signup";
+            redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다!");
+            return "redirect:/join";
         }
 
         userService.join2(joinForm);

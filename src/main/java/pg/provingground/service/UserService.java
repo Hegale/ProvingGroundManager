@@ -63,16 +63,6 @@ public class UserService {
     }
 
     /**
-     * nickname 중복 체크
-     * 회원가입 기능 구현 시 사용
-     * 중복되면 true return
-     */
-    public boolean checkNicknameDuplicate(String nickname) {
-        return userRepository.existsByNickname(nickname);
-    }
-
-
-    /**
      * 회원가입 기능 1
      * 비밀번호를 그대로 저장.
      * 중복체크는 Contoller에서 진행 -> 에러메시지 출력 위함!
