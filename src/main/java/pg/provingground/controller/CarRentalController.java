@@ -13,6 +13,7 @@ import pg.provingground.dto.form.CarRentalForm;
 import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.form.DateSearchForm;
 import pg.provingground.exception.NoAvailableCarException;
+import pg.provingground.security.CheckOwnership;
 import pg.provingground.service.CarRentalService;
 import pg.provingground.service.UserService;
 
@@ -43,13 +44,9 @@ public class CarRentalController {
     }
 
     @PostMapping("/car-rental/{carRentalId}/return")
+    //@CheckOwnership(serviceName = "carRentalService")
     /** 차량 대여 반납 및 취소 */
-    public String returnRental(@PathVariable("carRentalId") Long carRentalId, Authentication auth, RedirectAttributes redirectAttributes) {
-        // 정보 요청자가 해당 기록의 주인이 아닐 시
-        if (!carRentalService.isOwnerMatched(carRentalId, userService.getLoginUserByUsername(auth.getName()))) {
-            redirectAttributes.addFlashAttribute("errorMessage", "해당 권한이 없습니다!");
-            return "redirect:/car-rental";
-        }
+    public String returnRental(@PathVariable("carRentalId") Long carRentalId, RedirectAttributes redirectAttributes) {
         carRentalService.cancelRental(carRentalId);
         return "redirect:/car-rental";
     }

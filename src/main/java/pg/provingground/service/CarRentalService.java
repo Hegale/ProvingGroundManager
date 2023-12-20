@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CarRentalService {
+public class CarRentalService implements OwnershipService {
 
     private final CarRentalRepository carRentalRepository;
     private final CarTypeRepository carTypeRepository;

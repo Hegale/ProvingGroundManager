@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class TestService {
+public class TestService implements OwnershipService {
 
     private final GroundRentalRepositoryImpl groundRentalRepository;
     private final CarRentalRepository carRentalRepository;
@@ -198,6 +198,12 @@ public class TestService {
         file.transferTo(filePath.toFile());
 
         return filePath.toString();
+    }
+
+    /** 요청을 보낸 유저가 해당 시험 내역 기록의 주인인지 확인 */
+    public boolean isOwnerMatched(Long testId, User user) {
+        Test test = testRepository.findOne(testId);
+        return test.getUser().equals(user);
     }
 
 }

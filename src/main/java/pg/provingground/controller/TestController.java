@@ -17,6 +17,7 @@ import pg.provingground.dto.history.CarRentalHistory;
 import pg.provingground.dto.history.GroundRentalHistory;
 import pg.provingground.dto.form.TestForm;
 import pg.provingground.dto.history.TestHistory;
+import pg.provingground.security.CheckOwnership;
 import pg.provingground.service.CarRentalService;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
@@ -45,6 +46,7 @@ public class TestController {
     }
 
     @GetMapping("/test/{testId}/result")
+    @CheckOwnership(serviceName = "testService")
     public String testResult(@PathVariable Long testId, Model model){
 
         TestDto test = testService.getTest(testId);
@@ -57,6 +59,7 @@ public class TestController {
     }
 
     @PostMapping("/test/{testId}/result")
+    @CheckOwnership(serviceName = "testService")
     public String testResult(@PathVariable Long testId, @RequestParam("carRentalId") Long carRentalId,
                              @RequestParam(value = "file") MultipartFile file) {
         if (file != null) {
@@ -66,6 +69,7 @@ public class TestController {
     }
 
     @GetMapping("/test/{testId}/{carRentalId}/result")
+    @CheckOwnership(serviceName = "testService")
     public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
         TestDto testDto = testService.getTest(testId);
 
@@ -75,6 +79,7 @@ public class TestController {
     }
 
     @GetMapping("/test/{testId}/edit")
+    @CheckOwnership(serviceName = "testService")
     /** 특정 시험 내역을 수정 혹은 삭제, 해당 페이지로 이동 */
     public String editTest(@PathVariable Long testId, Model model) {
         TestDto test = testService.getTest(testId);
@@ -85,6 +90,7 @@ public class TestController {
     }
 
     @PostMapping("/test/{testId}/edit")
+    @CheckOwnership(serviceName = "testService")
     public String editTest(@PathVariable Long testId, @ModelAttribute TestDto testDto,
                            @RequestParam(value = "files", required = false) MultipartFile file) {
         testService.edit(testDto);
@@ -96,6 +102,7 @@ public class TestController {
     }
 
     @DeleteMapping("/test/{testId}/edit")
+    @CheckOwnership(serviceName = "testService")
     /** 시험 내역 삭제 삭제 */
     public String groundDelete(@PathVariable Long testId) {
         testService.delete(testId); // 예외 캐치
