@@ -72,11 +72,6 @@ public class GroundRentalService {
         return history;
     }
 
-    /** 해당 시험장 대여가 불가능한 시간대 구해서 반환*/
-    public List<LocalDateTime> getUnAvailableTimes(Long groundId) {
-        return groundRentalRepository.getGroundRentalStatus(groundId);
-    }
-
     /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
     public List<String> getAvailableTimes(Long groundId, String selectedDate) {
 

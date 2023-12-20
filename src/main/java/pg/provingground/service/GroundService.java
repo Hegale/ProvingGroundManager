@@ -13,6 +13,7 @@ import pg.provingground.repository.GroundRentalRepositoryImpl;
 import pg.provingground.repository.GroundRepository;
 import pg.provingground.repository.GroundRepositoryImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,14 +61,19 @@ public class GroundService {
 
     /** [관리자] 조건에 따라 시험장 예약 검색 */
     public List<GroundRentalDto> searchGroundRentalsByConditions(GroundRentalSearchForm searchForm) {
-        List<GroundRental> groundRentals = groundRentalRepository.findByCriteria(searchForm);
+        // 날짜 조건이 입력된 경우, 해당 조건 추가
+        if (searchForm.getStartDate() != null && searchForm.getEndDate() != null) {
+            LocalDateTime start = DateTimeUtils.convertToStartOfDay(searchForm.getStartDate());
+            LocalDateTime end = DateTimeUtils.convertToEndOfDay(searchForm.getEndDate());
+            searchForm.setStartDateTime(start);
+            searchForm.setEndDateTime(end);
+        }
+
+        List<GroundRental> groundRentals = groundRentalRepository.searchGroundRentals(searchForm);
         return groundRentals.stream()
                 .map(GroundRentalDto::new)
                 .collect(Collectors.toList());
     }
-
-    // TODO: 시험장 수정 메소드 구현
-    // TODO: 시험장 삭제 메소드 구현
 
     public List<Ground> findItems() {
         return groundRepository.findAll();

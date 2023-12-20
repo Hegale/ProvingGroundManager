@@ -110,16 +110,12 @@ public class GroundRentalRepositoryImpl {
     }
 
     /** [관리자] 대여 조건 검색 구현 */
-    public List<GroundRental> findByCriteria(GroundRentalSearchForm searchForm) {
+    public List<GroundRental> searchGroundRentals(GroundRentalSearchForm searchForm) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<GroundRental> cq = cb.createQuery(GroundRental.class);
         Root<GroundRental> groundRental = cq.from(GroundRental.class);
 
-        // 연관된 엔티티 로드를 위한 fetch join
-        Fetch<GroundRental, Ground> groundFetch = groundRental.fetch("ground", JoinType.LEFT);
-        Fetch<GroundRental, User> userFetch = groundRental.fetch("user", JoinType.LEFT);
-
-        // 조건을 설정하기 위한 Join
+        // 사전 join
         Join<GroundRental, Ground> groundJoin = groundRental.join("ground", JoinType.LEFT);
         Join<GroundRental, User> userJoin = groundRental.join("user", JoinType.LEFT);
 
@@ -138,10 +134,7 @@ public class GroundRentalRepositoryImpl {
         // 검색 조건: startDate와 endDate
         if (searchForm.getStartDate() != null && !searchForm.getStartDate().isEmpty() &&
                 searchForm.getEndDate() != null && !searchForm.getEndDate().isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime startDate = LocalDateTime.parse(searchForm.getStartDate(), formatter);
-            LocalDateTime endDate = LocalDateTime.parse(searchForm.getEndDate(), formatter);
-            predicates.add(cb.between(groundRental.get("startTime"), startDate, endDate));
+            predicates.add(cb.between(groundRental.get("startTime"), searchForm.getStartDateTime(), searchForm.getEndDateTime()));
         }
 
         // 검색 조건: canceled

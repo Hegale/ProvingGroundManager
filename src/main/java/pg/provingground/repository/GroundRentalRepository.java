@@ -27,5 +27,5 @@ public interface GroundRentalRepository extends JpaRepository<GroundRental, Long
     public List<GroundRentalHistory> findAllByUserAndTime(User user, LocalDateTime dateTime);
     public Map<LocalTime, Long> findAvailableTimesCount(Long groundId, LocalDate date);
     public List<LocalDateTime> getGroundRentalStatus(Long groundId);
-    public List<GroundRental> findByCriteria(GroundRentalSearchForm searchForm);
+    public List<GroundRental> searchGroundRentals(GroundRentalSearchForm searchForm);
 }

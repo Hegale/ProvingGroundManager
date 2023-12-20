@@ -82,13 +82,6 @@ public class CarRentalService {
         return carRentalRepository.searchCarRentals(carRentalSearchForm);
     }
 
-    /** [관리자] 모든 차량 대여 내역 반환 */
-    public List<CarRentalHistory> getAllRentals() {
-        return carRentalRepository.findAll().stream()
-                .map(carRental -> new CarRentalHistory(carRental))  // CarRental 객체를 CarRentalHistory 객체로 변환
-                .collect(Collectors.toList());
-    }
-
     /** 특정 차종과 날짜를 받아 대여 가능한 시간대를 리스트로 반환 */
     public List<String> getAvailableTimes(Long carTypeId, String selectedDate) {
 

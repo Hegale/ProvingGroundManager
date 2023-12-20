@@ -55,7 +55,7 @@ class GroundRentalRepositoryTest {
         GroundRentalSearchForm searchForm = new GroundRentalSearchForm();
 
         //when
-        List<GroundRental> result = groundRentalRepository.findByCriteria(searchForm);
+        List<GroundRental> result = groundRentalRepository.searchGroundRentals(searchForm);
 
         //then
 

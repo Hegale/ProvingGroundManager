@@ -3,6 +3,8 @@ package pg.provingground.dto.admin;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 public class GroundRentalSearchForm {
     private Long groundRentalId;
@@ -11,6 +13,9 @@ public class GroundRentalSearchForm {
 
     private String startDate;
     private String endDate;
+
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
 
     private String canceled;
 
