@@ -146,7 +146,7 @@
   <div th:replace="fragments/footer :: footer" />
 
 
-  <script>
+  <script th:inline="javascript">
     /*<![CDATA[*/
     var errorMessage = /*[[${errorMessage}]]*/ 'default';
     if (errorMessage && errorMessage !== 'default') {

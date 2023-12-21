@@ -29,12 +29,11 @@ public class CarRental {
 
     private FileMetaData fileMetaData;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)// 고려
+    @ManyToOne(fetch = FetchType.LAZY)// 고려
     @JoinColumn(name = "car_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

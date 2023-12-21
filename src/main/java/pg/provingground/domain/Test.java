@@ -3,6 +3,8 @@ package pg.provingground.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import pg.provingground.dto.admin.TestDto;
 
 import java.time.LocalDateTime;
@@ -45,10 +47,12 @@ public class Test {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ground_rental_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GroundRental groundRental;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     // === 생성 메서드 === //

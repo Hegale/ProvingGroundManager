@@ -27,6 +27,21 @@ public class User {
     @Column(name = "phone_num", unique = true)
     private String phoneNum;
 
+    // === 연관관계 === //
+
+    // User가 삭제되면 관련 CarRental, Test, Refuel, GroundRental도 삭제
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CarRental> carRentals;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Test> tests;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Refuel> refuels;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GroundRental> groundRentals;
+
     public static User createUser(String username, String password, String nickname, UserRole role, String phoneNum) {
         User user = new User();
         user.username = username;

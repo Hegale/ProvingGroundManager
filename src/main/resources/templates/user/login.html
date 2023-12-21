@@ -44,22 +44,12 @@
                 <div th:each="error : ${#fields.globalDetailedErrors()}" th:text="${error}"></div>
               </div>
 
-              <div class="contents-checkset d-flex justify-content-start">
-                <div class="checkset">
-                  <input id="checkset-c-3-1" class="checkset-input input-round" type="checkbox" value="" checked="">
-                  <label class="checkset-label" for="checkset-c-3-1"></label>
-                  <span class="checkset-text">자동 로그인</span>
-                </div>
-                <div class="checkset">
-                  <input id="checkset-c-3-2" class="checkset-input input-round" type="checkbox" value="">
-                  <label class="checkset-label" for="checkset-c-3-2"></label>
-                  <span class="checkset-text">아이디 저장</span>
-                </div>
+              <div style="margin-bottom: 2rem;">
+                <ul class="contents-list d-flex justify-content-center">
+                  <li class="contents-item">
+                    <a href="/join" class="contents-text">회원가입</a>
+                </ul>
               </div>
-              <ul class="contents-list d-flex justify-content-center">
-                <li class="contents-item">
-                  <a href="/join" class="contents-link">회원가입</a>ㄱ
-              </ul>
               <div class="btn-box juykim-btnbox" style="text-align:center;">
                 <button class="btnset btnset-rect btnset-mono btnset-lg juykim-btn" type="submit" style="display:inline-block;">로그인</button>
               </div>

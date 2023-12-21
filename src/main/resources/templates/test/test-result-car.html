@@ -8,7 +8,7 @@
 
 <head th:replace="fragments/header :: header">
   <title>페이지</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="tex찰t/html; charset=UTF-8" />
 </head>
 
 <body>
@@ -49,10 +49,6 @@
               </colgroup>
               <tbody>
               <tr>
-                <th><label class="label">차량 대여 번호</label></th>
-                <td th:text="${carRentalId}"></td>
-              </tr>
-              <tr>
                 <th>
                   <label class="label">시험 번호</label>
                 </th>
@@ -90,14 +86,8 @@
                   <p class="p1" th:text="${test.partners}" style="margin-left: 1rem;">협력사</p>
                 </td>
 
-                <th>
-                  <label class="label">시험 종류</label>
-                </th>
-                <!--
-                <td>
-                  <p class="p1" th:text="${test.type}" style="margin-left: 1rem;">타입</p>
-                </td>
-                -->
+                <th><label class="label">차량 대여 번호</label></th>
+                <td th:text="${carRentalId}"></td>
               </tr>
               </tbody>
             </table>

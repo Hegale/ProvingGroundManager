@@ -28,7 +28,7 @@ public class UserAdminController {
             userDtos = userService.getUsersByConditions(userSearchForm);
         } catch (NumberFormatException e) {
         redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 유저 번호입니다!");
-        return "redirect:/admin/test/list";
+        return "redirect:/admin/user/list";
     }
 
         model.addAttribute("userDtos", userDtos);
