@@ -71,13 +71,22 @@ public class TestController {
 
     @GetMapping("/test/{testId}/{carRentalId}/result")
     @CheckOwnership(serviceName = "testService")
-    public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
+    public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId,
+                                RedirectAttributes redirectAttributes, Model model) {
         TestDto testDto = testService.getTest(testId);
-        String carPathFile = carRentalService.getTestCarPath(carRentalId);
+        String carPathFileName;
+
+        try {
+            carPathFileName = carRentalService.getTestCarPath(carRentalId);
+        } catch (NullPointerException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "차량 주행 경로를 먼저 등록해 주세요!");
+            return "redirect:/test/{testId}/result";
+        }
 
         model.addAttribute("test", testDto);
         model.addAttribute("groundName", testDto.getGroundName());
-        model.addAttribute("carPath", carPathFile);
+        model.addAttribute("carPath", carPathFileName);
+        System.out.println("path = " + carPathFileName);
 
         return "test/test-result-car";
     }

@@ -117,8 +117,16 @@
   var colors = ["#0000FF"];// 다른 LineString에 대한 색상 배열
   var polylines = []; // 폴리라인 저장을 위한 배열
   var buttonContainer = document.getElementById('carPathButtons');// 생성된 버튼을 담을 컨테이너
+
+  // 파일 경로에 사용할 정로
+  /*<![CDATA[*/
+  var testId = /*[[${testId}]]*/ 'defaultTestId';
+  var carRentalId = /*[[${carRentalId}]]*/ 'defaultCarRentalId';
+  var carPath = /*[[${carPath}]]*/ 'defaultCarRentalId';
+  /*]]>*/
+  var carRequestPath = "http://localhost:8080/geofiles/path/" + testId + "/" + carPath + ".geojson";
   /** 해당 대여 차량의 경로 */
-  $.getJSON("http://localhost:8080/geofiles/test.geojson", function(data) {
+  $.getJSON(carRequestPath, function(data) {
     var features = data.features;
     for (var i = 0, len = features.length; i < len; i++) {
       var geometry = features[i].geometry;

@@ -51,7 +51,10 @@ public class CarRentalService implements OwnershipService {
     /** 해당 차량의 주행경로 파일 위치를 반환 */
     public String getTestCarPath(Long carRentalId) {
         CarRental carRental = carRentalRepository.findOne(carRentalId);
-        return carRental.getFileMetaData().getFilePath();
+        if (carRental.getFileMetaData() == null) {
+            throw new NullPointerException("주행 경로 파일이 존재하지 않습니다!");
+        }
+        return carRental.getFileMetaData().getFileName();
     }
 
     /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */

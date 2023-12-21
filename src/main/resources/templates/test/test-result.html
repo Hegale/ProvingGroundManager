@@ -153,7 +153,7 @@
 
 <div th:replace="fragments/footer :: footer" />
 
-<script>
+<script th:inline="javascript">
   function deleteTest(testId) {
     var form = document.createElement("form");
     form.setAttribute("method", "get");
@@ -164,7 +164,7 @@
 
   /*<![CDATA[*/
   var errorMessage = /*[[${errorMessage}]]*/ 'default';
-  if (errorMessage !== 'default') {
+  if (errorMessage && errorMessage !== 'default') {
     alert(errorMessage);
   }
   /*]]>*/
