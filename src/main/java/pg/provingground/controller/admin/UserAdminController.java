@@ -22,8 +22,14 @@ public class UserAdminController {
     private final UserService userService;
 
     @GetMapping("/admin/user/list")
-    public String list(@ModelAttribute UserSearchForm userSearchForm, Model model) {
-        List<UserDto> userDtos = userService.getUsersByConditions(userSearchForm);
+    public String list(@ModelAttribute UserSearchForm userSearchForm, RedirectAttributes redirectAttributes, Model model) {
+        List<UserDto> userDtos;
+        try {
+            userDtos = userService.getUsersByConditions(userSearchForm);
+        } catch (NumberFormatException e) {
+        redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 유저 번호입니다!");
+        return "redirect:/admin/test/list";
+    }
 
         model.addAttribute("userDtos", userDtos);
         model.addAttribute("userSearchForm", userSearchForm);

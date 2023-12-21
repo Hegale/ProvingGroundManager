@@ -29,8 +29,12 @@ public class UserService {
     /**
      * [관리자] 유저 검색
      */
-    public List<UserDto> getUsersByConditions(UserSearchForm userSearchForm) {
-        return userSearchRepository.findByCriteria(userSearchForm);
+    public List<UserDto> getUsersByConditions(UserSearchForm searchForm) {
+        // 대여번호 조건이 입력된 경우, 이를 숫자로 변환
+        if (searchForm.getUserIdString() != null && !searchForm.getUserIdString().isEmpty()) {
+            searchForm.setUserId(Long.parseLong(searchForm.getUserIdString()));
+        }
+        return userSearchRepository.findByCriteria(searchForm);
     }
 
     /**

@@ -4,12 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 import pg.provingground.domain.UserRole;
 
-@Getter
+@Getter @Setter
 public class UserSearchForm {
 
     private Long userId;
+    private String userIdString;
 
     private UserRole role;
 

@@ -29,7 +29,7 @@
                         <form action="/admin/user/list" th:object="${userSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
-                                    <input th:field="*{userId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="사용자 식별 아이디 검색" aria-label="내용">
+                                    <input th:field="*{userIdString}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="사용자 식별 아이디 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
                                     <input th:field="*{username}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="사번 검색" aria-label="내용">
@@ -124,12 +124,12 @@
     /*]]>*/
 </script>
 
-<script src="../resources/js/setting.js"></script>
-<script src="../resources/js/plugin.js"></script>
-<script src="../resources/js/template.js"></script>
-<script src="../resources/js/common.js"></script>
-<script src="../resources/js/script.js"></script>
-<script src="../resources/js/jquery-ui.min.js"></script>
+<script src="/js/setting.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
 
 </body>
 </html>

@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import pg.provingground.domain.User;
 import pg.provingground.dto.admin.UserDto;
 import pg.provingground.dto.admin.UserSearchForm;
@@ -34,13 +35,13 @@ public class UserSearchRepository {
         if (searchForm.getRole() != null) {
             predicates.add(cb.equal(user.get("role"), searchForm.getRole()));
         }
-        if (searchForm.getUsername() != null && !searchForm.getUsername().isEmpty()) {
+        if (StringUtils.hasText(searchForm.getUsername())) {
             predicates.add(cb.like(user.get("username"), "%" + searchForm.getUsername() + "%"));
         }
-        if (searchForm.getNickname() != null && !searchForm.getNickname().isEmpty()) {
+        if (StringUtils.hasText(searchForm.getNickname())) {
             predicates.add(cb.like(user.get("nickname"), "%" + searchForm.getNickname() + "%"));
         }
-        if (searchForm.getPhoneNum() != null && !searchForm.getPhoneNum().isEmpty()) {
+        if (StringUtils.hasText(searchForm.getPhoneNum())) {
             predicates.add(cb.like(user.get("phoneNum"), "%" + searchForm.getPhoneNum() + "%"));
         }
 
