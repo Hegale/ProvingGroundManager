@@ -14,6 +14,7 @@ import java.util.List;
 public class TestSearchForm {
 
     private Long testId;
+    private String testIdString;
 
     private String type; // 시험종류
 

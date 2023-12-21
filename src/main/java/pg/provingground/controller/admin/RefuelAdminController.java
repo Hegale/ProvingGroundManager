@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pg.provingground.domain.Station;
 import pg.provingground.dto.admin.RefuelDto;
 import pg.provingground.dto.admin.RefuelSearchForm;
@@ -22,9 +23,15 @@ public class RefuelAdminController {
     private final StationRepository stationRepository;
 
     @GetMapping("/admin/refuel/list")
-    public String list(@ModelAttribute RefuelSearchForm refuelSearchForm, Model model) {
+    public String list(@ModelAttribute RefuelSearchForm refuelSearchForm, RedirectAttributes redirectAttributes, Model model) {
+        List<RefuelDto> refuelDtos;
 
-        List<RefuelDto> refuelDtos = refuelService.searchRefuelsByConditions(refuelSearchForm);
+        try {
+            refuelDtos = refuelService.searchRefuelsByConditions(refuelSearchForm);
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 주유번호입니다!");
+            return "redirect:/admin/refuel/list";
+        }
 
         model.addAttribute("refuelSearchForm", refuelSearchForm);
         model.addAttribute("refuelDtos", refuelDtos);

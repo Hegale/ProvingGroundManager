@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class RefuelSearchForm {
 
     private Long refuelId;
+    private String refuelIdString;
 
     private String stationName;
 

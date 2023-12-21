@@ -135,6 +135,10 @@ public class TestService implements OwnershipService {
             searchForm.setStartDateTime(start);
             searchForm.setEndDateTime(end);
         }
+        // 대여번호 조건이 입력된 경우, 이를 숫자로 변환
+        if (searchForm.getTestIdString() != null && !searchForm.getTestIdString().isEmpty()) {
+            searchForm.setTestId(Long.parseLong(searchForm.getTestIdString()));
+        }
         return testRepository.searchTests(searchForm);
     }
 

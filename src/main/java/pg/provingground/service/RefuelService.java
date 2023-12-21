@@ -76,6 +76,11 @@ public class RefuelService {
             searchForm.setStartDateTime(start);
             searchForm.setEndDateTime(end);
         }
+        // 대여번호 조건이 입력된 경우, 이를 숫자로 변환
+        if (searchForm.getRefuelIdString() != null && !searchForm.getRefuelIdString().isEmpty()) {
+            searchForm.setRefuelId(Long.parseLong(searchForm.getRefuelIdString()));
+        }
+
         return refuelRepository.searchRefuels(searchForm);
     }
 

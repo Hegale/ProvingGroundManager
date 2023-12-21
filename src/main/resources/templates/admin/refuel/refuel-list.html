@@ -29,7 +29,7 @@
                         <form th:object="${refuelSearchForm}" method="get">
                             <div class="admin-search-area">
                                 <div class="inputset">
-                                    <input th:field="*{refuelId}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유번호로 검색" aria-label="내용">
+                                    <input th:field="*{refuelIdString}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유번호로 검색" aria-label="내용">
                                 </div>
                                 <div class="inputset">
                                     <input th:field="*{stationName}" type="text" class="admin-car-rental-search inputset-input form-control" placeholder="주유구 이름으로 검색" aria-label="내용">
@@ -106,6 +106,15 @@
 </main>
 
 <div th:replace="fragments/footer :: footer" />
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var errorMessage = /*[[${errorMessage}]]*/ 'default';
+    if (errorMessage && errorMessage !== 'default') {
+        alert(errorMessage);
+    }
+    /*]]>*/
+</script>
 
 <script src="/js/dateRangePicker.js"></script>
 <script src="/js/setting.js"></script>
