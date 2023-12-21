@@ -64,7 +64,6 @@ public class GroundAdminController {
     @PostMapping("/admin/ground/{groundId}/edit")
     public String editGround(@ModelAttribute GroundForm groundForm, @PathVariable Long groundId,
                              RedirectAttributes redirectAttributes, Model model) {
-
         try {
             groundService.editGround(groundId, groundForm);
         } catch (NumberFormatException e) {

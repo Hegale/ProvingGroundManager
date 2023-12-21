@@ -34,40 +34,39 @@
                   <legend class="legend">NAME *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="text" th:field="*{nickname}" class="inputset-input form-control" th:placeholder="*{nickname}">
+                      <input type="text" th:field="*{nickname}" class="inputset-input form-control" th:placeholder="*{nickname}" required>
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="fieldset">
-                  <legend class="legend">ID *</legend>
-                  <div class="input-group">
-                    <p th:text="*{username}"></p>
-                  </div>
-                </fieldset>
                 <fieldset>
-
-
-                  <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
-                    <button class="selectset-toggle btn" type="button">
-                      <span id="selectedFuelType">권한 재설정</span>
-                    </button>
-                    <input type="hidden" id="hiddenFuelType" th:field="*{role}"/>
-                    <ul class="selectset-list">
-                      <li class="selectset-item" th:each="userRole : ${T(pg.provingground.domain.UserRole).values()}">
-                        <button class="fuelType-select selectset-link time-select btn" type="button"
-                                th:text="${userRole.displayName}" th:attr="data-value=${userRole}">
-                          <span></span>
-                        </button>
-                      </li>
-                    </ul>
+                  <div style="display: flex; justify-content: space-between;">
+                    <div style="display: flex;">
+                      <legend class="legend">ID *</legend>
+                      <div class="input-group">
+                        <p th:text="*{username}"></p>
+                      </div>
+                    </div>
+                    <div class="selectset selectset-lg" style="width: 22rem; margin-left: 1rem;">
+                      <button class="selectset-toggle btn" type="button">
+                        <span id="selectedFuelType">권한 재설정</span>
+                      </button>
+                      <input type="hidden" id="hiddenFuelType" th:field="*{role}"/>
+                      <ul class="selectset-list">
+                        <li class="selectset-item" th:each="userRole : ${T(pg.provingground.domain.UserRole).values()}">
+                          <button class="fuelType-select selectset-link time-select btn" type="button"
+                                  th:text="${userRole.displayName}" th:attr="data-value=${userRole}">
+                            <span></span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-
                 </fieldset>
                 <fieldset class="fieldset">
                   <legend class="legend">PASSWORD *</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="password" th:field="*{password}" class="inputset-input form-control">
+                      <input type="password" th:field="*{password}" th:placeholder="*{password}" class="inputset-input form-control" required>
                     </div>
                   </div>
                 </fieldset>
@@ -75,7 +74,7 @@
                   <legend class="legend">PHONE NUMBER</legend>
                   <div class="input-group">
                     <div class="inputset col inputset-line">
-                      <input type="text" th:field="*{phoneNum}" class="inputset-input form-control" th:placeholder="*{phoneNum}">
+                      <input type="text" th:field="*{phoneNum}" class="inputset-input form-control" th:placeholder="*{phoneNum}" required>
                     </div>
                   </div>
                 </fieldset>

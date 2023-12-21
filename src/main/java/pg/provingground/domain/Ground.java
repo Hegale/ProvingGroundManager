@@ -36,10 +36,10 @@ public class Ground {
     }
 
     public void edit(GroundForm groundForm) {
-        if (groundForm.getName() != null) {
+        if (!groundForm.getName().isEmpty()) {
             this.name = groundForm.getName();
         }
-        if (groundForm.getDescription() != null) {
+        if (!groundForm.getDescription().isEmpty()) {
             this.description = groundForm.getDescription();
         }
         if (groundForm.getCar_maximum() != null) {
