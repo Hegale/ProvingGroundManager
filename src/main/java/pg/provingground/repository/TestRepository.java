@@ -3,10 +3,7 @@ package pg.provingground.repository;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.StringUtils;
-import pg.provingground.domain.Ground;
-import pg.provingground.domain.GroundRental;
-import pg.provingground.domain.Test;
-import pg.provingground.domain.User;
+import pg.provingground.domain.*;
 import pg.provingground.dto.admin.TestDto;
 import pg.provingground.dto.admin.TestSearchForm;
 

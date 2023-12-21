@@ -154,29 +154,33 @@
   });
 
 
-
+  /*<![CDATA[*/
+  var groundName = /*[[${groundName}]]*/ 'defaultName';
+  var geoJsonPath = "http://localhost:8080/geofiles/grounds/" + encodeURIComponent(groundName) + ".geojson";
+  /*]]>*/
   /** 주행시험장 폴리곤 */
-  $.getJSON("http://localhost:8080/geofiles/grounds/3_multi.geojson", function(data) {
-    var features = data.features;
+  $.getJSON(geoJsonPath)
+          .done(function(data) {
+      var features = data.features;
 
-    var mainPolygonPath, holePaths = [];
+      var mainPolygonPath, holePaths = [];
 
-    for (var i = 0, len = features.length; i < len; i++) {
-      var geometry = features[i].geometry;
+      for (var i = 0, len = features.length; i < len; i++) {
+        var geometry = features[i].geometry;
 
-      if (geometry.type === 'MultiPolygon') {
-        geometry.coordinates.forEach(function(polygon) {
-          var path = polygon[0].map(function(coords) {
-            return new kakao.maps.LatLng(coords[1], coords[0]);
+        if (geometry.type === 'MultiPolygon') {
+          geometry.coordinates.forEach(function(polygon) {
+            var path = polygon[0].map(function(coords) {
+              return new kakao.maps.LatLng(coords[1], coords[0]);
+            });
+
+            if (i === 0) { // 첫 번째 feature는 메인 폴리곤
+              mainPolygonPath = path;
+            } else { // 나머지 feature들은 구멍
+              holePaths.push(path);
+            }
           });
-
-          if (i === 0) { // 첫 번째 feature는 메인 폴리곤
-            mainPolygonPath = path;
-          } else { // 나머지 feature들은 구멍
-            holePaths.push(path);
-          }
-        });
-      }
+        }
     }
 
     console.log("========main========")
@@ -193,8 +197,13 @@
       strokeOpacity: 0,
       fillColor: '#f9f',
       fillOpacity: 0.4
-    });
+    })
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    alert("주행시험장 폴리곤 파일이 존재하지 않습니다!");
+    // 파일 로드 실패 시 처리. 예를 들어 리디렉션
+    window.location.href = '/test'; // 리디렉션할 URL로 변경하세요.
   });
+
 
 
 </script>

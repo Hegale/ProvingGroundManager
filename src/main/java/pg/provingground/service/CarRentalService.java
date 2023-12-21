@@ -48,6 +48,12 @@ public class CarRentalService implements OwnershipService {
         return carRental.getCarRentalId();
     }
 
+    /** 해당 차량의 주행경로 파일 위치를 반환 */
+    public String getTestCarPath(Long carRentalId) {
+        CarRental carRental = carRentalRepository.findOne(carRentalId);
+        return carRental.getFileMetaData().getFilePath();
+    }
+
     /** 해당 차종의 차량 중, 해당 시간대에 예약 가능한 차량 하나 반환 */
     public Long getSchedulableCar(Long carTypeId, LocalDateTime time) {
         List<Car> unavailableCars = carRentalRepository.findNotReturned(carTypeId, time);

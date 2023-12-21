@@ -33,6 +33,7 @@ public class TestController {
 
     private final TestService testService;
     private final UserService userService;
+    private final CarRentalService carRentalService;
 
     @GetMapping("/test")
     public String testHistory(@ModelAttribute DateSearchForm dateSearchForm, Model model, Authentication auth) {
@@ -59,7 +60,7 @@ public class TestController {
     }
 
     @PostMapping("/test/{testId}/result")
-    @CheckOwnership(serviceName = "testService")
+    //@CheckOwnership(serviceName = "testService")
     public String testResult(@PathVariable Long testId, @RequestParam("carRentalId") Long carRentalId,
                              @RequestParam(value = "file") MultipartFile file) {
         if (file != null) {
@@ -72,8 +73,11 @@ public class TestController {
     @CheckOwnership(serviceName = "testService")
     public String carTestResult(@PathVariable Long testId, @PathVariable Long carRentalId, Model model) {
         TestDto testDto = testService.getTest(testId);
+        String carPathFile = carRentalService.getTestCarPath(carRentalId);
 
         model.addAttribute("test", testDto);
+        model.addAttribute("groundName", testDto.getGroundName());
+        model.addAttribute("carPath", carPathFile);
 
         return "test/test-result-car";
     }
@@ -104,8 +108,8 @@ public class TestController {
     @DeleteMapping("/test/{testId}/edit")
     @CheckOwnership(serviceName = "testService")
     /** 시험 내역 삭제 삭제 */
-    public String groundDelete(@PathVariable Long testId) {
-        testService.delete(testId); // 예외 캐치
+    public String testDelete(@PathVariable Long testId) {
+        testService.delete(testId);
         return "redirect:/test";
     }
 

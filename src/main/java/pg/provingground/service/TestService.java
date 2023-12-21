@@ -38,7 +38,6 @@ public class TestService implements OwnershipService {
     private final TestRepository testRepository;
 
     public TestDto getTest(Long testId) {
-        // TODO: 해당 유저가 아닐 시 접근 권한 없다는 Exception 발령
         Test test = testRepository.findOne(testId);
         return new TestDto(testId, test.getDateTime(), test.getType(), test.getPartners(), test.getTitle(),
                 test.getContents(), test.getGroundRental().getGround().getName(), test.getUser().getUsername());
