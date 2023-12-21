@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class GroundRentalSearchForm {
     private Long groundRentalId;
+    private String groundRentalIdString;
 
     private String groundName;
 

@@ -29,7 +29,6 @@ public class CarRentalAdminController {
         try {
             carRentalDtos = carRentalService.getRentalsByConditions(carRentalSearchForm);
         } catch (NumberFormatException e) {
-            System.out.println("유효하지않다구요");
             redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 대여번호입니다!");
             return "redirect:/admin/car-rental/list";
         }
