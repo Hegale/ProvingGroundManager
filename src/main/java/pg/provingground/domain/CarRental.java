@@ -12,8 +12,11 @@ import java.time.LocalDateTime;
 @Getter
 // carTypeId + returned로 검색 잦음
 @Table(name = "car_rental", indexes = {
-        @Index(name = "idx_start_time", columnList = "start_time"),
-        @Index(name = "idx_car_returned", columnList = "car_id, returned")
+        @Index(name = "idx_car_rental_id", columnList = "car_rental_id"),
+        @Index(name = "idx_start_time_returned", columnList = "start_time, returned"),
+        @Index(name = "idx_car", columnList = "car_id"),
+        @Index(name = "idx_user", columnList = "user_id"),
+        @Index(name = "idx_test", columnList = "test_id"),
 })
 public class CarRental {
 

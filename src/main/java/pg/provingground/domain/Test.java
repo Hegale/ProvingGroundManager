@@ -13,12 +13,19 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor
 @Getter
+@Table(indexes = {
+        @Index(name = "idx_test_id", columnList = "test_id"),
+        @Index(name = "idx_time", columnList = "date_time"),
+        @Index(name = "idx_ground_rental", columnList = "ground_rental_id"),
+        @Index(name = "idx_user", columnList = "user_id")
+})
 public class Test {
     @Id
     @GeneratedValue
     @Column(name = "test_id")
     private Long testId;
 
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
     private String type; // 시험종류

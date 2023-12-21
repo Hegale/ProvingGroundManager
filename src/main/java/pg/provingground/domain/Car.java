@@ -9,8 +9,9 @@ import pg.provingground.dto.admin.CarForm;
 @Getter @Setter
 @Table(indexes = {
         @Index(name = "idx_car_id", columnList = "car_id"),
-        @Index(name = "idx_car_type_id", columnList = "car_type")
+        @Index(name = "idx_car_type", columnList = "car_type")
 })
+/** 차량 엔티티 */
 public class Car {
 
     @Id @GeneratedValue

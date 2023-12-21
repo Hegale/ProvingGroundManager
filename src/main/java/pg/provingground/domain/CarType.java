@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-// 차종 엔티티
+/** 차종 엔티티 */
 public class CarType {
 
     @Id @GeneratedValue

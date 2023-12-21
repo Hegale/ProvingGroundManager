@@ -10,7 +10,7 @@ import java.awt.*;
 
 @Entity
 @Getter @Setter
-@Table(name = "ground", indexes = @Index(name = "idx_ground_id", columnList = "ground_id"))
+@Table(indexes = @Index(name = "idx_ground_id", columnList = "ground_id"))
 public class Ground {
 
     @Id @GeneratedValue

@@ -9,6 +9,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@Table(indexes = {
+        @Index(name = "idx_refuel_id", columnList = "refueling_id"),
+        @Index(name = "idx_time", columnList = "time"),
+        @Index(name = "idx_car", columnList = "car_id"),
+        @Index(name = "idx_user", columnList = "user_id"),
+        @Index(name = "idx_station", columnList = "station_id")
+})
 public class Refuel {
 
     @Id @GeneratedValue

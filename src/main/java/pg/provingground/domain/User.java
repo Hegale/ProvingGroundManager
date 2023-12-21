@@ -9,6 +9,10 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@Table(indexes = {
+        @Index(name = "idx_user_id", columnList = "user_id"),
+        @Index(name = "idx_username_role", columnList = "username, role")
+})
 public class User {
 
     @Id @GeneratedValue

@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+// carTypeId + returned로 검색 잦음
+@Table(name = "ground_rental", indexes = {
+        @Index(name = "idx_ground_rental_id", columnList = "ground_rental_id"),
+        @Index(name = "idx_start_time_canceled", columnList = "start_time, canceled"),
+        @Index(name = "idx_ground", columnList = "ground_id"),
+        @Index(name = "idx_user", columnList = "user_id")
+})
 public class GroundRental {
 
     @Id @GeneratedValue
