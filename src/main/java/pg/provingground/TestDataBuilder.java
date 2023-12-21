@@ -23,7 +23,6 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class TestDataBuilder {
 
-    private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final CarTypeRepository carTypeRepository;
     private final GroundRepository groundRepository;
@@ -32,7 +31,6 @@ public class TestDataBuilder {
     private final StationRepositoryImpl stationRepository;
     private final TestRepository testRepository;
     private final UserService userService;
-    private final TestService testService;
     private final EntityManager em;
     private final BCryptPasswordEncoder encoder;
 

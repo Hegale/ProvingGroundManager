@@ -81,12 +81,11 @@ public class RefuelController {
 
         try {
             validAmount = carService.validFuelAmount(carId, amount);
+            refuelService.refuel(username, carId, stationId, LocalDateTime.now(), validAmount);
         } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 주유량입니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/refuel";
         }
-        // TODO: 유효한 주유구인지 확인하는 service method 호출
-        refuelService.refuel(username, carId, stationId, LocalDateTime.now(), validAmount);
 
         // 주유 후 주유 내역으로 이동
         return "redirect:/refuel";

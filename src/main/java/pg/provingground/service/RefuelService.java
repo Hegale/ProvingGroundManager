@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class RefuelService {
 
     private final RefuelRepository refuelRepository;
-    private final UserRepository userRepository;
     private final UserService userService;
     private final CarRepositoryImpl carRepository;
     private final StationRepositoryImpl stationRepository;
@@ -37,6 +36,9 @@ public class RefuelService {
         Car car = carRepository.findOne(carId);
         Station station = stationRepository.findOne(stationId);
 
+        if (!isMatchFuel(car.getType().getEngine(), station.getFuelType())) {
+            throw new IllegalArgumentException("주유구의 연료 타입이 차량 엔진과 일치하지 않습니다!");
+        }
         // 새 주유 기록을 저장
         Refuel refuel = Refuel.createRefuel(user, car, station, time, amount);
 
@@ -45,6 +47,16 @@ public class RefuelService {
 
         refuelRepository.save(refuel);
         return refuel.getRefuelingId();
+    }
+
+    private boolean isMatchFuel(String engine, FuelType fuelType) {
+        if (engine.equals("하이브리드")) {
+            engine = "가솔린";
+        }
+        if (fuelType.getDisplayName().equals(engine)) {
+            return true;
+        }
+        return false;
     }
 
     public List<Refuel> findUserRefuel(Long userId) {
