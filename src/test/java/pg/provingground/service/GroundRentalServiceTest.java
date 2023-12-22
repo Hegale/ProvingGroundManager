@@ -8,13 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import pg.provingground.domain.CarRental;
 import pg.provingground.domain.Ground;
 import pg.provingground.domain.GroundRental;
-import pg.provingground.domain.User;
 import pg.provingground.dto.admin.GroundRentalDto;
 import pg.provingground.dto.admin.GroundRentalSearchForm;
 import pg.provingground.exception.NoAvailableGroundException;
@@ -39,8 +36,6 @@ import static org.mockito.Mockito.*;
 class GroundRentalServiceTest {
     @Mock
     private GroundRentalRepository groundRentalRepository;
-    @Mock
-    private UserService userService;
     @Mock
     private GroundRepository groundRepository;
 

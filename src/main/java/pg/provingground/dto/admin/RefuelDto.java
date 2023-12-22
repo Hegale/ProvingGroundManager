@@ -23,7 +23,7 @@ public class RefuelDto {
 
     private String stationName;
 
-    // 필요한 생성자를 추가합니다
+    public RefuelDto() {}
     public RefuelDto(Long refuelingId, String carName, String carNumber, FuelType fuelType, String stationName, LocalDateTime time, Long amount) {
         this.refuelingId = refuelingId;
         this.carName = carName;

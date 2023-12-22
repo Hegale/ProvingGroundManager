@@ -131,7 +131,7 @@ public class TestService implements OwnershipService {
         return test.getTestId();
     }
 
-    private boolean isDuplicateTest(Long groundId) {
+    protected boolean isDuplicateTest(Long groundId) {
         return testRepository.findByGroundRental(groundId);
     }
 
@@ -162,13 +162,6 @@ public class TestService implements OwnershipService {
         CarRental carRental = carRentalRepository.findOne(carRentalId);
         carRental.setFileMetaData(metaData); // 테스트에 파일 메타데이터를 저장
     }
-
-    /*
-    public void getCarPath(Long carRentalId){
-
-    }
-
-     */
 
     @Transactional
     public void processFile(MultipartFile file, Long testId) {
@@ -205,9 +198,7 @@ public class TestService implements OwnershipService {
 
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        System.out.println("파일 이름: " + fileName);
         Path filePath = uploadPath.resolve(fileName);
-        System.out.println("파일 경로: " + filePath);
         file.transferTo(filePath.toFile());
 
         return filePath.toString();

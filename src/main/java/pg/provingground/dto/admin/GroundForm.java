@@ -27,4 +27,11 @@ public class GroundForm {
         this.distance = String.valueOf(ground.getDistance());
     }
 
+    public GroundForm(String name, String description, String car_maximum, String distance) {
+        this.name = name;
+        this.description = description;
+        this.car_maximum = car_maximum;
+        this.distance = distance;
+    }
+
 }

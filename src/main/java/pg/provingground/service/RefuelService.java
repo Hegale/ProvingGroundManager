@@ -49,7 +49,7 @@ public class RefuelService {
         return refuel.getRefuelingId();
     }
 
-    private boolean isMatchFuel(String engine, FuelType fuelType) {
+    protected boolean isMatchFuel(String engine, FuelType fuelType) {
         if (engine.equals("하이브리드")) {
             engine = "가솔린";
         }
@@ -100,7 +100,7 @@ public class RefuelService {
     @Transactional
     public void addStation(StationForm stationForm) {
         Station station = Station.createStation(stationForm.getName(), stationForm.getFuelType());
-        stationRepository.save(station); // TODO: 스테이션 이름 중복 확인
+        stationRepository.save(station);
     }
 
 }

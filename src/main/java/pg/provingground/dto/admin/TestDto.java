@@ -28,6 +28,8 @@ public class TestDto {
 
     private String username;
 
+    public TestDto() {}
+
     public TestDto(Long testId, LocalDateTime dateTime, String type, String partners, String title, String contents, String groundName, String username) {
         this.testId = testId;
         this.dateTime = dateTime;
