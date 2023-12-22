@@ -7,6 +7,7 @@ import org.springframework.data.geo.Point;
 import pg.provingground.dto.admin.GroundForm;
 
 import java.awt.*;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -25,6 +26,9 @@ public class Ground {
     private int car_maximum; // 최대 이용 가능 차량
 
     private int distance;
+
+    @OneToMany(mappedBy = "ground", cascade = CascadeType.ALL)
+    private List<GroundRental> groundRentals;
 
     public static Ground createGround(String name, String description, int car_maximum, int distance) {
         Ground ground = new Ground();

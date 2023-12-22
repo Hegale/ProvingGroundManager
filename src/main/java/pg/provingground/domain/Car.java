@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import pg.provingground.dto.admin.CarForm;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 @Table(indexes = {
@@ -26,6 +28,12 @@ public class Car {
     private String number;
 
     private Long fuel; // 잔여 연료, cc단위
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<CarRental> carRentals;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Refuel> refuels;
 
     // === 생성 메서드 === //
     public static Car createCar(CarType carType, String carNumber) {
