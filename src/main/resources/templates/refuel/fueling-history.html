@@ -80,9 +80,7 @@
                   <!-- 목록 하나 시작 -->
                   <tr th:each="refuel : ${refuels}">
                     <td class="number" th:text="${refuel.refuelingId}">7</td>
-                    <td>
-                      <p th:text="${refuel.carName}">차량</p>
-                    </td>
+                    <td><p th:text="${refuel.carName}">차종</p></td>
                     <td class="last-child" th:text="${refuel.stationName}">주유구</td>
                     <td class="last-child" th:text="${refuel.time.toString()}">주유일시</td>
                     <td class="last-child" th:text="${#numbers.formatDecimal(refuel.amount / 1000, 1, 'COMMA', 0, 'POINT')}">주유량</td>

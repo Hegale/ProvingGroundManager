@@ -64,9 +64,6 @@ public class CarRental {
         // 취소하려는 차량이 이미 반납된 상태이면
         if (this.returned.equals("Y")) {
             throw new IllegalStateException("이미 반납된 차량입니다.");
-        } else if (!LocalDateTime.now().isBefore(this.startTime)) {
-            // TODO: 이걸 여기서 체크하지 말고 controller에서 체크. 버튼을 아예 다르게 주기
-            throw new IllegalStateException("이미 예약 시간이 지난 차량입니다.");
         }
         // 취소 로직을 아예 이력을 없애버리는 걸로 할지, 혹은 이르게 반납 완료된 걸로 할지는 고민해보기..
         this.returned = "Y";

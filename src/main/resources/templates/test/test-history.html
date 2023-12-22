@@ -81,7 +81,7 @@
                 <th scope="col">시험장</th>
                 <th scope="col">차량 대수</th>
                 <th scope="col">시험 제목</th>
-                <th scope="col">내역 확인 및 수정/삭제</th>
+                <th scope="col">내역 확인 및 수정</th>
               </tr>
               </thead>
               <tbody>
@@ -106,7 +106,7 @@
                     <a th:href="@{'/test/' + ${test.testId} + '/edit'}">
                       <button
                               class="btnset btnset-lg btnset-mono btnset-line juykim-cancel-btn">
-                        수정/삭제
+                        수정
                       </button>
                     </a>
                   </div>
@@ -156,11 +156,11 @@
 
 <div th:replace="fragments/footer :: footer" />
 
-<script>
+<script th:inline="javascript">
 
   /*<![CDATA[*/
   var errorMessage = /*[[${errorMessage}]]*/ 'default';
-  if (errorMessage !== 'default') {
+  if (errorMessage && errorMessage !== 'default') {
     alert(errorMessage);
   }
   /*]]>*/

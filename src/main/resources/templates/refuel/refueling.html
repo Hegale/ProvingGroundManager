@@ -26,7 +26,7 @@
 
                 <div class="juykim-car-search">
                   <select name="stationId"  id="stationSelect" class="selectset selectset-lg juykim-selectbox" onchange="selectBoxChange(this.value);">
-                    <option th:each="station : ${stations}" th:value="${station.stationId}" th:text="${station.name}">주유구명</option>
+                    <option th:each="station : ${stations}" th:value="${station.stationId}" th:text="${station.name} + ' [' + ${station.fuelType} + ']'">주유구명</option>
                   </select>
                 </div>
                 <fieldset class="fieldset" style="margin-top:3rem;">

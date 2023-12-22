@@ -40,6 +40,16 @@ public class TestRepositoryImpl {
         return em.find(Test.class, testId);
     }
 
+    public boolean findByGroundRental(Long groundRentalId) {
+        return !em.createQuery(
+                "select t " +
+                        "from Test t " +
+                        "where t.groundRental.groundRentalId = :groundRentalId", Test.class)
+                .setParameter("groundRentalId", groundRentalId)
+                .getResultList()
+                .isEmpty();
+    }
+
     public List<TestDto> findAllDto() {
         return em.createQuery(
                 "SELECT new pg.provingground.dto.admin.TestDto(" +

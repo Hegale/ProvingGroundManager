@@ -105,6 +105,12 @@ public class TestService implements OwnershipService {
     @Transactional
     /** 입력 정보를 바탕으로 시험 진행 내역 추가 */
     public Long addTest(TestForm testForm, User user) {
+
+        // 이미 등록된 테스트를 추가등록하고자 할 때
+        if (isDuplicateTest(Long.valueOf(testForm.getGroundRentalId()))) {
+            throw new IllegalArgumentException("중복된 시험은 등록할 수 없습니다!");
+        }
+
         GroundRental groundRental = groundRentalRepository.findOne(Long.valueOf(testForm.getGroundRentalId()));
         List<CarRental> carRentals = carRentalRepository.findByIds(testForm.getCarRentalIdsList());
 
@@ -123,6 +129,10 @@ public class TestService implements OwnershipService {
         }
 
         return test.getTestId();
+    }
+
+    private boolean isDuplicateTest(Long groundId) {
+        return testRepository.findByGroundRental(groundId);
     }
 
     /** [관리자] 조건에 따른 시험내역 검색 */

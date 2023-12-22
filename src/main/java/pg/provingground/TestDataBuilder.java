@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pg.provingground.domain.*;
 import pg.provingground.repository.*;
+import pg.provingground.service.CarService;
+import pg.provingground.service.RefuelService;
 import pg.provingground.service.TestService;
 import pg.provingground.service.UserService;
 
@@ -28,9 +30,11 @@ public class TestDataBuilder {
     private final GroundRepository groundRepository;
     private final CarRentalRepository carRentalRepository;
     private final GroundRentalRepository groundRentalRepository;
+    private final RefuelService refuelService;
     private final StationRepositoryImpl stationRepository;
     private final TestRepository testRepository;
     private final UserService userService;
+    private final CarService carService;
     private final EntityManager em;
     private final BCryptPasswordEncoder encoder;
 
@@ -100,7 +104,7 @@ public class TestDataBuilder {
                     ids.get(i), encoder.encode(passwds.get(i)), names.get(i), UserRole.USER, phoneNums.get(i));
             em.persist(user);
         }
-        User user = User.createUser("a", encoder.encode("a"), "tester", UserRole.ADMIN, "000");
+        User user = User.createUser("admin", encoder.encode("admin"), "admin", UserRole.ADMIN, "000-0000-0000");
         em.persist(user);
     }
 
@@ -154,11 +158,12 @@ public class TestDataBuilder {
     @Order(3)
     @Transactional
     public void buildCarRentalData() {
-        User user = userService.getLoginUserById(1L); // pikachu
+        User user = userService.getLoginUserById(1L);
+        LocalDateTime time = LocalDateTime.now().minusDays(3);
         for (int i = 0; i < 12; ++i) {
             Car car = carRepository.findOne((long) i + 1);
             CarRental carRental = CarRental.createCarRental(user, car,
-                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
+                    time.plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
             carRentalRepository.save(carRental);
         }
         // 3번 차량에 대한 테스트 데이터 생성
@@ -184,11 +189,12 @@ public class TestDataBuilder {
     @Order(3)
     @Transactional
     public void buildGroundRentalData() {
-        User user = userService.getLoginUserById(1L); // pikachu
+        User user = userService.getLoginUserById(1L);
+        LocalDateTime time = LocalDateTime.now().minusDays(3);
         for (int i = 0; i < 12; ++i) {
             Ground ground = groundRepository.findOne((long) i % 8 + 1);
             GroundRental groundRental = GroundRental.createGroundRental(user, ground,
-                    LocalDateTime.now().plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
+                    time.plusDays(i + 1).with(LocalTime.MIDNIGHT).withHour(10));
             groundRentalRepository.save(groundRental);
         }
     }
@@ -203,6 +209,18 @@ public class TestDataBuilder {
         for (int i = 0; i < 5; ++i) {
             Station station = Station.createStation(names.get(i),fuelTypes.get(i));
             stationRepository.save(station);
+        }
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(3)
+    @Transactional
+    public void refuelData() {
+        String username = "19011051";
+        List<String> amounts = List.of("10", "12", "5", "20", "30", "10", "40");
+        for (int i = 0; i < 7; ++i) {
+            Long validAmount = carService.validFuelAmount(1L, amounts.get(i));
+            refuelService.refuel(username, 1L, 1L, LocalDateTime.now(), validAmount);
         }
     }
 

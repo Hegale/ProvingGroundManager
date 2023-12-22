@@ -15,6 +15,7 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     public void edit(Test test, TestDto testDto);
 
     public Test findOne(Long testId);
+    public boolean findByGroundRental(Long groundRentalId);
 
     public List<TestDto> findAllDto();
 

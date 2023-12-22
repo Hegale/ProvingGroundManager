@@ -43,7 +43,7 @@ public class CarRentalRepositoryImpl {
     /** 특정 유저의 대여 내역을 검색 */
     public List<CarRental> findAllByUser(User user) {
         return em.createQuery(
-                        "select c from CarRental c where c.user = :user", CarRental.class)
+                        "select c from CarRental c where c.user = :user order by c.startTime asc", CarRental.class)
                 .setParameter("user", user)
                 .getResultList();
     }

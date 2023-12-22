@@ -110,7 +110,7 @@
                 </tr>
                 <tr>
                   <td style="border:none; display: flex; justify-content: right; align-items: right;">
-                    <button type="button" id="deleteButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 삭제</button>
+                    <!--<button type="button" id="deleteButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">시험 내역 삭제</button>-->
                     <button type="submit" value="Post" id="postButton" class="btnset btnset-lg btnset-mono btnset-line" style="height:6rem;">수정</button>
                   </td>
                 </tr>
@@ -140,8 +140,15 @@
       document.getElementById('deleteButton').addEventListener('click', function() {
         fetch("/test/" + testId + "/edit", {
           method: 'DELETE'
-        }).then(response => response.json())
-                .then(data => console.log(data));
+        }).then(response => {
+          if (response.ok) {
+            // 요청 성공, 페이지 리디렉트
+            window.location.href = '/test';
+          } else {
+            // 오류 처리
+            console.error('삭제 실패');
+          }
+        }).catch(error => console.error('오류:', error));
       });
 
     })

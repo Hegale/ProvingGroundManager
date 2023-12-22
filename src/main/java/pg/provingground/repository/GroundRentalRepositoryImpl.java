@@ -37,7 +37,7 @@ public class GroundRentalRepositoryImpl {
 
     public List<GroundRental> findAllByUser(User user) {
         return em.createQuery(
-                "select g from GroundRental g where g.user = :user", GroundRental.class)
+                "select g from GroundRental g where g.user = :user order by g.startTime ASC", GroundRental.class)
                 .setParameter("user", user)
                 .getResultList();
     }

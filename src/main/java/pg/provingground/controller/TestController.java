@@ -115,9 +115,9 @@ public class TestController {
     }
 
     @DeleteMapping("/test/{testId}/edit")
-    @CheckOwnership(serviceName = "testService")
-    /** 시험 내역 삭제 삭제 */
+    /** 시험 내역 삭제 */
     public String testDelete(@PathVariable Long testId) {
+        System.out.println("시험 내역 삭제");
         testService.delete(testId);
         return "redirect:/test";
     }
@@ -165,7 +165,13 @@ public class TestController {
                 .toList());
 
         String userName = auth.getName();
-        Long testId = testService.addTest(testForm, userService.getLoginUserByUsername(userName));
+        Long testId;
+        try {
+            testId = testService.addTest(testForm, userService.getLoginUserByUsername(userName));
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/test";
+        }
 
         if (files != null && files.length > 0) {
             for (MultipartFile file : files) {
