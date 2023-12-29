@@ -1,24 +1,47 @@
 # 주행시험장 관리 시스템
 
+   
 ## 구현 결과
+### 유저 기능
 - 메인 화면
 <img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/e3175911-925a-4239-96f4-6f75b16a00ea">
 
 - 시험장 예약 기능
 <img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/1414dcaa-8521-448d-9aaf-0a4a4dab5ffc">
-<img width="981" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/806e8e9b-78d8-4f5f-b22b-60b7976f59f9">
+<img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/806e8e9b-78d8-4f5f-b22b-60b7976f59f9">
 <img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/3382b9f3-e7a9-42a5-b69f-7455508475c3">
 
+- 차량 대여 기능
+<img width="993" alt="스크린샷 2023-12-29 12 09 51" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/f57df486-278d-4f5a-b8c4-c80a4450b891">
+<img width="993" alt="스크린샷 2023-12-29 12 10 17" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/1d79f1de-c636-4dad-84cb-e10616d70edc">
+<img width="993" alt="스크린샷 2023-12-29 12 10 35" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/ea2dad94-fde4-40cf-bfc2-68ab3852c2ff">
+
 - 시험 내역 작성 및 확인 기능
-<img width="992" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/59dae435-9235-41da-a381-122615e30a34">
+<img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/59dae435-9235-41da-a381-122615e30a34">
 <img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/13101b43-693f-4a6d-aa09-65d80105e1f7">
-<img width="992" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/45353ead-559a-450e-895e-e7ea557efeb5">
+<img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/45353ead-559a-450e-895e-e7ea557efeb5">
 <img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/50275984-9260-4faa-ac9a-65fa8301bbe8">
 
-- 관리자 기능
-<img width="993" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/c0bafe3c-d2d9-4fe4-a662-e04abcfe71a3">
-<img width="992" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/ae52aef1-f62f-46cd-8bcc-bfd5b437f673">
-<img width="992" alt="image" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/61db33cd-67a7-402c-8a6e-5927da296157">
+- 주유 기능
+<img width="993" alt="스크린샷 2023-12-29 12 11 57" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/22dac16f-1527-481f-b022-7a9841d12dbd">
+<img width="993" alt="스크린샷 2023-12-29 12 12 07" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/068dd1ef-eb7e-4c4f-a9a5-d68cc3243c30">
+<img width="993" alt="스크린샷 2023-12-29 12 12 22" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/c0e1ce76-5625-4dbb-9713-6386d4885f07">
+
+### 관리자 전용 기능
+- 차량 관련 (차량 목록 확인, 차량 등록, 차량 대여 내역)
+<img width="993" alt="스크린샷 2023-12-29 12 14 33" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/05ba6443-a415-47d3-b016-6d5ce47b11f5">
+<img width="993" alt="스크린샷 2023-12-29 12 13 28" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/576dca43-0cee-45bc-a9f4-5d73f28d9f76">
+<img width="993" alt="스크린샷 2023-12-29 12 13 41" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/00f50ec5-6705-4406-9582-390fbe42876a">
+
+- 시험장 관련 (시험장 목록 확인, 시험장 등록, 시험장 예약 내역)
+<img width="993" alt="스크린샷 2023-12-29 12 15 45" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/7780b6db-c91e-4d26-bf0c-49c94b891847">
+<img width="993" alt="스크린샷 2023-12-29 12 15 54" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/59ea4aa3-81ee-40e7-ac95-86a54b1ef877">
+<img width="993" alt="스크린샷 2023-12-29 12 16 01" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/3636941e-1ab6-4f2b-8847-c1de8e322cef">
+
+- 시험 목록 확인
+<img width="993" alt="스크린샷 2023-12-29 12 17 05" src="https://github.com/Hegale/ProvingGroundManager/assets/92227496/74fa6702-7b66-4ebb-9b2c-95d08c4b8934">
+
+- 주유 관련 (주유 목록 확인, 주유구 등록, 주유 내역)
 
 
 ## 구현 목록
